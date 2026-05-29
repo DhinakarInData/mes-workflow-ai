@@ -57,17 +57,17 @@
             }
         },
         {
-            "id": "NODE_A3",
-            "type": "manual_activity",
+            "id": "NODE_ERR1",
+            "type": "error",
             "position": {
                 "x": 250,
                 "y": 710
             },
             "data": {
-                "label": "Rescan barcode",
-                "step_number": "A3",
-                "lane": "Operator",
-                "group": "MATERIAL_VERIFICATION"
+                "label": "Invalid Barcode",
+                "step_number": "ERR1",
+                "lane": "SYSTEM",
+                "group": "VALIDATION"
             }
         },
         {
@@ -140,7 +140,7 @@
         {
             "id": "EDGE_3",
             "source": "NODE_D1",
-            "target": "NODE_A3",
+            "target": "NODE_ERR1",
             "label": "NO",
             "type": "step",
             "style": {
@@ -170,24 +170,6 @@
             },
             "sourceHandle": "bottom",
             "targetHandle": "top"
-        },
-        {
-            "id": "EDGE_5",
-            "source": "NODE_A3",
-            "target": "NODE_A1",
-            "label": "RETRY",
-            "type": "smoothstep",
-            "style": {
-                "stroke": "blue",
-                "strokeWidth": 2
-            },
-            "labelStyle": {
-                "fill": "blue",
-                "fontWeight": "bold"
-            },
-            "sourceHandle": "retry",
-            "targetHandle": "top",
-            "animated": true
         }
     ]
 }

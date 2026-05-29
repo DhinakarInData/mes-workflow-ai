@@ -9,11 +9,13 @@ import StartNode from "./nodes/StartNode";
 import EndNode from "./nodes/EndNode";
 import ManualActivityNode from "./nodes/ManualActivityNode";
 import DecisionNode from "./nodes/DecisionNode";
+import ErrorNode from "./nodes/ErrorNode";
 import "reactflow/dist/style.css";
 
 const nodeTypes = {
 
   start: StartNode,
+  error: ErrorNode,
 
   end: EndNode,
 
