@@ -1,0 +1,104 @@
+{
+    "nodes": [
+        {
+            "id": "NODE_START",
+            "type": "start",
+            "position": {
+                "x": 400,
+                "y": 0
+            },
+            "data": {
+                "label": "Start",
+                "step_number": "S1",
+                "lane": "System",
+                "group": "SYSTEM"
+            }
+        },
+        {
+            "id": "NODE_A1",
+            "type": "activity",
+            "position": {
+                "x": 400,
+                "y": 180
+            },
+            "data": {
+                "label": "Scan barcode",
+                "step_number": "A1",
+                "lane": "Operator",
+                "group": "MATERIAL_VERIFICATION"
+            }
+        },
+        {
+            "id": "NODE_D1",
+            "type": "decision",
+            "position": {
+                "x": 400,
+                "y": 360
+            },
+            "data": {
+                "label": "Barcode verified?",
+                "step_number": "D1",
+                "lane": "System",
+                "group": "MATERIAL_VERIFICATION"
+            }
+        },
+        {
+            "id": "NODE_A2",
+            "type": "activity",
+            "position": {
+                "x": 400,
+                "y": 540
+            },
+            "data": {
+                "label": "Charge material",
+                "step_number": "A2",
+                "lane": "Operator",
+                "group": "MATERIAL_VERIFICATION"
+            }
+        },
+        {
+            "id": "NODE_END",
+            "type": "end",
+            "position": {
+                "x": 400,
+                "y": 720
+            },
+            "data": {
+                "label": "End",
+                "step_number": "E1",
+                "lane": "System",
+                "group": "SYSTEM"
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "EDGE_0",
+            "source": "NODE_START",
+            "target": "NODE_A1",
+            "label": "SEQUENCE",
+            "type": "smoothstep"
+        },
+        {
+            "id": "EDGE_1",
+            "source": "NODE_A1",
+            "target": "NODE_D1",
+            "label": "SEQUENCE",
+            "type": "smoothstep"
+        },
+        {
+            "id": "EDGE_2",
+            "source": "NODE_D1",
+            "target": "NODE_A2",
+            "label": "YES",
+            "type": "smoothstep"
+        },
+        {
+            "id": "EDGE_3",
+            "source": "NODE_A2",
+            "target": "NODE_END",
+            "label": "SEQUENCE",
+            "type": "smoothstep"
+        }
+    ]
+}

@@ -1,0 +1,193 @@
+{
+    "nodes": [
+        {
+            "id": "NODE_START",
+            "type": "start",
+            "position": {
+                "x": 500,
+                "y": 50
+            },
+            "data": {
+                "label": "Start",
+                "step_number": "S1",
+                "lane": "System",
+                "group": "SYSTEM"
+            }
+        },
+        {
+            "id": "NODE_A1",
+            "type": "manual_activity",
+            "position": {
+                "x": 500,
+                "y": 270
+            },
+            "data": {
+                "label": "Scan barcode",
+                "step_number": "A1",
+                "lane": "Operator",
+                "group": "MATERIAL_VERIFICATION"
+            }
+        },
+        {
+            "id": "NODE_D1",
+            "type": "decision",
+            "position": {
+                "x": 500,
+                "y": 490
+            },
+            "data": {
+                "label": "Barcode verified?",
+                "step_number": "D1",
+                "lane": "System",
+                "group": "MATERIAL_VERIFICATION"
+            }
+        },
+        {
+            "id": "NODE_A2",
+            "type": "manual_activity",
+            "position": {
+                "x": 750,
+                "y": 710
+            },
+            "data": {
+                "label": "Charge material",
+                "step_number": "A2",
+                "lane": "Operator",
+                "group": "MATERIAL_VERIFICATION"
+            }
+        },
+        {
+            "id": "NODE_A3",
+            "type": "manual_activity",
+            "position": {
+                "x": 250,
+                "y": 710
+            },
+            "data": {
+                "label": "Rescan barcode",
+                "step_number": "A3",
+                "lane": "Operator",
+                "group": "MATERIAL_VERIFICATION"
+            }
+        },
+        {
+            "id": "NODE_END",
+            "type": "end",
+            "position": {
+                "x": 500.0,
+                "y": 930
+            },
+            "data": {
+                "label": "End",
+                "step_number": "E1",
+                "lane": "System",
+                "group": "SYSTEM"
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "EDGE_0",
+            "source": "NODE_START",
+            "target": "NODE_A1",
+            "label": "SEQUENCE",
+            "type": "step",
+            "style": {
+                "stroke": "#555555",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#555555",
+                "fontWeight": "bold"
+            },
+            "sourceHandle": "bottom",
+            "targetHandle": "top"
+        },
+        {
+            "id": "EDGE_1",
+            "source": "NODE_A1",
+            "target": "NODE_D1",
+            "label": "SEQUENCE",
+            "type": "step",
+            "style": {
+                "stroke": "#555555",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#555555",
+                "fontWeight": "bold"
+            },
+            "sourceHandle": "bottom",
+            "targetHandle": "top"
+        },
+        {
+            "id": "EDGE_2",
+            "source": "NODE_D1",
+            "target": "NODE_A2",
+            "label": "YES",
+            "type": "step",
+            "style": {
+                "stroke": "green",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "green",
+                "fontWeight": "bold"
+            },
+            "sourceHandle": "yes",
+            "targetHandle": "top"
+        },
+        {
+            "id": "EDGE_3",
+            "source": "NODE_D1",
+            "target": "NODE_A3",
+            "label": "NO",
+            "type": "step",
+            "style": {
+                "stroke": "red",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "red",
+                "fontWeight": "bold"
+            },
+            "sourceHandle": "no",
+            "targetHandle": "top"
+        },
+        {
+            "id": "EDGE_4",
+            "source": "NODE_A2",
+            "target": "NODE_END",
+            "label": "SEQUENCE",
+            "type": "step",
+            "style": {
+                "stroke": "#555555",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#555555",
+                "fontWeight": "bold"
+            },
+            "sourceHandle": "bottom",
+            "targetHandle": "top"
+        },
+        {
+            "id": "EDGE_5",
+            "source": "NODE_A3",
+            "target": "NODE_A1",
+            "label": "RETRY",
+            "type": "smoothstep",
+            "style": {
+                "stroke": "blue",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "blue",
+                "fontWeight": "bold"
+            },
+            "sourceHandle": "retry",
+            "targetHandle": "top",
+            "animated": true
+        }
+    ]
+}

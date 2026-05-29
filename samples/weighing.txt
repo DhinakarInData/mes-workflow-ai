@@ -1,0 +1,5 @@
+1. Operator login to MES
+2. Scan material barcode
+3. Verify weight
+4. If variance exceeds tolerance notify supervisor
+5. Print label

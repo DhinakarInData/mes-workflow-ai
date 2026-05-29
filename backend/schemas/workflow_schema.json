@@ -1,0 +1,101 @@
+{
+  "workflow_name": "Material Verification",
+
+  "nodes": [
+
+    {
+      "id": "NODE_START",
+      "type": "START",
+      "label": "Start",
+      "step_number": "S1",
+      "lane": "System",
+      "group": "SYSTEM"
+    },
+
+    {
+      "id": "NODE_A1",
+      "type": "MANUAL_ACTIVITY",
+      "label": "Scan barcode",
+      "step_number": "A1",
+      "lane": "Operator",
+      "group": "MATERIAL_VERIFICATION"
+    },
+
+    {
+      "id": "NODE_D1",
+      "type": "DECISION",
+      "label": "Barcode verified?",
+      "step_number": "D1",
+      "lane": "System",
+      "group": "MATERIAL_VERIFICATION"
+    },
+
+    {
+      "id": "NODE_A2",
+      "type": "MANUAL_ACTIVITY",
+      "label": "Charge material",
+      "step_number": "A2",
+      "lane": "Operator",
+      "group": "MATERIAL_VERIFICATION"
+    },
+
+    {
+      "id": "NODE_A3",
+      "type": "MANUAL_ACTIVITY",
+      "label": "Rescan barcode",
+      "step_number": "A3",
+      "lane": "Operator",
+      "group": "MATERIAL_VERIFICATION"
+    },
+
+    {
+      "id": "NODE_END",
+      "type": "END",
+      "label": "End",
+      "step_number": "E1",
+      "lane": "System",
+      "group": "SYSTEM"
+    }
+  ],
+
+  "edges": [
+
+    {
+      "source": "NODE_START",
+      "target": "NODE_A1",
+      "edge_type": "SEQUENCE"
+    },
+
+    {
+      "source": "NODE_A1",
+      "target": "NODE_D1",
+      "edge_type": "SEQUENCE"
+    },
+
+    {
+      "source": "NODE_D1",
+      "target": "NODE_A2",
+      "edge_type": "YES"
+    },
+
+    {
+      "source": "NODE_D1",
+      "target": "NODE_A3",
+      "edge_type": "NO"
+    },
+
+    {
+      "source": "NODE_A2",
+      "target": "NODE_END",
+      "edge_type": "SEQUENCE"
+    },
+
+    {
+  "source": "NODE_A3",
+  "target": "NODE_A1",
+  "edge_type": "RETRY"
+}
+  ],
+
+  "connectors": []
+}

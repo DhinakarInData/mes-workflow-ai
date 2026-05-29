@@ -1,0 +1,86 @@
+{
+  "nodes": [
+    {
+      "id": "N1",
+      "type": "START",
+      "label": "Start"
+    },
+    {
+      "id": "N2",
+      "type": "ACTION",
+      "label": "Operator login to MES"
+    },
+    {
+      "id": "N3",
+      "type": "SCAN",
+      "label": "Scan material barcode"
+    },
+    {
+      "id": "N4",
+      "type": "VERIFY",
+      "label": "Verify weight"
+    },
+    {
+      "id": "N5",
+      "type": "DECISION",
+      "label": "variance exceeds tolerance?"
+    },
+    {
+      "id": "N6",
+      "type": "ACTION",
+      "label": "notify supervisor"
+    },
+    {
+      "id": "N7",
+      "type": "PRINT",
+      "label": "Print label"
+    },
+    {
+      "id": "N8",
+      "type": "END",
+      "label": "End"
+    }
+  ],
+  "edges": [
+    {
+      "source": "N1",
+      "target": "N2",
+      "condition": null
+    },
+    {
+      "source": "N2",
+      "target": "N3",
+      "condition": null
+    },
+    {
+      "source": "N3",
+      "target": "N4",
+      "condition": null
+    },
+    {
+      "source": "N4",
+      "target": "N5",
+      "condition": null
+    },
+    {
+      "source": "N5",
+      "target": "N6",
+      "condition": "YES"
+    },
+    {
+      "source": "N5",
+      "target": "N7",
+      "condition": "NO"
+    },
+    {
+      "source": "N6",
+      "target": "N7",
+      "condition": null
+    },
+    {
+      "source": "N7",
+      "target": "N8",
+      "condition": null
+    }
+  ]
+}
