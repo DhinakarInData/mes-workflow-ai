@@ -10,8 +10,8 @@
             "data": {
                 "label": "Start",
                 "step_number": "S1",
-                "lane": "System",
-                "group": "SYSTEM"
+                "lane": "SYSTEM",
+                "group": "WORKFLOW"
             }
         },
         {
@@ -22,9 +22,9 @@
                 "y": 270
             },
             "data": {
-                "label": "Scan barcode",
+                "label": "Scan Barcode",
                 "step_number": "A1",
-                "lane": "Operator",
+                "lane": "OPERATOR",
                 "group": "MATERIAL_VERIFICATION"
             }
         },
@@ -33,41 +33,69 @@
             "type": "decision",
             "position": {
                 "x": 500,
+                "y": 710
+            },
+            "data": {
+                "label": "Barcode Verification",
+                "step_number": "D1",
+                "lane": "SYSTEM",
+                "group": "VALIDATION"
+            }
+        },
+        {
+            "id": "NODE_SYS1",
+            "type": "system_activity",
+            "position": {
+                "x": 500,
                 "y": 490
             },
             "data": {
-                "label": "Barcode verified?",
-                "step_number": "D1",
-                "lane": "System",
-                "group": "MATERIAL_VERIFICATION"
+                "label": "Verify Barcode In MES",
+                "step_number": "SYS1",
+                "lane": "MES",
+                "group": "VALIDATION"
             }
         },
         {
             "id": "NODE_A2",
             "type": "manual_activity",
             "position": {
-                "x": 750,
-                "y": 710
+                "x": 100,
+                "y": 100
             },
             "data": {
-                "label": "Charge material",
+                "label": "Charge Material",
                 "step_number": "A2",
-                "lane": "Operator",
-                "group": "MATERIAL_VERIFICATION"
+                "lane": "OPERATOR",
+                "group": "MATERIAL_EXECUTION"
             }
         },
         {
             "id": "NODE_ERR1",
             "type": "error",
             "position": {
-                "x": 250,
-                "y": 710
+                "x": 100,
+                "y": 100
             },
             "data": {
                 "label": "Invalid Barcode",
                 "step_number": "ERR1",
                 "lane": "SYSTEM",
-                "group": "VALIDATION"
+                "group": "ERROR_HANDLING"
+            }
+        },
+        {
+            "id": "NODE_CONN_A",
+            "type": "connector",
+            "position": {
+                "x": 100,
+                "y": 100
+            },
+            "data": {
+                "label": "(A)",
+                "step_number": "C1",
+                "lane": "SYSTEM",
+                "group": "CONNECTOR"
             }
         },
         {
@@ -75,13 +103,13 @@
             "type": "end",
             "position": {
                 "x": 500.0,
-                "y": 930
+                "y": 710
             },
             "data": {
                 "label": "End",
                 "step_number": "E1",
-                "lane": "System",
-                "group": "SYSTEM"
+                "lane": "SYSTEM",
+                "group": "WORKFLOW"
             }
         }
     ],
@@ -106,7 +134,7 @@
         {
             "id": "EDGE_1",
             "source": "NODE_A1",
-            "target": "NODE_D1",
+            "target": "NODE_SYS1",
             "label": "SEQUENCE",
             "type": "step",
             "style": {
@@ -122,43 +150,77 @@
         },
         {
             "id": "EDGE_2",
-            "source": "NODE_D1",
-            "target": "NODE_A2",
-            "label": "YES",
+            "source": "NODE_SYS1",
+            "target": "NODE_D1",
+            "label": "SEQUENCE",
             "type": "step",
             "style": {
-                "stroke": "green",
+                "stroke": "#555555",
                 "strokeWidth": 2
             },
             "labelStyle": {
-                "fill": "green",
+                "fill": "#555555",
                 "fontWeight": "bold"
             },
-            "sourceHandle": "yes",
+            "sourceHandle": "bottom",
             "targetHandle": "top"
         },
         {
             "id": "EDGE_3",
             "source": "NODE_D1",
-            "target": "NODE_ERR1",
-            "label": "NO",
+            "target": "NODE_A2",
+            "label": "CONDITIONAL",
             "type": "step",
             "style": {
-                "stroke": "red",
+                "stroke": "#555555",
                 "strokeWidth": 2
             },
             "labelStyle": {
-                "fill": "red",
+                "fill": "#555555",
                 "fontWeight": "bold"
             },
-            "sourceHandle": "no",
+            "sourceHandle": "bottom",
             "targetHandle": "top"
         },
         {
             "id": "EDGE_4",
+            "source": "NODE_D1",
+            "target": "NODE_ERR1",
+            "label": "ERROR_FLOW",
+            "type": "step",
+            "style": {
+                "stroke": "#555555",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#555555",
+                "fontWeight": "bold"
+            },
+            "sourceHandle": "bottom",
+            "targetHandle": "top"
+        },
+        {
+            "id": "EDGE_5",
             "source": "NODE_A2",
-            "target": "NODE_END",
+            "target": "NODE_CONN_A",
             "label": "SEQUENCE",
+            "type": "step",
+            "style": {
+                "stroke": "#555555",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#555555",
+                "fontWeight": "bold"
+            },
+            "sourceHandle": "bottom",
+            "targetHandle": "top"
+        },
+        {
+            "id": "EDGE_6",
+            "source": "NODE_CONN_A",
+            "target": "NODE_END",
+            "label": "CONTINUATION",
             "type": "step",
             "style": {
                 "stroke": "#555555",

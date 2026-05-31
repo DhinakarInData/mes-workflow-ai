@@ -1,5 +1,5 @@
 {
-  "workflow_name": "Material Verification",
+  "workflow_name": "Equipment Cleaning Verification",
 
   "nodes": [
 
@@ -8,45 +8,107 @@
       "type": "START",
       "label": "Start",
       "step_number": "S1",
-      "lane": "System",
-      "group": "SYSTEM"
+      "lane": "SYSTEM",
+      "group": "WORKFLOW"
     },
 
     {
       "id": "NODE_A1",
       "type": "MANUAL_ACTIVITY",
-      "label": "Scan barcode",
+      "label": "Scan Equipment Barcode",
       "step_number": "A1",
-      "lane": "Operator",
-      "group": "MATERIAL_VERIFICATION"
+      "lane": "OPERATOR",
+      "group": "EQUIPMENT_VERIFICATION"
+    },
+
+    {
+      "id": "NODE_SYS1",
+      "type": "SYSTEM_ACTIVITY",
+      "label": "Verify Equipment Status",
+      "step_number": "SYS1",
+      "lane": "MES",
+      "group": "SYSTEM_VALIDATION"
     },
 
     {
       "id": "NODE_D1",
       "type": "DECISION",
-      "label": "Barcode verified?",
+      "label": "Equipment Cleaned?",
       "step_number": "D1",
-      "lane": "System",
-      "group": "MATERIAL_VERIFICATION"
+      "lane": "SYSTEM",
+      "group": "VALIDATION"
+    },
+
+    {
+      "id": "NODE_ERR1",
+      "type": "ERROR",
+      "label": "Cleaning Required",
+      "step_number": "ERR1",
+      "lane": "SYSTEM",
+      "group": "ERROR_HANDLING"
     },
 
     {
       "id": "NODE_A2",
       "type": "MANUAL_ACTIVITY",
-      "label": "Charge material",
+      "label": "Perform Cleaning",
       "step_number": "A2",
-      "lane": "Operator",
-      "group": "MATERIAL_VERIFICATION"
+      "lane": "OPERATOR",
+      "group": "CLEANING_PROCESS"
     },
 
-   
     {
-      "id": "NODE_ERR1",
-      "type": "ERROR",
-      "label": "Invalid Barcode",
-      "step_number": "ERR1",
+      "id": "NODE_SYS2",
+      "type": "SYSTEM_ACTIVITY",
+      "label": "Record Cleaning Completion",
+      "step_number": "SYS2",
+      "lane": "MES",
+      "group": "SYSTEM_UPDATE"
+    },
+
+    {
+      "id": "NODE_CONN_A",
+      "type": "CONNECTOR",
+      "label": "(A)",
+      "step_number": "C1",
       "lane": "SYSTEM",
-      "group": "VALIDATION"
+      "group": "CONNECTOR"
+    },
+
+    {
+      "id": "NODE_A3",
+      "type": "MANUAL_ACTIVITY",
+      "label": "Start Manufacturing",
+      "step_number": "A3",
+      "lane": "OPERATOR",
+      "group": "EXECUTION"
+    },
+
+    {
+      "id": "NODE_D2",
+      "type": "DECISION",
+      "label": "Batch Completed?",
+      "step_number": "D2",
+      "lane": "SYSTEM",
+      "group": "EXECUTION"
+    },
+
+    {
+      "id": "NODE_A4",
+      "type": "MANUAL_ACTIVITY",
+      "label": "Continue Manufacturing",
+      "step_number": "A4",
+      "lane": "OPERATOR",
+      "group": "EXECUTION"
+    },
+
+    {
+      "id": "NODE_M1",
+      "type": "MERGE",
+      "label": "Merge Flow",
+      "step_number": "M1",
+      "lane": "SYSTEM",
+      "group": "MERGE"
     },
 
     {
@@ -54,8 +116,8 @@
       "type": "END",
       "label": "End",
       "step_number": "E1",
-      "lane": "System",
-      "group": "SYSTEM"
+      "lane": "SYSTEM",
+      "group": "WORKFLOW"
     }
   ],
 
@@ -69,29 +131,87 @@
 
     {
       "source": "NODE_A1",
+      "target": "NODE_SYS1",
+      "edge_type": "SEQUENCE"
+    },
+
+    {
+      "source": "NODE_SYS1",
       "target": "NODE_D1",
       "edge_type": "SEQUENCE"
     },
 
     {
       "source": "NODE_D1",
-      "target": "NODE_A2",
-      "edge_type": "YES"
+      "target": "NODE_CONN_A",
+      "edge_type": "CONDITIONAL",
+      "condition": "YES"
     },
 
     {
       "source": "NODE_D1",
       "target": "NODE_ERR1",
-      "edge_type": "NO"
+      "edge_type": "ERROR_FLOW",
+      "condition": "NO"
+    },
+
+    {
+      "source": "NODE_ERR1",
+      "target": "NODE_A2",
+      "edge_type": "SEQUENCE"
     },
 
     {
       "source": "NODE_A2",
-      "target": "NODE_END",
+      "target": "NODE_SYS2",
       "edge_type": "SEQUENCE"
-    }
+    },
 
-   
+    {
+      "source": "NODE_SYS2",
+      "target": "NODE_A1",
+      "edge_type": "LOOPBACK",
+      "condition": "RETRY"
+    },
+
+    {
+      "source": "NODE_CONN_A",
+      "target": "NODE_A3",
+      "edge_type": "CONTINUATION"
+    },
+
+    {
+      "source": "NODE_A3",
+      "target": "NODE_D2",
+      "edge_type": "SEQUENCE"
+    },
+
+    {
+      "source": "NODE_D2",
+      "target": "NODE_END",
+      "edge_type": "CONDITIONAL",
+      "condition": "YES"
+    },
+
+    {
+      "source": "NODE_D2",
+      "target": "NODE_A4",
+      "edge_type": "CONDITIONAL",
+      "condition": "NO"
+    },
+
+    {
+      "source": "NODE_A4",
+      "target": "NODE_M1",
+      "edge_type": "SEQUENCE"
+    },
+
+    {
+      "source": "NODE_M1",
+      "target": "NODE_A3",
+      "edge_type": "LOOPBACK",
+      "condition": "REWORK"
+    }
   ],
 
   "connectors": []

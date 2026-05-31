@@ -1,45 +1,40 @@
 import { useEffect, useState } from "react";
 
-import ReactFlow, {
-  Background,
-  Controls,
-  
-} from "reactflow";
-import StartNode from "./nodes/StartNode";
-import EndNode from "./nodes/EndNode";
-import ManualActivityNode from "./nodes/ManualActivityNode";
+import ReactFlow from "reactflow";
+
+import "reactflow/dist/style.css";
+import ConnectorNode from "./nodes/ConnectorNode";
+import SystemActivityNode from "./nodes/SystemActivityNode";
 import DecisionNode from "./nodes/DecisionNode";
 import ErrorNode from "./nodes/ErrorNode";
-import "reactflow/dist/style.css";
-
-const nodeTypes = {
-
-  start: StartNode,
-  error: ErrorNode,
-
-  end: EndNode,
-
-  manual_activity: ManualActivityNode,
-  decision: DecisionNode
-};
+import ManualActivityNode from "./nodes/ManualActivityNode";
+import SwimlaneBackground from "./components/SwimlaneBackground";
 
 function App() {
 
   const [nodes, setNodes] = useState([]);
 
   const [edges, setEdges] = useState([]);
+  const nodeTypes = {
 
+  connector: ConnectorNode,
 
+  decision: DecisionNode,
+
+  error: ErrorNode,
+
+  manual_activity: ManualActivityNode,
+
+  system_activity: SystemActivityNode
+}
 
   useEffect(() => {
 
-    fetch("/graph.json")
+    fetch("http://127.0.0.1:8000/workflow")
 
       .then((response) => response.json())
 
       .then((data) => {
-
-        console.log(data);
 
         setNodes(data.nodes);
 
@@ -49,30 +44,35 @@ function App() {
   }, []);
 
 
-
   return (
 
     <div
       style={{
         width: "100vw",
-        height: "100vh"
+        height: "100vh",
+        position: "relative"
       }}
     >
+   
 
       <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        nodeTypes={nodeTypes}
-      >
+  nodes={nodes}
+  edges={edges}
+  nodeTypes={nodeTypes}
+  defaultViewport={{
+    x: 100,
+    y: 50,
+    zoom: 1
+  }}
+>
 
-        <Background />
+  <SwimlaneBackground />
 
-        <Controls />
-
-      </ReactFlow>
+</ReactFlow>
 
     </div>
   );
 }
+
 
 export default App;

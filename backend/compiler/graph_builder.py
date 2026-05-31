@@ -1,109 +1,219 @@
-import json
-from compiler.graph_model import (
-    GraphNode,
-    GraphEdge,
-    Connector
+from config import DEBUG_MODE
+import os
+
+from compiler.layout_engine import (
+
+    build_layout,
+
+    print_layout_report
+)
+from compiler.reactflow_adapter import (
+
+    build_reactflow_graph,
+
+    print_reactflow_report
 )
 
-from compiler.validator import (
-    validate_workflow_schema
+from compiler.normalization_engine import (
+    print_ir_report
+)
+from compiler.topology_engine import (
+    print_topology_report
 )
 
-from compiler.adapter import (
-    graph_to_reactflow
+from compiler.semantic_engine import (
+    print_semantic_report
 )
+
+from compiler.workflow_parser import (
+    parse_workflow
+)
+
+from compiler.graph_analyzer import (
+    print_graph_summary,
+    bfs_traversal,
+    find_merge_nodes,
+    find_decision_nodes,
+    find_loopback_edges
+)
+
+
+# ===================================
+# BUILD WORKFLOW GRAPH
+# ===================================
 
 def build_graph():
 
-    with open(
-        "schemas/workflow_schema.json",
-        "r"
-    ) as file:
+    # ===================================
+    # WORKFLOW PATH
+    # ===================================
 
-        data = json.load(file)
+    current_dir = os.path.dirname(
+        os.path.abspath(__file__)
+    )
 
+    workflow_path = os.path.join(
+        current_dir,
+        "..",
+        "schemas",
+        "workflow_schema.json"
+    )
 
-    validate_workflow_schema(data)
+    # ===================================
+    # PARSE DSL
+    # ===================================
 
+    graph = parse_workflow(
+        workflow_path
+    )
 
-    graph_nodes = []
-    graph_edges = []
-    graph_connectors = []
+    # ===================================
+    # GRAPH SUMMARY
+    # ===================================
 
+    print_graph_summary(graph)
 
-    # =========================
-    # CREATE GRAPH NODES
-    # =========================
+    # ===================================
+    # TOPOLOGY REPORT
+    # ===================================
 
-    for node in data["nodes"]:
+    print_topology_report(graph)
 
-        graph_node = GraphNode(
-            id=node["id"],
-            step_number=node["step_number"],
-            type=node["type"],
-            label=node["label"],
-            lane=node["lane"],
-            group=node["group"]
+    # ===================================
+    # SEMANTIC REPORT
+    # ===================================
+
+    print_semantic_report(graph)
+    
+    print_ir_report(graph)
+    
+    node_positions = build_layout(
+        graph
+    )
+
+    if DEBUG_MODE:
+
+        print_layout_report(
+            graph,
+            node_positions
+    )
+    reactflow_graph = build_reactflow_graph(
+
+        graph,
+
+        node_positions
+    )
+
+    print_reactflow_report(
+        reactflow_graph
+    )
+    # ===================================
+    # BFS ORDER
+    # ===================================
+
+    traversal_order = bfs_traversal(graph)
+
+    print("\n===== BFS ORDER =====\n")
+
+    for node_id in traversal_order:
+
+        print(node_id)
+
+    # ===================================
+    # DECISION ANALYSIS
+    # ===================================
+
+    print("\n===== DECISION ANALYSIS =====\n")
+
+    decision_nodes = find_decision_nodes(
+        graph
+    )
+
+    for node in decision_nodes:
+
+        outgoing = graph.adjacency_map.get(
+            node.id,
+            []
         )
 
-        graph_nodes.append(graph_node)
-
-
-    # =========================
-    # CREATE GRAPH EDGES
-    # =========================
-
-    for edge in data["edges"]:
-
-        graph_edge = GraphEdge(
-            source=edge["source"],
-            target=edge["target"],
-            edge_type=edge["edge_type"]
+        print(
+            f"\n{node.id} | {node.label}"
         )
 
-        graph_edges.append(graph_edge)
+        print("Outgoing Branches:")
 
+        for edge in outgoing:
 
-    # =========================
-    # CREATE CONNECTORS
-    # =========================
+            print(
+                "  ->",
+                edge.target,
+                "|",
+                edge.edge_type,
+                "|",
+                edge.condition
+            )
 
-    for connector in data["connectors"]:
+    # ===================================
+    # MERGE ANALYSIS
+    # ===================================
 
-        graph_connector = Connector(
-            id=connector["id"],
-            source=connector["source"],
-            target=connector["target"],
-            connector_type=connector["type"]
+    print("\n===== MERGE ANALYSIS =====\n")
+
+    merge_nodes = find_merge_nodes(graph)
+
+    for node in merge_nodes:
+
+        incoming = graph.reverse_adjacency_map.get(
+            node.id,
+            []
         )
 
-        graph_connectors.append(graph_connector)
+        print(
+            f"\n{node.id} | {node.label}"
+        )
+
+        print("Incoming Paths:")
+
+        for edge in incoming:
+
+            print(
+                "  <-",
+                edge.source,
+                "|",
+                edge.edge_type,
+                "|",
+                edge.condition
+            )
+
+    # ===================================
+    # LOOPBACK ANALYSIS
+    # ===================================
+
+    print("\n===== LOOPBACK ANALYSIS =====\n")
+
+    loopbacks = find_loopback_edges(graph)
+
+    for edge in loopbacks:
+
+        print(
+            edge.source,
+            "->",
+            edge.target,
+            "|",
+            edge.condition
+        )
+
+    # ===================================
+    # RETURN GRAPH
+    # ===================================
+
+    return graph
 
 
-    return {
-        "nodes": graph_nodes,
-        "edges": graph_edges,
-        "connectors": graph_connectors
-    }
-
+# ===================================
+# TEST GRAPH BUILDER
+# ===================================
 
 if __name__ == "__main__":
 
-    graph = build_graph()
-
-    reactflow_graph = graph_to_reactflow(
-    graph
-)
-
-with open(
-    "../frontend/public/graph.json",
-    "w"
-) as file:
-
-    json.dump(
-        reactflow_graph,
-        file,
-        indent=4
-    )
-
-print("graph.json generated")
+    build_graph()

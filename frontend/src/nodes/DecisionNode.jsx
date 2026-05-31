@@ -1,7 +1,11 @@
 import {
+
   Handle,
+
   Position
+
 } from "reactflow";
+
 
 export default function DecisionNode({ data }) {
 
@@ -9,13 +13,20 @@ export default function DecisionNode({ data }) {
 
     <div
       style={{
-        width: "110px",
-        height: "110px",
+        width: "180px",
+        height: "180px",
+        background: "#1E3A8A",
+        border: "2px solid #3B82F6",
+        transform: "rotate(45deg)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "white",
         position: "relative"
       }}
     >
 
-      {/* TOP INPUT */}
+      {/* TOP TARGET */}
 
       <Handle
         type="target"
@@ -23,7 +34,26 @@ export default function DecisionNode({ data }) {
         id="top"
       />
 
-      {/* DEFAULT SEQUENCE */}
+
+      {/* LEFT SOURCE */}
+
+      <Handle
+        type="source"
+        position={Position.Left}
+        id="left"
+      />
+
+
+      {/* RIGHT SOURCE */}
+
+      <Handle
+        type="source"
+        position={Position.Right}
+        id="right"
+      />
+
+
+      {/* BOTTOM SOURCE */}
 
       <Handle
         type="source"
@@ -31,48 +61,16 @@ export default function DecisionNode({ data }) {
         id="bottom"
       />
 
-      {/* YES */}
-
-      <Handle
-        type="source"
-        position={Position.Right}
-        id="yes"
-      />
-
-      {/* NO */}
-
-      <Handle
-        type="source"
-        position={Position.Left}
-        id="no"
-      />
 
       <div
         style={{
-          width: "100%",
-          height: "100%",
-          background: "#E11D48",
-          transform: "rotate(45deg)",
-          border: "2px solid #BE123C",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
+          transform: "rotate(-45deg)",
+          textAlign: "center",
+          width: "110px",
+          fontWeight: "bold"
         }}
       >
-
-        <div
-          style={{
-            transform: "rotate(-45deg)",
-            color: "white",
-            textAlign: "center",
-            fontWeight: "bold",
-            width: "70px",
-            fontSize: "12px"
-          }}
-        >
-          {data.label}
-        </div>
-
+        {data.label}
       </div>
 
     </div>

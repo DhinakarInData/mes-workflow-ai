@@ -1,7 +1,11 @@
 import {
+
   Handle,
+
   Position
+
 } from "reactflow";
+
 
 export default function ErrorNode({ data }) {
 
@@ -19,11 +23,41 @@ export default function ErrorNode({ data }) {
       }}
     >
 
+      {/* TOP TARGET */}
+
       <Handle
         type="target"
         position={Position.Top}
         id="top"
       />
+
+
+      {/* LEFT TARGET */}
+
+      <Handle
+        type="target"
+        position={Position.Left}
+        id="left"
+      />
+
+
+      {/* RIGHT SOURCE */}
+
+      <Handle
+        type="source"
+        position={Position.Right}
+        id="right"
+      />
+
+
+      {/* BOTTOM SOURCE */}
+
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        id="bottom"
+      />
+
 
       <div
         style={{
@@ -35,6 +69,7 @@ export default function ErrorNode({ data }) {
       >
         ERROR
       </div>
+
 
       <div
         style={{

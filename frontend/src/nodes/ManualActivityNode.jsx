@@ -1,7 +1,11 @@
 import {
+
   Handle,
+
   Position
+
 } from "reactflow";
+
 
 export default function ManualActivityNode({ data }) {
 
@@ -10,14 +14,16 @@ export default function ManualActivityNode({ data }) {
     <div
       style={{
         width: "180px",
-        background: "#2E3B52",
+        background: "#111827",
         color: "white",
-        border: "2px solid #111827",
-        borderRadius: "6px",
+        border: "2px solid #374151",
+        borderRadius: "8px",
         overflow: "hidden",
         position: "relative"
       }}
     >
+
+      {/* TOP TARGET */}
 
       <Handle
         type="target"
@@ -25,44 +31,50 @@ export default function ManualActivityNode({ data }) {
         id="top"
       />
 
+
+      {/* LEFT TARGET */}
+
+      <Handle
+        type="target"
+        position={Position.Left}
+        id="left"
+      />
+
+
+      {/* RIGHT SOURCE */}
+
+      <Handle
+        type="source"
+        position={Position.Right}
+        id="right"
+      />
+
+
+      {/* BOTTOM SOURCE */}
+
       <Handle
         type="source"
         position={Position.Bottom}
         id="bottom"
       />
 
-      <Handle
-        type="source"
-        position={Position.Left}
-        id="retry"
-      />
 
       <div
         style={{
-          background: "#111827",
           padding: "8px",
+          fontWeight: "bold",
           textAlign: "center",
-          fontWeight: "bold"
+          background: "#1F2937"
         }}
       >
         {data.step_number}
       </div>
 
-      <div
-        style={{
-          padding: "12px",
-          textAlign: "center",
-          fontSize: "12px"
-        }}
-      >
-        MANUAL ACTIVITY
-      </div>
 
       <div
         style={{
-          paddingBottom: "16px",
-          textAlign: "center",
-          fontWeight: "bold"
+          padding: "18px",
+          textAlign: "center"
         }}
       >
         {data.label}
