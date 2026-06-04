@@ -3,13 +3,19 @@ from fastapi import APIRouter
 from compiler.workflow_parser import (
     parse_workflow
 )
+from engines.semantic_layout_engine import (
+    build_semantic_layout
+)
 
 from compiler.layout_engine import (
-    build_layout
+    build_semantic_layout
 )
 
 from compiler.reactflow_adapter import (
     build_reactflow_graph
+)
+from compiler.semantic_engine import (
+    find_semantic_clusters
 )
 
 import os
@@ -40,7 +46,7 @@ def get_workflow_graph():
 
         "schemas",
 
-        "workflow_schema.json"
+        "workflow_schema_test.json"
     )
 
 
@@ -57,7 +63,7 @@ def get_workflow_graph():
     # BUILD LAYOUT
     # ===================================
 
-    node_positions = build_layout(
+    node_positions = build_semantic_layout(
         graph
     )
 
@@ -65,12 +71,25 @@ def get_workflow_graph():
     # ===================================
     # BUILD REACTFLOW GRAPH
     # ===================================
+    semantic_clusters = find_semantic_clusters(
+        graph
+    )
 
+    semantic_groups = {}
+
+    for group_name, nodes in semantic_clusters.items():
+
+        semantic_groups[group_name] = [
+
+        node.id for node in nodes
+    ]
+    
     reactflow_graph = build_reactflow_graph(
 
         graph,
 
-        node_positions
+        node_positions,
+        semantic_groups
     )
 
 

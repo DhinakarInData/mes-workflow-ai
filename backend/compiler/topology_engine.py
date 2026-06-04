@@ -5,57 +5,99 @@ from collections import defaultdict
 # CALCULATE NODE DEPTHS
 # ===================================
 
+# ===================================
+# CALCULATE NODE DEPTHS
+# ===================================
+
 def calculate_node_depths(graph):
 
-    depths = {}
+    node_depths = {}
 
-    start_node = graph.get_start_node()
+    visited = set()
 
 
-    if not start_node:
-
-        return depths
-
+    # ===================================
+    # DFS
+    # ===================================
 
     def dfs(
+
         node_id,
+
         current_depth
     ):
 
-        # EXISTING DEPTH
+        # ===================================
+        # PREVENT INFINITE LOOPS
+        # ===================================
 
-        if node_id in depths:
+        if node_id in visited:
 
-            if current_depth <= depths[node_id]:
-
-                return
-
-
-        depths[node_id] = current_depth
+            return
 
 
-        outgoing_edges = graph.adjacency_map.get(
+        visited.add(node_id)
+
+
+        # ===================================
+        # STORE DEPTH
+        # ===================================
+
+        existing_depth = node_depths.get(
+            node_id,
+            -1
+        )
+
+
+        node_depths[node_id] = max(
+
+            existing_depth,
+
+            current_depth
+        )
+
+
+        # ===================================
+        # OUTGOING EDGES
+        # ===================================
+
+        outgoing = graph.adjacency_map.get(
             node_id,
             []
         )
 
 
-        for edge in outgoing_edges:
+        for edge in outgoing:
 
             dfs(
+
                 edge.target,
+
                 current_depth + 1
             )
 
 
-    dfs(
-        start_node.id,
-        0
-    )
+    # ===================================
+    # ROOT NODES
+    # ===================================
+
+    for node in graph.nodes.values():
+
+        incoming = graph.reverse_adjacency_map.get(
+            node.id,
+            []
+        )
 
 
-    return depths
+        if len(incoming) == 0:
 
+            dfs(
+                node.id,
+                0
+            )
+
+
+    return node_depths
 
 # ===================================
 # GROUP NODES BY DEPTH
@@ -192,11 +234,12 @@ def find_terminal_branches(graph):
 # PRINT TOPOLOGY REPORT
 # ===================================
 
-if DEBUG_MODE:
+def print_topology_report(graph):
 
-    print_topology_report(
-        graph
+    print(
+        "\n===== TOPOLOGY REPORT =====\n"
     )
+
 
     # ===================================
     # DEPTH LEVELS

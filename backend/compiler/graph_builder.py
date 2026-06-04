@@ -1,6 +1,17 @@
 from config import DEBUG_MODE
 import os
+from compiler.grouping_engine import (
 
+    build_semantic_groups,
+
+    print_group_report
+)
+from compiler.connector_engine import (
+    inject_loopback_connectors
+)
+from engines.semantic_layout_engine import (
+    build_semantic_layout
+)
 from compiler.layout_engine import (
 
     build_layout,
@@ -66,7 +77,21 @@ def build_graph():
     graph = parse_workflow(
         workflow_path
     )
+    graph = inject_loopback_connectors(
+        graph
+    )
+    print_semantic_report(
+    graph
+)
+    semantic_groups = build_semantic_groups(
+        graph
+    )
+    print_group_report(
 
+        graph,
+
+    semantic_groups
+    )
     # ===================================
     # GRAPH SUMMARY
     # ===================================
@@ -87,7 +112,7 @@ def build_graph():
     
     print_ir_report(graph)
     
-    node_positions = build_layout(
+    node_positions = build_semantic_layout(
         graph
     )
 
@@ -101,7 +126,8 @@ def build_graph():
 
         graph,
 
-        node_positions
+        node_positions,
+        semantic_groups
     )
 
     print_reactflow_report(

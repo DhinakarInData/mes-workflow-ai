@@ -43,6 +43,8 @@ class WorkflowEdge:
 
     condition: Optional[str] = None
 
+    edge_label: Optional[str] = None
+
     metadata: Dict = field(default_factory=dict)
 
 
@@ -76,7 +78,6 @@ class WorkflowGraph:
 
         self.reverse_adjacency_map = {}
 
-
         for edge in self.edges:
 
             # OUTGOING
@@ -87,11 +88,9 @@ class WorkflowGraph:
                     edge.source
                 ] = []
 
-
             self.adjacency_map[
                 edge.source
             ].append(edge)
-
 
             # INCOMING
 
@@ -100,7 +99,6 @@ class WorkflowGraph:
                 self.reverse_adjacency_map[
                     edge.target
                 ] = []
-
 
             self.reverse_adjacency_map[
                 edge.target
@@ -131,7 +129,6 @@ class WorkflowGraph:
 
                 return node
 
-
         return None
 
 
@@ -143,12 +140,10 @@ class WorkflowGraph:
 
         result = []
 
-
         for node in self.nodes.values():
 
             if node.type == "END":
 
                 result.append(node)
-
 
         return result

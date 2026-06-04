@@ -209,7 +209,7 @@ def find_human_tasks(graph):
 # PRINT SEMANTIC REPORT
 # ===================================
 
-if DEBUG_MODE:
+
 
     print_semantic_report(
         graph

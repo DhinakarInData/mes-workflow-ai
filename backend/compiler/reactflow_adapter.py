@@ -1,3 +1,59 @@
+from compiler.routing_engine import (
+    get_routing_config
+)
+# ===================================
+# ESTIMATE NODE SIZE
+# ===================================
+
+def estimate_node_size(label):
+
+    if not label:
+
+        return 220, 100
+
+
+    char_count = len(label)
+
+
+    # ===================================
+    # WIDTH
+    # ===================================
+
+    width = min(
+
+        max(
+            220,
+            char_count * 7
+        ),
+
+        420
+    )
+
+
+    # ===================================
+    # LINES
+    # ===================================
+
+    line_count = (
+
+        char_count // 24
+    ) + 1
+
+
+    # ===================================
+    # HEIGHT
+    # ===================================
+
+    height = max(
+
+        100,
+
+        line_count * 32
+    )
+
+
+    return width, height
+
 # ===================================
 # BUILD REACTFLOW NODES
 # ===================================
@@ -24,7 +80,9 @@ def build_reactflow_nodes(
             }
         )
 
-
+        node_width, node_height = estimate_node_size(
+    node.label
+)
         reactflow_node = {
 
             "id": node.id,
@@ -50,7 +108,10 @@ def build_reactflow_nodes(
 
                 "actor": node.actor,
 
-                "event_type": node.event_type
+                "event_type": node.event_type,
+                "width": node_width,
+
+                "height": node_height,
             }
         }
 
@@ -64,6 +125,85 @@ def build_reactflow_nodes(
 
 
 # ===================================
+# GET EDGE STYLE
+# ===================================
+
+def get_edge_style(routing_type):
+
+    edge_color = "#6B7280"
+
+    animated = False
+
+
+    # ===================================
+    # STRAIGHT FLOW
+    # ===================================
+
+    if routing_type == "STRAIGHT":
+
+        edge_color = "#16A34A"
+
+
+    # ===================================
+    # RIGHT BRANCH
+    # ===================================
+
+    elif routing_type == "RIGHT_BRANCH":
+
+        edge_color = "#16A34A"
+
+
+    # ===================================
+    # ERROR BRANCH
+    # ===================================
+
+    elif routing_type == "ERROR_BRANCH":
+
+        edge_color = "#DC2626"
+
+
+    # ===================================
+    # OUTER LOOP
+    # ===================================
+
+    elif routing_type == "OUTER_RIGHT_LOOP":
+
+        edge_color = "#2563EB"
+
+        animated = True
+
+
+    # ===================================
+    # BOTTOM LOOP
+    # ===================================
+
+    elif routing_type == "BOTTOM_RETURN_LOOP":
+
+        edge_color = "#7C3AED"
+
+        animated = True
+
+
+    # ===================================
+    # CONNECTOR FLOW
+    # ===================================
+
+    elif routing_type == "CONNECTOR_FLOW":
+
+        edge_color = "#EA580C"
+
+        animated = True
+
+
+    return {
+
+        "edge_color": edge_color,
+
+        "animated": animated
+    }
+
+
+# ===================================
 # BUILD REACTFLOW EDGES
 # ===================================
 
@@ -74,84 +214,30 @@ def build_reactflow_edges(graph):
 
     for index, edge in enumerate(graph.edges):
 
-        edge_color = "#555555"
+        # ===================================
+        # ROUTING METADATA
+        # ===================================
+
+        routing = get_routing_config(edge)
+
+
+        routing_type = routing["routing_type"]
+
+        lane_offset = routing["lane_offset"]
 
 
         # ===================================
-        # EDGE COLORS
+        # STYLE
         # ===================================
 
-        if edge.edge_type == "CONDITIONAL":
-
-            edge_color = "green"
-
-
-        elif edge.edge_type == "ERROR_FLOW":
-
-            edge_color = "red"
+        style_config = get_edge_style(
+            routing_type
+        )
 
 
-        elif edge.edge_type == "LOOPBACK":
+        edge_color = style_config["edge_color"]
 
-            edge_color = "blue"
-
-
-        elif edge.edge_type == "CONTINUATION":
-
-            edge_color = "orange"
-
-
-        # ===================================
-        # DEFAULT HANDLES
-        # ===================================
-
-        source_handle = "bottom"
-
-        target_handle = "top"
-
-
-        # ===================================
-        # CONDITIONAL FLOW
-        # ===================================
-
-        if edge.edge_type == "CONDITIONAL":
-
-            source_handle = "right"
-
-            target_handle = "left"
-
-
-        # ===================================
-        # ERROR FLOW
-        # ===================================
-
-        elif edge.edge_type == "ERROR_FLOW":
-
-            source_handle = "left"
-
-            target_handle = "right"
-
-
-        # ===================================
-        # LOOPBACK FLOW
-        # ===================================
-
-        elif edge.edge_type == "LOOPBACK":
-
-            source_handle = "right"
-
-            target_handle = "left"
-
-
-        # ===================================
-        # CONTINUATION FLOW
-        # ===================================
-
-        elif edge.edge_type == "CONTINUATION":
-
-            source_handle = "bottom"
-
-            target_handle = "top"
+        animated = style_config["animated"]
 
 
         # ===================================
@@ -166,18 +252,16 @@ def build_reactflow_edges(graph):
 
             "target": edge.target,
 
-            "sourceHandle": source_handle,
+            "label": edge.edge_label or edge.condition,
 
-            "targetHandle": target_handle,
+            "type": "semantic",
 
-            "label": edge.condition,
+            "animated": animated,
 
-            "type": "smoothstep",
 
-            "animated": (
-
-                edge.edge_type == "LOOPBACK"
-            ),
+            # ===================================
+            # VISUAL STYLE
+            # ===================================
 
             "style": {
 
@@ -186,11 +270,24 @@ def build_reactflow_edges(graph):
                 "strokeWidth": 2
             },
 
+
             "labelStyle": {
 
                 "fill": edge_color,
 
                 "fontWeight": "bold"
+            },
+
+
+            # ===================================
+            # ROUTING METADATA
+            # ===================================
+
+            "data": {
+
+                "routing_type": routing_type,
+
+                "lane_offset": lane_offset
             }
         }
 
@@ -211,7 +308,9 @@ def build_reactflow_graph(
 
     graph,
 
-    node_positions
+    node_positions,
+
+    semantic_groups
 ):
 
     return {
@@ -225,7 +324,9 @@ def build_reactflow_graph(
 
         "edges": build_reactflow_edges(
             graph
-        )
+        ),
+
+        "semantic_groups": semantic_groups
     }
 
 

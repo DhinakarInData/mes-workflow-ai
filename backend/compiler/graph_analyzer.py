@@ -2,24 +2,68 @@ from collections import deque
 
 
 # ===================================
+# IS CONNECTOR NODE
+# ===================================
+
+def is_connector_node(node):
+
+    return node.type == "CONNECTOR"
+
+
+# ===================================
 # FIND ROOT NODES
 # ===================================
 
 def find_root_nodes(graph):
 
-    roots = []
+    root_nodes = []
 
 
-    for node_id in graph.nodes:
+    for node in graph.nodes.values():
 
-        if node_id not in graph.reverse_adjacency_map:
+        # ===================================
+        # SKIP CONNECTORS
+        # ===================================
 
-            roots.append(
-                graph.get_node(node_id)
+        if is_connector_node(node):
+
+            continue
+
+
+        incoming = graph.reverse_adjacency_map.get(
+            node.id,
+            []
+        )
+
+
+        valid_incoming = []
+
+
+        for edge in incoming:
+
+            source_node = graph.nodes.get(
+                edge.source
             )
 
 
-    return roots
+            if (
+
+                source_node and
+
+                not is_connector_node(
+                    source_node
+                )
+            ):
+
+                valid_incoming.append(edge)
+
+
+        if len(valid_incoming) == 0:
+
+            root_nodes.append(node)
+
+
+    return root_nodes
 
 
 # ===================================
@@ -28,19 +72,54 @@ def find_root_nodes(graph):
 
 def find_terminal_nodes(graph):
 
-    terminals = []
+    terminal_nodes = []
 
 
-    for node_id in graph.nodes:
+    for node in graph.nodes.values():
 
-        if node_id not in graph.adjacency_map:
+        # ===================================
+        # SKIP CONNECTORS
+        # ===================================
 
-            terminals.append(
-                graph.get_node(node_id)
+        if is_connector_node(node):
+
+            continue
+
+
+        outgoing = graph.adjacency_map.get(
+            node.id,
+            []
+        )
+
+
+        valid_outgoing = []
+
+
+        for edge in outgoing:
+
+            target_node = graph.nodes.get(
+                edge.target
             )
 
 
-    return terminals
+            if (
+
+                target_node and
+
+                not is_connector_node(
+                    target_node
+                )
+            ):
+
+                valid_outgoing.append(edge)
+
+
+        if len(valid_outgoing) == 0:
+
+            terminal_nodes.append(node)
+
+
+    return terminal_nodes
 
 
 # ===================================
@@ -103,12 +182,43 @@ def find_merge_nodes(graph):
 
     for node_id, incoming_edges in graph.reverse_adjacency_map.items():
 
-        if len(incoming_edges) > 1:
+        node = graph.get_node(node_id)
 
-            merge_nodes.append(
 
-                graph.get_node(node_id)
+        # ===================================
+        # SKIP CONNECTORS
+        # ===================================
+
+        if is_connector_node(node):
+
+            continue
+
+
+        valid_incoming = []
+
+
+        for edge in incoming_edges:
+
+            source_node = graph.get_node(
+                edge.source
             )
+
+
+            if (
+
+                source_node and
+
+                not is_connector_node(
+                    source_node
+                )
+            ):
+
+                valid_incoming.append(edge)
+
+
+        if len(valid_incoming) > 1:
+
+            merge_nodes.append(node)
 
 
     return merge_nodes
@@ -181,9 +291,45 @@ def bfs_traversal(graph):
 
         for edge in outgoing_edges:
 
-            queue.append(
+            target_node = graph.get_node(
                 edge.target
             )
+
+
+            # ===================================
+            # SKIP CONNECTORS
+            # ===================================
+
+            if (
+
+                target_node and
+
+                is_connector_node(
+                    target_node
+                )
+            ):
+
+                connector_outgoing = (
+
+                    graph.adjacency_map.get(
+                        target_node.id,
+                        []
+                    )
+                )
+
+
+                for connector_edge in connector_outgoing:
+
+                    queue.append(
+                        connector_edge.target
+                    )
+
+
+            else:
+
+                queue.append(
+                    edge.target
+                )
 
 
     return traversal_order
@@ -195,7 +341,9 @@ def bfs_traversal(graph):
 
 def print_graph_summary(graph):
 
-    print("\n===== GRAPH SUMMARY =====\n")
+    print(
+        "\n===== GRAPH SUMMARY =====\n"
+    )
 
 
     print(
@@ -203,45 +351,72 @@ def print_graph_summary(graph):
         len(graph.nodes)
     )
 
+
     print(
         "Total Edges:",
         len(graph.edges)
     )
 
 
-    print("\n===== ROOT NODES =====\n")
+    print(
+        "\n===== ROOT NODES =====\n"
+    )
 
 
     for node in find_root_nodes(graph):
 
-        print(node.id, "|", node.label)
+        print(
+            node.id,
+            "|",
+            node.label
+        )
 
 
-    print("\n===== TERMINAL NODES =====\n")
+    print(
+        "\n===== TERMINAL NODES =====\n"
+    )
 
 
     for node in find_terminal_nodes(graph):
 
-        print(node.id, "|", node.label)
+        print(
+            node.id,
+            "|",
+            node.label
+        )
 
 
-    print("\n===== DECISION NODES =====\n")
+    print(
+        "\n===== DECISION NODES =====\n"
+    )
 
 
     for node in find_decision_nodes(graph):
 
-        print(node.id, "|", node.label)
+        print(
+            node.id,
+            "|",
+            node.label
+        )
 
 
-    print("\n===== MERGE NODES =====\n")
+    print(
+        "\n===== MERGE NODES =====\n"
+    )
 
 
     for node in find_merge_nodes(graph):
 
-        print(node.id, "|", node.label)
+        print(
+            node.id,
+            "|",
+            node.label
+        )
 
 
-    print("\n===== LOOPBACK EDGES =====\n")
+    print(
+        "\n===== LOOPBACK EDGES =====\n"
+    )
 
 
     for edge in find_loopback_edges(graph):
@@ -256,7 +431,9 @@ def print_graph_summary(graph):
         )
 
 
-    print("\n===== BFS TRAVERSAL =====\n")
+    print(
+        "\n===== BFS TRAVERSAL =====\n"
+    )
 
 
     traversal = bfs_traversal(graph)

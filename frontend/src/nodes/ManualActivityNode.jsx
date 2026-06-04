@@ -1,57 +1,57 @@
 import {
-
   Handle,
-
   Position
-
 } from "reactflow";
 
 
 export default function ManualActivityNode({ data }) {
 
+  const width = data.width || 220;
+
+  const height = data.height || 100;
+
+
   return (
 
     <div
       style={{
-        width: "180px",
+        width,
+        minHeight: height,
         background: "#111827",
         color: "white",
         border: "2px solid #374151",
         borderRadius: "8px",
         overflow: "hidden",
-        position: "relative"
+        position: "relative",
+
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center"
       }}
     >
 
       {/* TOP TARGET */}
-
       <Handle
         type="target"
         position={Position.Top}
         id="top"
       />
 
-
       {/* LEFT TARGET */}
-
       <Handle
         type="target"
         position={Position.Left}
         id="left"
       />
 
-
       {/* RIGHT SOURCE */}
-
       <Handle
         type="source"
         position={Position.Right}
         id="right"
       />
 
-
       {/* BOTTOM SOURCE */}
-
       <Handle
         type="source"
         position={Position.Bottom}
@@ -59,22 +59,29 @@ export default function ManualActivityNode({ data }) {
       />
 
 
+      {/* HEADER */}
       <div
         style={{
           padding: "8px",
           fontWeight: "bold",
           textAlign: "center",
-          background: "#1F2937"
+          background: "#1F2937",
+          fontSize: "12px"
         }}
       >
         {data.step_number}
       </div>
 
 
+      {/* BODY */}
       <div
         style={{
           padding: "18px",
-          textAlign: "center"
+          textAlign: "center",
+          lineHeight: "1.5",
+          wordBreak: "break-word",
+          whiteSpace: "normal",
+          fontSize: "13px"
         }}
       >
         {data.label}

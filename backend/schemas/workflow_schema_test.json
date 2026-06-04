@@ -1,0 +1,97 @@
+{
+  "nodes": [
+    {
+      "id": "start_1",
+      "type": "START",
+      "label": "START",
+      "step_number": "START",
+      "lane": "MAIN",
+      "group": "MAIN"
+    },
+
+    {
+      "id": "a1",
+      "type": "SYSTEM_ACTIVITY",
+      "label": "Check if Specimen Preparation Instructions are Applicable",
+      "step_number": "A1",
+      "lane": "MAIN",
+      "group": "MAIN"
+    },
+
+    {
+      "id": "a1_1",
+      "type": "DECISION",
+      "label": "System Response",
+      "step_number": "A1.1",
+      "lane": "MAIN",
+      "group": "MAIN"
+    },
+
+    {
+      "id": "a1_2",
+      "type": "ACTIVITY",
+      "label": "Display Specimen Preparation Instructions",
+      "step_number": "A1.2",
+      "lane": "MAIN",
+      "group": "MAIN"
+    },
+
+    {
+      "id": "a2",
+      "type": "SYSTEM_ACTIVITY",
+      "label": "Get Challenge Test List",
+      "step_number": "A2",
+      "lane": "MAIN",
+      "group": "MAIN"
+    },
+
+    {
+      "id": "end_1",
+      "type": "END",
+      "label": "END",
+      "step_number": "END",
+      "lane": "MAIN",
+      "group": "MAIN"
+    }
+  ],
+
+  "edges": [
+    {
+      "source": "start_1",
+      "target": "a1",
+      "edge_type": "NORMAL"
+    },
+
+    {
+      "source": "a1",
+      "target": "a1_1",
+      "edge_type": "NORMAL"
+    },
+
+    {
+      "source": "a1_1",
+      "target": "a1_2",
+      "edge_type": "CONDITIONAL",
+      "edge_label": "Applicable"
+    },
+
+    {
+      "source": "a1_1",
+      "target": "a2",
+      "edge_type": "CONDITIONAL",
+      "edge_label": "Not Applicable"
+    },
+
+    {
+      "source": "a1_2",
+      "target": "a2",
+      "edge_type": "NORMAL"
+    },
+
+    {
+      "source": "a2",
+      "target": "end_1",
+      "edge_type": "NORMAL"
+    }
+  ]
+}

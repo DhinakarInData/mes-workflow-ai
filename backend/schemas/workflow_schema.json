@@ -1,120 +1,147 @@
 {
-  "workflow_name": "Equipment Cleaning Verification",
+  "workflow_name": "Enterprise Electronic Batch Manufacturing Workflow",
 
   "nodes": [
 
     {
-      "id": "NODE_START",
+      "id": "START",
       "type": "START",
-      "label": "Start",
+      "label": "Start Workflow",
       "step_number": "S1",
       "lane": "SYSTEM",
       "group": "WORKFLOW"
     },
 
     {
-      "id": "NODE_A1",
+      "id": "OP1",
       "type": "MANUAL_ACTIVITY",
-      "label": "Scan Equipment Barcode",
+      "label": "Enter batch manufacturing details according to approved production order and material dispensing records",
       "step_number": "A1",
       "lane": "OPERATOR",
-      "group": "EQUIPMENT_VERIFICATION"
+      "group": "BATCH_ENTRY"
     },
 
     {
-      "id": "NODE_SYS1",
+      "id": "SYS1",
       "type": "SYSTEM_ACTIVITY",
-      "label": "Verify Equipment Status",
+      "label": "Validate recipe configuration against approved master batch record revision and active equipment mapping",
       "step_number": "SYS1",
       "lane": "MES",
-      "group": "SYSTEM_VALIDATION"
+      "group": "VALIDATION"
     },
 
     {
-      "id": "NODE_D1",
+      "id": "DEC1",
       "type": "DECISION",
-      "label": "Equipment Cleaned?",
+      "label": "Is recipe validation successful according to current manufacturing execution system configuration?",
       "step_number": "D1",
       "lane": "SYSTEM",
       "group": "VALIDATION"
     },
 
     {
-      "id": "NODE_ERR1",
+      "id": "ERR1",
       "type": "ERROR",
-      "label": "Cleaning Required",
+      "label": "Recipe validation failed due to missing equipment mapping or inactive process parameters",
       "step_number": "ERR1",
       "lane": "SYSTEM",
       "group": "ERROR_HANDLING"
     },
 
     {
-      "id": "NODE_A2",
+      "id": "OP2",
       "type": "MANUAL_ACTIVITY",
-      "label": "Perform Cleaning",
+      "label": "Correct recipe configuration and update manufacturing execution parameters according to deviation comments",
       "step_number": "A2",
       "lane": "OPERATOR",
-      "group": "CLEANING_PROCESS"
+      "group": "REWORK"
     },
 
     {
-      "id": "NODE_SYS2",
+      "id": "QA1",
+      "type": "MANUAL_ACTIVITY",
+      "label": "Perform electronic quality review of batch setup, material traceability, and process parameter verification",
+      "step_number": "QA1",
+      "lane": "QA",
+      "group": "QUALITY_REVIEW"
+    },
+
+    {
+      "id": "DEC2",
+      "type": "DECISION",
+      "label": "Does the quality review satisfy all compliance and audit trail verification requirements?",
+      "step_number": "D2",
+      "lane": "SYSTEM",
+      "group": "QUALITY_REVIEW"
+    },
+
+    {
+      "id": "SUP1",
+      "type": "MANUAL_ACTIVITY",
+      "label": "Supervisor reviews production readiness and approves execution according to manufacturing schedule",
+      "step_number": "SUP1",
+      "lane": "SUPERVISOR",
+      "group": "SUPERVISOR_APPROVAL"
+    },
+
+    {
+      "id": "DEC3",
+      "type": "DECISION",
+      "label": "Has supervisor approved production execution and electronic batch release authorization?",
+      "step_number": "D3",
+      "lane": "SYSTEM",
+      "group": "SUPERVISOR_APPROVAL"
+    },
+
+    {
+      "id": "SYS2",
       "type": "SYSTEM_ACTIVITY",
-      "label": "Record Cleaning Completion",
+      "label": "Allocate manufacturing equipment and initialize execution workflow for electronic batch manufacturing",
       "step_number": "SYS2",
       "lane": "MES",
-      "group": "SYSTEM_UPDATE"
+      "group": "EXECUTION"
     },
 
     {
-      "id": "NODE_CONN_A",
-      "type": "CONNECTOR",
-      "label": "(A)",
-      "step_number": "C1",
-      "lane": "SYSTEM",
-      "group": "CONNECTOR"
-    },
-
-    {
-      "id": "NODE_A3",
+      "id": "OP3",
       "type": "MANUAL_ACTIVITY",
-      "label": "Start Manufacturing",
+      "label": "Execute manufacturing process according to approved electronic batch manufacturing instructions",
       "step_number": "A3",
       "lane": "OPERATOR",
       "group": "EXECUTION"
     },
 
     {
-      "id": "NODE_D2",
+      "id": "DEC4",
       "type": "DECISION",
-      "label": "Batch Completed?",
-      "step_number": "D2",
+      "label": "Has manufacturing execution completed successfully without process deviations or material discrepancies?",
+      "step_number": "D4",
       "lane": "SYSTEM",
       "group": "EXECUTION"
     },
 
     {
-      "id": "NODE_A4",
+      "id": "OP4",
       "type": "MANUAL_ACTIVITY",
-      "label": "Continue Manufacturing",
+      "label": "Continue manufacturing execution and resolve in-process operational deviations before completion",
       "step_number": "A4",
       "lane": "OPERATOR",
       "group": "EXECUTION"
     },
 
     {
-      "id": "NODE_M1",
-      "type": "MERGE",
-      "label": "Merge Flow",
-      "step_number": "M1",
-      "lane": "SYSTEM",
-      "group": "MERGE"
+      "id": "SYS3",
+      "type": "SYSTEM_ACTIVITY",
+      "label": "Generate electronic batch manufacturing record and archive audit trail for regulatory compliance",
+      "step_number": "SYS3",
+      "lane": "MES",
+      "group": "RELEASE"
     },
 
     {
-      "id": "NODE_END",
+      "id": "END",
       "type": "END",
-      "label": "End",
+      "label": "Workflow Completed",
       "step_number": "E1",
       "lane": "SYSTEM",
       "group": "WORKFLOW"
@@ -124,93 +151,127 @@
   "edges": [
 
     {
-      "source": "NODE_START",
-      "target": "NODE_A1",
+      "source": "START",
+      "target": "OP1",
       "edge_type": "SEQUENCE"
     },
 
     {
-      "source": "NODE_A1",
-      "target": "NODE_SYS1",
+      "source": "OP1",
+      "target": "SYS1",
       "edge_type": "SEQUENCE"
     },
 
     {
-      "source": "NODE_SYS1",
-      "target": "NODE_D1",
+      "source": "SYS1",
+      "target": "DEC1",
       "edge_type": "SEQUENCE"
     },
 
     {
-      "source": "NODE_D1",
-      "target": "NODE_CONN_A",
+      "source": "DEC1",
+      "target": "QA1",
       "edge_type": "CONDITIONAL",
       "condition": "YES"
     },
 
     {
-      "source": "NODE_D1",
-      "target": "NODE_ERR1",
+      "source": "DEC1",
+      "target": "ERR1",
       "edge_type": "ERROR_FLOW",
       "condition": "NO"
     },
 
     {
-      "source": "NODE_ERR1",
-      "target": "NODE_A2",
+      "source": "ERR1",
+      "target": "OP2",
       "edge_type": "SEQUENCE"
     },
 
     {
-      "source": "NODE_A2",
-      "target": "NODE_SYS2",
-      "edge_type": "SEQUENCE"
-    },
-
-    {
-      "source": "NODE_SYS2",
-      "target": "NODE_A1",
+      "source": "OP2",
+      "target": "OP1",
       "edge_type": "LOOPBACK",
       "condition": "RETRY"
     },
 
     {
-      "source": "NODE_CONN_A",
-      "target": "NODE_A3",
-      "edge_type": "CONTINUATION"
-    },
-
-    {
-      "source": "NODE_A3",
-      "target": "NODE_D2",
+      "source": "QA1",
+      "target": "DEC2",
       "edge_type": "SEQUENCE"
     },
 
     {
-      "source": "NODE_D2",
-      "target": "NODE_END",
+      "source": "DEC2",
+      "target": "SUP1",
       "edge_type": "CONDITIONAL",
       "condition": "YES"
     },
 
     {
-      "source": "NODE_D2",
-      "target": "NODE_A4",
+      "source": "DEC2",
+      "target": "OP2",
+      "edge_type": "LOOPBACK",
+      "condition": "REJECTED"
+    },
+
+    {
+      "source": "SUP1",
+      "target": "DEC3",
+      "edge_type": "SEQUENCE"
+    },
+
+    {
+      "source": "DEC3",
+      "target": "SYS2",
+      "edge_type": "CONDITIONAL",
+      "condition": "YES"
+    },
+
+    {
+      "source": "DEC3",
+      "target": "OP2",
+      "edge_type": "LOOPBACK",
+      "condition": "REWORK"
+    },
+
+    {
+      "source": "SYS2",
+      "target": "OP3",
+      "edge_type": "SEQUENCE"
+    },
+
+    {
+      "source": "OP3",
+      "target": "DEC4",
+      "edge_type": "SEQUENCE"
+    },
+
+    {
+      "source": "DEC4",
+      "target": "SYS3",
+      "edge_type": "CONDITIONAL",
+      "condition": "YES"
+    },
+
+    {
+      "source": "DEC4",
+      "target": "OP4",
       "edge_type": "CONDITIONAL",
       "condition": "NO"
     },
 
     {
-      "source": "NODE_A4",
-      "target": "NODE_M1",
-      "edge_type": "SEQUENCE"
+      "source": "OP4",
+      "target": "OP3",
+      "edge_type": "LOOPBACK",
+      "condition": "REWORK"
     },
 
     {
-      "source": "NODE_M1",
-      "target": "NODE_A3",
-      "edge_type": "LOOPBACK",
-      "condition": "REWORK"
+      "source": "SYS3",
+      "target": "END",
+      "edge_type": "SEQUENCE"
     }
   ],
 

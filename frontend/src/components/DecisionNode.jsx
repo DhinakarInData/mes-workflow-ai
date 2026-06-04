@@ -1,18 +1,28 @@
-import { Handle, Position } from "reactflow";
+import {
+  Handle,
+  Position
+} from "reactflow";
 
 
 export default function DecisionNode({ data }) {
+
+  const width = 160;
+
+  const height = 160;
+
 
   return (
 
     <div
       style={{
-        width: 120,
-        height: 120,
 
-        background: "#fde68a",
+        width,
 
-        border: "2px solid #d97706",
+        height,
+
+        background: "#1E3A8A",
+
+        border: "2px solid #3B82F6",
 
         transform: "rotate(45deg)",
 
@@ -22,59 +32,76 @@ export default function DecisionNode({ data }) {
 
         justifyContent: "center",
 
+        color: "white",
+
         position: "relative"
       }}
     >
 
-      {/* ================================
-          TOP HANDLE
-      ================================= */}
-
+      {/* TARGET */}
       <Handle
         type="target"
         position={Position.Top}
+        id="in"
       />
 
 
-      {/* ================================
-          RIGHT HANDLE
-      ================================= */}
-
+      {/* YES FLOW */}
       <Handle
         type="source"
-        id="yes"
-        position={Position.Right}
-      />
-
-
-      {/* ================================
-          BOTTOM HANDLE
-      ================================= */}
-
-      <Handle
-        type="source"
-        id="no"
         position={Position.Bottom}
+        id="yes"
+        style={{
+          left: "50%",
+          background: "#16A34A"
+        }}
       />
 
 
-      {/* ================================
-          LABEL
-      ================================= */}
+      {/* NO FLOW */}
+      <Handle
+        type="source"
+        position={Position.Right}
+        id="no"
+        style={{
+          top: "35%",
+          background: "#DC2626"
+        }}
+      />
+
+
+      {/* LOOP FLOW */}
+      <Handle
+        type="source"
+        position={Position.Left}
+        id="loop"
+        style={{
+          top: "65%",
+          background: "#2563EB"
+        }}
+      />
+
 
       <div
         style={{
+
           transform: "rotate(-45deg)",
+
+          width: "120px",
 
           textAlign: "center",
 
-          width: 80,
+          fontWeight: "bold",
 
-          fontWeight: 600,
+          fontSize: "13px",
 
-          fontSize: 13,
+          lineHeight: "1.5",
 
-          lineHeight: "18px"
+          whiteSpace: "normal",
+
+          wordBreak: "break-word",
+
+          overflowWrap: "break-word"
         }}
       >
         {data.label}
