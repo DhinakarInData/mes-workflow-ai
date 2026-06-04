@@ -3,12 +3,8 @@ from fastapi import APIRouter
 from compiler.workflow_parser import (
     parse_workflow
 )
-from engines.semantic_layout_engine import (
-    build_semantic_layout
-)
-
-from compiler.layout_engine import (
-    build_semantic_layout
+from engines.topology_layout_engine import (
+    build_topology_layout
 )
 
 from compiler.reactflow_adapter import (
@@ -46,7 +42,7 @@ def get_workflow_graph():
 
         "schemas",
 
-        "workflow_schema_test.json"
+        "fds_nway_test.json"
     )
 
 
@@ -63,7 +59,7 @@ def get_workflow_graph():
     # BUILD LAYOUT
     # ===================================
 
-    node_positions = build_semantic_layout(
+    node_positions = build_topology_layout(
         graph
     )
 

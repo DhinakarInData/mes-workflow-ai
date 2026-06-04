@@ -90,44 +90,45 @@ function App() {
   // FETCH WORKFLOW
   // ===================================
 
-  useEffect(() => {
+ useEffect(() => {
 
-    fetch(
-      "http://127.0.0.1:8000/workflow"
+  fetch(
+    "http://127.0.0.1:8000/workflow"
+  )
+
+    .then(
+      (response) => response.json()
     )
 
-      .then(
-        (response) => response.json()
-      )
+    .then((data) => {
+      console.log(
+  data.nodes.map(n => ({
+    id: n.id,
+    x: n.position.x,
+    y: n.position.y
+  }))
+);
 
-      .then((data) => {
+      console.log(
+        "NODES:",
+        data.nodes
+      );
 
-        // ===================================
-        // APPLY LAYOUT
-        // ===================================
+      console.log(
+        "EDGES:",
+        data.edges
+      );
 
-        const layoutedGraph = getLayoutedElements(
+      setNodes(
+        data.nodes
+      );
 
-          data.nodes,
+      setEdges(
+        data.edges
+      );
+    });
 
-          data.edges
-        );
-
-
-        // ===================================
-        // STORE GRAPH
-        // ===================================
-
-        setNodes(
-          layoutedGraph.nodes
-        );
-
-        setEdges(
-          layoutedGraph.edges
-        );
-      });
-
-  }, []);
+}, []);
 
 
   // ===================================

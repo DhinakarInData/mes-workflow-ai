@@ -1,0 +1,141 @@
+{
+  "nodes": [
+    {
+      "id": "START",
+      "type": "START",
+      "label": "Start Workflow",
+      "step_number": "START",
+      "lane": "MAIN",
+      "group": "MAIN"
+    },
+
+    {
+      "id": "DEC1",
+      "type": "DECISION",
+      "label": "Select Manufacturing Option",
+      "step_number": "A1",
+      "lane": "MAIN",
+      "group": "MAIN"
+    },
+
+    {
+      "id": "OPT1",
+      "type": "MANUAL_ACTIVITY",
+      "label": "Option 1",
+      "step_number": "A1.1",
+      "lane": "MAIN",
+      "group": "MAIN"
+    },
+
+    {
+      "id": "OPT2",
+      "type": "MANUAL_ACTIVITY",
+      "label": "Option 2",
+      "step_number": "A1.2",
+      "lane": "MAIN",
+      "group": "MAIN"
+    },
+
+    {
+      "id": "OPT3",
+      "type": "MANUAL_ACTIVITY",
+      "label": "Option 3",
+      "step_number": "A1.3",
+      "lane": "MAIN",
+      "group": "MAIN"
+    },
+
+    {
+      "id": "OPT4",
+      "type": "MANUAL_ACTIVITY",
+      "label": "Option 4",
+      "step_number": "A1.4",
+      "lane": "MAIN",
+      "group": "MAIN"
+    },
+
+    {
+      "id": "MERGE1",
+      "type": "MANUAL_ACTIVITY",
+      "label": "Merge Point",
+      "step_number": "A2",
+      "lane": "MAIN",
+      "group": "MAIN"
+    },
+
+    {
+      "id": "END",
+      "type": "END",
+      "label": "End Workflow",
+      "step_number": "END",
+      "lane": "MAIN",
+      "group": "MAIN"
+    }
+  ],
+
+  "edges": [
+    {
+      "source": "START",
+      "target": "DEC1",
+      "edge_type": "SEQUENCE"
+    },
+
+    {
+      "source": "DEC1",
+      "target": "OPT1",
+      "edge_type": "CONDITIONAL",
+      "condition": "OPTION_1"
+    },
+
+    {
+      "source": "DEC1",
+      "target": "OPT2",
+      "edge_type": "CONDITIONAL",
+      "condition": "OPTION_2"
+    },
+
+    {
+      "source": "DEC1",
+      "target": "OPT3",
+      "edge_type": "CONDITIONAL",
+      "condition": "OPTION_3"
+    },
+
+    {
+      "source": "DEC1",
+      "target": "OPT4",
+      "edge_type": "CONDITIONAL",
+      "condition": "OPTION_4"
+    },
+
+    {
+      "source": "OPT1",
+      "target": "MERGE1",
+      "edge_type": "SEQUENCE"
+    },
+
+    {
+      "source": "OPT2",
+      "target": "MERGE1",
+      "edge_type": "SEQUENCE"
+    },
+
+    {
+      "source": "OPT3",
+      "target": "MERGE1",
+      "edge_type": "SEQUENCE"
+    },
+
+    {
+      "source": "OPT4",
+      "target": "MERGE1",
+      "edge_type": "SEQUENCE"
+    },
+
+    {
+      "source": "MERGE1",
+      "target": "END",
+      "edge_type": "SEQUENCE"
+    }
+  ]
+}

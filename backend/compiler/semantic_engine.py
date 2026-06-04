@@ -211,28 +211,26 @@ def find_human_tasks(graph):
 
 
 
-    print_semantic_report(
-        graph
-    )
+def print_semantic_report(graph):
 
 
     # ===================================
     # NODE SEMANTICS
     # ===================================
 
-    semantics = classify_node_semantics(
+        semantics = classify_node_semantics(
         graph
     )
 
 
-    print(
+        print(
         "===== NODE SEMANTICS =====\n"
     )
 
 
-    for node_id, semantic_type in semantics.items():
+        for node_id, semantic_type in semantics.items():
 
-        node = graph.get_node(node_id)
+            node = graph.get_node(node_id)
 
         print(
 
@@ -252,19 +250,19 @@ def find_human_tasks(graph):
     # SEMANTIC CLUSTERS
     # ===================================
 
-    print(
+        print(
         "\n===== SEMANTIC CLUSTERS =====\n"
     )
 
 
-    clusters = find_semantic_clusters(
+        clusters = find_semantic_clusters(
         graph
     )
 
 
-    for group, nodes in clusters.items():
+        for group, nodes in clusters.items():
 
-        print(f"\n{group}:")
+            print(f"\n{group}:")
 
 
         for node in nodes:
@@ -285,28 +283,28 @@ def find_human_tasks(graph):
     # EVENT NODES
     # ===================================
 
-    print(
+        print(
         "\n===== EVENT NODES =====\n"
     )
 
 
-    event_nodes = find_event_nodes(
+        event_nodes = find_event_nodes(
         graph
     )
 
 
-    if len(event_nodes) == 0:
+        if len(event_nodes) == 0:
 
-        print(
+         print(
             "No event nodes"
         )
 
 
-    else:
+        else:
 
-        for node in event_nodes:
+            for node in event_nodes:
 
-            print(
+                print(
 
                 node.id,
 
@@ -324,28 +322,28 @@ def find_human_tasks(graph):
     # SYSTEM ACTIVITIES
     # ===================================
 
-    print(
+        print(
         "\n===== SYSTEM ACTIVITIES =====\n"
     )
 
 
-    system_nodes = find_system_nodes(
+        system_nodes = find_system_nodes(
         graph
     )
 
 
-    if len(system_nodes) == 0:
+        if len(system_nodes) == 0:
 
-        print(
+         print(
             "No system activities"
         )
 
 
-    else:
+        else:
 
-        for node in system_nodes:
+            for node in system_nodes:
 
-            print(
+                print(
 
                 node.id,
 
@@ -359,28 +357,28 @@ def find_human_tasks(graph):
     # HUMAN TASKS
     # ===================================
 
-    print(
+        print(
         "\n===== HUMAN TASKS =====\n"
     )
 
 
-    human_tasks = find_human_tasks(
+        human_tasks = find_human_tasks(
         graph
     )
 
 
-    if len(human_tasks) == 0:
+        if len(human_tasks) == 0:
 
-        print(
+            print(
             "No human tasks"
         )
 
 
-    else:
+        else:
 
-        for node in human_tasks:
+            for node in human_tasks:
 
-            print(
+                print(
 
                 node.id,
 

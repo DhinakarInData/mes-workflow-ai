@@ -334,6 +334,65 @@ def bfs_traversal(graph):
 
     return traversal_order
 
+# ===================================
+# FIND BRANCH NODES
+# ===================================
+
+def find_branch_nodes(graph):
+
+    branch_nodes = []
+
+    for node in graph.nodes.values():
+
+        if is_connector_node(node):
+            continue
+
+        outgoing = graph.adjacency_map.get(
+            node.id,
+            []
+        )
+
+        if len(outgoing) > 1:
+
+            branch_nodes.append(node)
+
+    return branch_nodes
+
+# ===================================
+# GET BRANCH COUNT
+# ===================================
+
+def get_branch_count(
+    graph,
+    node_id
+):
+
+    outgoing = graph.adjacency_map.get(
+        node_id,
+        []
+    )
+
+    return len(outgoing)
+
+
+# ===================================
+# IS MERGE NODE
+# ===================================
+
+def is_merge_node(
+    graph,
+    node_id
+):
+
+    incoming = graph.reverse_adjacency_map.get(
+        node_id,
+        []
+    )
+
+    return len(incoming) > 1
+# ===================================
+# PRINT GRAPH SUMMARY
+# ===================================
 
 # ===================================
 # PRINT GRAPH SUMMARY
@@ -345,23 +404,19 @@ def print_graph_summary(graph):
         "\n===== GRAPH SUMMARY =====\n"
     )
 
-
     print(
         "Total Nodes:",
         len(graph.nodes)
     )
-
 
     print(
         "Total Edges:",
         len(graph.edges)
     )
 
-
     print(
         "\n===== ROOT NODES =====\n"
     )
-
 
     for node in find_root_nodes(graph):
 
@@ -371,11 +426,9 @@ def print_graph_summary(graph):
             node.label
         )
 
-
     print(
         "\n===== TERMINAL NODES =====\n"
     )
-
 
     for node in find_terminal_nodes(graph):
 
@@ -385,11 +438,9 @@ def print_graph_summary(graph):
             node.label
         )
 
-
     print(
         "\n===== DECISION NODES =====\n"
     )
-
 
     for node in find_decision_nodes(graph):
 
@@ -399,11 +450,9 @@ def print_graph_summary(graph):
             node.label
         )
 
-
     print(
         "\n===== MERGE NODES =====\n"
     )
-
 
     for node in find_merge_nodes(graph):
 
@@ -413,11 +462,26 @@ def print_graph_summary(graph):
             node.label
         )
 
+    print(
+        "\n===== BRANCH NODES =====\n"
+    )
+
+    for node in find_branch_nodes(graph):
+
+        print(
+            node.id,
+            "|",
+            node.label,
+            "| Branches:",
+            get_branch_count(
+                graph,
+                node.id
+            )
+        )
 
     print(
         "\n===== LOOPBACK EDGES =====\n"
     )
-
 
     for edge in find_loopback_edges(graph):
 
@@ -430,14 +494,11 @@ def print_graph_summary(graph):
             edge.target
         )
 
-
     print(
         "\n===== BFS TRAVERSAL =====\n"
     )
 
-
     traversal = bfs_traversal(graph)
-
 
     for node_id in traversal:
 

@@ -9,8 +9,9 @@ from compiler.grouping_engine import (
 from compiler.connector_engine import (
     inject_loopback_connectors
 )
-from engines.semantic_layout_engine import (
-    build_semantic_layout
+from engines.topology_layout_engine import (
+    build_topology_layout,
+    print_topology_layout
 )
 from compiler.layout_engine import (
 
@@ -67,7 +68,7 @@ def build_graph():
         current_dir,
         "..",
         "schemas",
-        "workflow_schema.json"
+        "fds_nway_test.json"
     )
 
     # ===================================
@@ -112,9 +113,14 @@ def build_graph():
     
     print_ir_report(graph)
     
-    node_positions = build_semantic_layout(
-        graph
-    )
+    node_positions = build_topology_layout(
+    graph
+)
+
+    print_topology_layout(
+        graph,
+        node_positions
+)
 
     if DEBUG_MODE:
 

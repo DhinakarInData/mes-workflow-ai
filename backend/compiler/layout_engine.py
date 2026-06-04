@@ -154,3 +154,10 @@ def print_layout_report(
 
             f"y={pos['y']}"
         )
+        
+        
+def build_layout(graph):
+
+    return build_semantic_layout(
+        graph
+    )
