@@ -19,7 +19,7 @@ export default function EndNode({ data }) {
       <Handle
         type="target"
         position={Position.Top}
-        id="top"
+        id="target"
       />
 
       {data.label}

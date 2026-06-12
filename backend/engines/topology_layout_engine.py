@@ -1,8 +1,9 @@
 from collections import deque
 
 MAIN_X = 700
-HORIZONTAL_GAP = 300
+HORIZONTAL_GAP = 340
 VERTICAL_GAP = 250
+RETURN_BUS_GAP = 260
 
 
 def build_topology_layout(graph):
@@ -157,12 +158,31 @@ def build_topology_layout(graph):
             x = MAIN_X
             
         # ===================================
-        # KEEP MERGE CENTERED
+        # KEEP MERGE ON OUTER RETURN BUS
         # ===================================
 
         if node.type == "MERGE":
 
-            x = 500
+            incoming = graph.reverse_adjacency_map.get(
+                node_id,
+                []
+            )
+
+            source_lanes = [
+                branch_lane.get(
+                    edge.source,
+                    MAIN_X
+                )
+                for edge in incoming
+            ]
+
+            if source_lanes:
+
+                x = max(source_lanes) + RETURN_BUS_GAP
+
+            else:
+
+                x = MAIN_X + RETURN_BUS_GAP
 
         node_positions[node_id] = {
 

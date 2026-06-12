@@ -140,7 +140,10 @@ def get_edge_style(routing_type):
     # STRAIGHT FLOW
     # ===================================
 
-    if routing_type == "STRAIGHT":
+    if routing_type in [
+        "STRAIGHT",
+        "VERTICAL"
+    ]:
 
         edge_color = "#16A34A"
 
@@ -149,7 +152,10 @@ def get_edge_style(routing_type):
     # RIGHT BRANCH
     # ===================================
 
-    elif routing_type == "RIGHT_BRANCH":
+    elif routing_type in [
+        "RIGHT_BRANCH",
+        "DOWN"
+    ]:
 
         edge_color = "#16A34A"
 
@@ -158,7 +164,10 @@ def get_edge_style(routing_type):
     # ERROR BRANCH
     # ===================================
 
-    elif routing_type == "ERROR_BRANCH":
+    elif routing_type in [
+        "ERROR_BRANCH",
+        "RIGHT_EXTERNAL"
+    ]:
 
         edge_color = "#DC2626"
 
@@ -167,7 +176,10 @@ def get_edge_style(routing_type):
     # OUTER LOOP
     # ===================================
 
-    elif routing_type == "OUTER_RIGHT_LOOP":
+    elif routing_type in [
+        "OUTER_RIGHT_LOOP",
+        "OUTER_LOOP"
+    ]:
 
         edge_color = "#2563EB"
 
@@ -178,7 +190,10 @@ def get_edge_style(routing_type):
     # BOTTOM LOOP
     # ===================================
 
-    elif routing_type == "BOTTOM_RETURN_LOOP":
+    elif routing_type in [
+        "BOTTOM_RETURN_LOOP",
+        "BOTTOM_LOOP"
+    ]:
 
         edge_color = "#7C3AED"
 
@@ -196,12 +211,50 @@ def get_edge_style(routing_type):
         animated = True
 
 
+    elif routing_type == "MERGE_JOIN":
+
+        edge_color = "#6B7280"
+
+
     return {
 
         "edge_color": edge_color,
 
         "animated": animated
     }
+
+
+def get_source_handle(routing_type):
+
+    if routing_type in [
+        "RIGHT_EXTERNAL",
+        "MERGE_JOIN"
+    ]:
+
+        return "error"
+
+    if routing_type in [
+        "OUTER_LOOP",
+        "BOTTOM_LOOP",
+        "LEFT_RETURN"
+    ]:
+
+        return "error"
+
+    return "success"
+
+
+def get_target_handle(routing_type):
+
+    if routing_type in [
+        "OUTER_LOOP",
+        "BOTTOM_LOOP",
+        "LEFT_RETURN"
+    ]:
+
+        return "loopback"
+
+    return "target"
     
 
 # ===================================
@@ -211,6 +264,10 @@ def get_edge_style(routing_type):
 def build_reactflow_edges(graph):
 
     reactflow_edges = []
+
+    error_branch_counts = {}
+
+    loop_branch_count = 0
 
     
     for index, edge in enumerate(graph.edges):
@@ -234,22 +291,42 @@ def build_reactflow_edges(graph):
 
             lane_offset = routing["lane_offset"]
 
+            target_node = graph.get_node(
+                edge.target
+            )
+
+            if target_node and target_node.type == "MERGE":
+
+                routing_type = "MERGE_JOIN"
+
 
         # ERROR BRANCH SEPARATION
 
             if edge.routing_role == "ERROR":
 
-                if edge.target.endswith("1"):
+                error_branch_counts[edge.source] = (
+                    error_branch_counts.get(
+                        edge.source,
+                        0
+                    ) + 1
+                )
 
-                    lane_offset = 1
+                lane_offset = error_branch_counts[
+                    edge.source
+                ]
 
-                elif edge.target.endswith("2"):
+            if routing_type in [
+                "OUTER_LOOP",
+                "BOTTOM_LOOP",
+                "LEFT_RETURN"
+            ]:
 
-                    lane_offset = 2
+                loop_branch_count += 1
 
-                elif edge.target.endswith("3"):
-
-                    lane_offset = 3
+                lane_offset = max(
+                    lane_offset,
+                    loop_branch_count
+                )
 
 
         # ===================================
@@ -264,6 +341,14 @@ def build_reactflow_edges(graph):
             edge_color = style_config["edge_color"]
 
             animated = style_config["animated"]
+
+            source_handle = get_source_handle(
+                routing_type
+            )
+
+            target_handle = get_target_handle(
+                routing_type
+            )
 
             print(
                 edge.source,
@@ -290,9 +375,9 @@ def build_reactflow_edges(graph):
             "type": "semantic",
 
             "animated": animated,
-             #"sourceHandle": source_handle,
+             "sourceHandle": source_handle,
              
-             "targetHandle": "target",
+             "targetHandle": target_handle,
 
 
             # ===================================
@@ -323,7 +408,19 @@ def build_reactflow_edges(graph):
 
                 "routing_type": routing_type,
 
-                "lane_offset": lane_offset
+                "lane_offset": lane_offset,
+
+                "routing_role": edge.routing_role,
+
+                "edge_type": edge.edge_type,
+
+                "source_type": graph.get_node(
+                    edge.source
+                ).type if graph.get_node(edge.source) else None,
+
+                "target_type": graph.get_node(
+                    edge.target
+                ).type if graph.get_node(edge.target) else None
             }
         }
 

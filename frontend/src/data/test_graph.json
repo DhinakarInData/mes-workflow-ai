@@ -27,7 +27,7 @@
                 "y": 250
             },
             "data": {
-                "label": "Scan Equipment",
+                "label": "Select Equipment",
                 "step_number": "A1",
                 "lane": "MAIN",
                 "group": "GENERAL",
@@ -46,14 +46,14 @@
                 "y": 500
             },
             "data": {
-                "label": "Check Equipment & Line Clearance Status",
+                "label": "Check Equipment Status",
                 "step_number": "SC1",
                 "lane": "MAIN",
                 "group": "GENERAL",
                 "actor": null,
                 "response_actor": null,
                 "event_type": null,
-                "width": 273,
+                "width": 220,
                 "height": 100
             }
         },
@@ -80,50 +80,12 @@
             "id": "SA1",
             "type": "system_activity",
             "position": {
-                "x": 1000,
+                "x": 1040,
                 "y": 1000
             },
             "data": {
-                "label": "Invalid Equipment",
+                "label": "Equipment Unavailable",
                 "step_number": "SA1",
-                "lane": "MAIN",
-                "group": "GENERAL",
-                "actor": null,
-                "response_actor": null,
-                "event_type": null,
-                "width": 220,
-                "height": 100
-            }
-        },
-        {
-            "id": "SA2",
-            "type": "system_activity",
-            "position": {
-                "x": 1300,
-                "y": 1000
-            },
-            "data": {
-                "label": "Incorrect Equipment",
-                "step_number": "SA2",
-                "lane": "MAIN",
-                "group": "GENERAL",
-                "actor": null,
-                "response_actor": null,
-                "event_type": null,
-                "width": 220,
-                "height": 100
-            }
-        },
-        {
-            "id": "SA3",
-            "type": "system_activity",
-            "position": {
-                "x": 1600,
-                "y": 1000
-            },
-            "data": {
-                "label": "Line Clearance Not Done",
-                "step_number": "SA3",
                 "lane": "MAIN",
                 "group": "GENERAL",
                 "actor": null,
@@ -141,8 +103,27 @@
                 "y": 1000
             },
             "data": {
-                "label": "Fill LC Checklist",
+                "label": "Perform Line Clearance",
                 "step_number": "A2",
+                "lane": "MAIN",
+                "group": "GENERAL",
+                "actor": null,
+                "response_actor": null,
+                "event_type": null,
+                "width": 220,
+                "height": 100
+            }
+        },
+        {
+            "id": "SC2",
+            "type": "system_check",
+            "position": {
+                "x": 700,
+                "y": 1250
+            },
+            "data": {
+                "label": "Check Line Clearance Status",
+                "step_number": "SC2",
                 "lane": "MAIN",
                 "group": "GENERAL",
                 "actor": null,
@@ -157,30 +138,30 @@
             "type": "response",
             "position": {
                 "x": 700,
-                "y": 1250
+                "y": 1500
             },
             "data": {
-                "label": "User Response",
+                "label": "System Response",
                 "step_number": "R2",
                 "lane": "MAIN",
                 "group": "GENERAL",
                 "actor": null,
-                "response_actor": "USER",
+                "response_actor": "SYSTEM",
                 "event_type": null,
                 "width": 220,
                 "height": 100
             }
         },
         {
-            "id": "E1",
-            "type": "end",
+            "id": "SA2",
+            "type": "system_activity",
             "position": {
-                "x": 700,
-                "y": 1500
+                "x": 1040,
+                "y": 1750
             },
             "data": {
-                "label": "End",
-                "step_number": "E1",
+                "label": "Line Clearance Pending",
+                "step_number": "SA2",
                 "lane": "MAIN",
                 "group": "GENERAL",
                 "actor": null,
@@ -191,17 +172,131 @@
             }
         },
         {
-            "id": "MERGE_1",
-            "type": "merge",
+            "id": "A3",
+            "type": "manual_activity",
             "position": {
-                "x": 500,
+                "x": 700,
+                "y": 1750
+            },
+            "data": {
+                "label": "Perform Equipment Inspection",
+                "step_number": "A3",
+                "lane": "MAIN",
+                "group": "GENERAL",
+                "actor": null,
+                "response_actor": null,
+                "event_type": null,
+                "width": 220,
+                "height": 100
+            }
+        },
+        {
+            "id": "SC3",
+            "type": "system_check",
+            "position": {
+                "x": 700,
+                "y": 2000
+            },
+            "data": {
+                "label": "Check Inspection Status",
+                "step_number": "SC3",
+                "lane": "MAIN",
+                "group": "GENERAL",
+                "actor": null,
+                "response_actor": null,
+                "event_type": null,
+                "width": 220,
+                "height": 100
+            }
+        },
+        {
+            "id": "R3",
+            "type": "response",
+            "position": {
+                "x": 700,
+                "y": 2250
+            },
+            "data": {
+                "label": "System Response",
+                "step_number": "R3",
+                "lane": "MAIN",
+                "group": "GENERAL",
+                "actor": null,
+                "response_actor": "SYSTEM",
+                "event_type": null,
+                "width": 220,
+                "height": 100
+            }
+        },
+        {
+            "id": "SA3",
+            "type": "system_activity",
+            "position": {
+                "x": 1040,
+                "y": 2500
+            },
+            "data": {
+                "label": "Inspection Failed",
+                "step_number": "SA3",
+                "lane": "MAIN",
+                "group": "GENERAL",
+                "actor": null,
+                "response_actor": null,
+                "event_type": null,
+                "width": 220,
+                "height": 100
+            }
+        },
+        {
+            "id": "A4",
+            "type": "manual_activity",
+            "position": {
+                "x": 700,
+                "y": 2500
+            },
+            "data": {
+                "label": "Acknowledge Startup Readiness",
+                "step_number": "A4",
+                "lane": "MAIN",
+                "group": "GENERAL",
+                "actor": null,
+                "response_actor": null,
+                "event_type": null,
+                "width": 220,
+                "height": 100
+            }
+        },
+        {
+            "id": "SA4",
+            "type": "system_activity",
+            "position": {
+                "x": 700,
+                "y": 2750
+            },
+            "data": {
+                "label": "Start Production",
+                "step_number": "SA4",
+                "lane": "MAIN",
+                "group": "GENERAL",
+                "actor": null,
+                "response_actor": null,
+                "event_type": null,
+                "width": 220,
+                "height": 100
+            }
+        },
+        {
+            "id": "E1",
+            "type": "end",
+            "position": {
+                "x": 700,
                 "y": 1250
             },
             "data": {
-                "label": "",
-                "step_number": "MERGE_1",
+                "label": "End",
+                "step_number": "E1",
                 "lane": "MAIN",
-                "group": "MERGE",
+                "group": "GENERAL",
                 "actor": null,
                 "response_actor": null,
                 "event_type": null,
@@ -218,18 +313,23 @@
             "label": null,
             "type": "semantic",
             "animated": false,
+            "sourceHandle": "success",
             "targetHandle": "target",
             "style": {
-                "stroke": "#6B7280",
+                "stroke": "#16A34A",
                 "strokeWidth": 2
             },
             "labelStyle": {
-                "fill": "#6B7280",
+                "fill": "#16A34A",
                 "fontWeight": "bold"
             },
             "data": {
                 "routing_type": "VERTICAL",
-                "lane_offset": 0
+                "lane_offset": 0,
+                "routing_role": "MAIN_FLOW",
+                "edge_type": "SEQUENCE",
+                "source_type": "START",
+                "target_type": "MANUAL_ACTIVITY"
             }
         },
         {
@@ -239,18 +339,23 @@
             "label": null,
             "type": "semantic",
             "animated": false,
+            "sourceHandle": "success",
             "targetHandle": "target",
             "style": {
-                "stroke": "#6B7280",
+                "stroke": "#16A34A",
                 "strokeWidth": 2
             },
             "labelStyle": {
-                "fill": "#6B7280",
+                "fill": "#16A34A",
                 "fontWeight": "bold"
             },
             "data": {
                 "routing_type": "VERTICAL",
-                "lane_offset": 0
+                "lane_offset": 0,
+                "routing_role": "MAIN_FLOW",
+                "edge_type": "SEQUENCE",
+                "source_type": "MANUAL_ACTIVITY",
+                "target_type": "SYSTEM_CHECK"
             }
         },
         {
@@ -260,249 +365,413 @@
             "label": null,
             "type": "semantic",
             "animated": false,
+            "sourceHandle": "success",
             "targetHandle": "target",
             "style": {
-                "stroke": "#6B7280",
+                "stroke": "#16A34A",
                 "strokeWidth": 2
             },
             "labelStyle": {
-                "fill": "#6B7280",
+                "fill": "#16A34A",
                 "fontWeight": "bold"
             },
             "data": {
                 "routing_type": "VERTICAL",
-                "lane_offset": 0
+                "lane_offset": 0,
+                "routing_role": "MAIN_FLOW",
+                "edge_type": "SEQUENCE",
+                "source_type": "SYSTEM_CHECK",
+                "target_type": "RESPONSE"
             }
         },
         {
             "id": "EDGE_3",
             "source": "R1",
             "target": "A2",
-            "label": "VALID",
+            "label": "AVAILABLE",
             "type": "semantic",
             "animated": false,
+            "sourceHandle": "success",
             "targetHandle": "target",
             "style": {
-                "stroke": "#6B7280",
+                "stroke": "#16A34A",
                 "strokeWidth": 2
             },
             "labelStyle": {
-                "fill": "#6B7280",
+                "fill": "#16A34A",
                 "fontWeight": "bold"
             },
             "data": {
                 "routing_type": "DOWN",
-                "lane_offset": 0
+                "lane_offset": 0,
+                "routing_role": "SUCCESS",
+                "edge_type": "CONDITIONAL",
+                "source_type": "RESPONSE",
+                "target_type": "MANUAL_ACTIVITY"
             }
         },
         {
             "id": "EDGE_4",
             "source": "R1",
             "target": "SA1",
-            "label": "INVALID_EQUIPMENT",
+            "label": "UNAVAILABLE",
             "type": "semantic",
             "animated": false,
+            "sourceHandle": "error",
             "targetHandle": "target",
             "style": {
-                "stroke": "#6B7280",
+                "stroke": "#DC2626",
                 "strokeWidth": 2
             },
             "labelStyle": {
-                "fill": "#6B7280",
+                "fill": "#DC2626",
                 "fontWeight": "bold"
             },
             "data": {
                 "routing_type": "RIGHT_EXTERNAL",
-                "lane_offset": 1
+                "lane_offset": 1,
+                "routing_role": "ERROR",
+                "edge_type": "CONDITIONAL",
+                "source_type": "RESPONSE",
+                "target_type": "SYSTEM_ACTIVITY"
             }
         },
         {
             "id": "EDGE_5",
-            "source": "R1",
-            "target": "SA2",
-            "label": "INCORRECT_EQUIPMENT",
-            "type": "semantic",
-            "animated": false,
-            "targetHandle": "target",
-            "style": {
-                "stroke": "#6B7280",
-                "strokeWidth": 2
-            },
-            "labelStyle": {
-                "fill": "#6B7280",
-                "fontWeight": "bold"
-            },
-            "data": {
-                "routing_type": "RIGHT_EXTERNAL",
-                "lane_offset": 2
-            }
-        },
-        {
-            "id": "EDGE_6",
-            "source": "R1",
-            "target": "SA3",
-            "label": "LINE_CLEARANCE_NOT_DONE",
-            "type": "semantic",
-            "animated": false,
-            "targetHandle": "target",
-            "style": {
-                "stroke": "#6B7280",
-                "strokeWidth": 2
-            },
-            "labelStyle": {
-                "fill": "#6B7280",
-                "fontWeight": "bold"
-            },
-            "data": {
-                "routing_type": "RIGHT_EXTERNAL",
-                "lane_offset": 3
-            }
-        },
-        {
-            "id": "EDGE_7",
-            "source": "A2",
-            "target": "R2",
+            "source": "SA1",
+            "target": "E1",
             "label": null,
             "type": "semantic",
             "animated": false,
+            "sourceHandle": "success",
             "targetHandle": "target",
             "style": {
-                "stroke": "#6B7280",
+                "stroke": "#16A34A",
                 "strokeWidth": 2
             },
             "labelStyle": {
-                "fill": "#6B7280",
+                "fill": "#16A34A",
                 "fontWeight": "bold"
             },
             "data": {
                 "routing_type": "VERTICAL",
-                "lane_offset": 0
+                "lane_offset": 0,
+                "routing_role": "MAIN_FLOW",
+                "edge_type": "SEQUENCE",
+                "source_type": "SYSTEM_ACTIVITY",
+                "target_type": "END"
+            }
+        },
+        {
+            "id": "EDGE_6",
+            "source": "A2",
+            "target": "SC2",
+            "label": null,
+            "type": "semantic",
+            "animated": false,
+            "sourceHandle": "success",
+            "targetHandle": "target",
+            "style": {
+                "stroke": "#16A34A",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#16A34A",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "VERTICAL",
+                "lane_offset": 0,
+                "routing_role": "MAIN_FLOW",
+                "edge_type": "SEQUENCE",
+                "source_type": "MANUAL_ACTIVITY",
+                "target_type": "SYSTEM_CHECK"
+            }
+        },
+        {
+            "id": "EDGE_7",
+            "source": "SC2",
+            "target": "R2",
+            "label": null,
+            "type": "semantic",
+            "animated": false,
+            "sourceHandle": "success",
+            "targetHandle": "target",
+            "style": {
+                "stroke": "#16A34A",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#16A34A",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "VERTICAL",
+                "lane_offset": 0,
+                "routing_role": "MAIN_FLOW",
+                "edge_type": "SEQUENCE",
+                "source_type": "SYSTEM_CHECK",
+                "target_type": "RESPONSE"
             }
         },
         {
             "id": "EDGE_8",
             "source": "R2",
-            "target": "A1",
-            "label": "CONTINUE_WITH_NEXT_EQUIPMENT",
+            "target": "A3",
+            "label": "COMPLETED",
             "type": "semantic",
             "animated": false,
+            "sourceHandle": "success",
             "targetHandle": "target",
             "style": {
-                "stroke": "#6B7280",
+                "stroke": "#16A34A",
                 "strokeWidth": 2
             },
             "labelStyle": {
-                "fill": "#6B7280",
+                "fill": "#16A34A",
                 "fontWeight": "bold"
             },
             "data": {
-                "routing_type": "OUTER_LOOP",
-                "lane_offset": 3
+                "routing_type": "DOWN",
+                "lane_offset": 0,
+                "routing_role": "SUCCESS",
+                "edge_type": "CONDITIONAL",
+                "source_type": "RESPONSE",
+                "target_type": "MANUAL_ACTIVITY"
             }
         },
         {
             "id": "EDGE_9",
             "source": "R2",
-            "target": "E1",
-            "label": "DONE_WITH_EQUIPMENT_LC",
+            "target": "SA2",
+            "label": "NOT_COMPLETED",
             "type": "semantic",
             "animated": false,
+            "sourceHandle": "error",
             "targetHandle": "target",
             "style": {
-                "stroke": "#6B7280",
+                "stroke": "#DC2626",
                 "strokeWidth": 2
             },
             "labelStyle": {
-                "fill": "#6B7280",
+                "fill": "#DC2626",
                 "fontWeight": "bold"
             },
             "data": {
-                "routing_type": "DOWN",
-                "lane_offset": 0
+                "routing_type": "RIGHT_EXTERNAL",
+                "lane_offset": 1,
+                "routing_role": "ERROR",
+                "edge_type": "CONDITIONAL",
+                "source_type": "RESPONSE",
+                "target_type": "SYSTEM_ACTIVITY"
             }
         },
         {
             "id": "EDGE_10",
-            "source": "SA1",
-            "target": "MERGE_1",
+            "source": "SA2",
+            "target": "E1",
             "label": null,
             "type": "semantic",
             "animated": false,
+            "sourceHandle": "success",
             "targetHandle": "target",
             "style": {
-                "stroke": "#6B7280",
+                "stroke": "#16A34A",
                 "strokeWidth": 2
             },
             "labelStyle": {
-                "fill": "#6B7280",
+                "fill": "#16A34A",
                 "fontWeight": "bold"
             },
             "data": {
                 "routing_type": "VERTICAL",
-                "lane_offset": 0
+                "lane_offset": 0,
+                "routing_role": "MAIN_FLOW",
+                "edge_type": "SEQUENCE",
+                "source_type": "SYSTEM_ACTIVITY",
+                "target_type": "END"
             }
         },
         {
             "id": "EDGE_11",
-            "source": "SA2",
-            "target": "MERGE_1",
+            "source": "A3",
+            "target": "SC3",
             "label": null,
             "type": "semantic",
             "animated": false,
+            "sourceHandle": "success",
             "targetHandle": "target",
             "style": {
-                "stroke": "#6B7280",
+                "stroke": "#16A34A",
                 "strokeWidth": 2
             },
             "labelStyle": {
-                "fill": "#6B7280",
+                "fill": "#16A34A",
                 "fontWeight": "bold"
             },
             "data": {
                 "routing_type": "VERTICAL",
-                "lane_offset": 0
+                "lane_offset": 0,
+                "routing_role": "MAIN_FLOW",
+                "edge_type": "SEQUENCE",
+                "source_type": "MANUAL_ACTIVITY",
+                "target_type": "SYSTEM_CHECK"
             }
         },
         {
             "id": "EDGE_12",
-            "source": "SA3",
-            "target": "MERGE_1",
+            "source": "SC3",
+            "target": "R3",
             "label": null,
             "type": "semantic",
             "animated": false,
+            "sourceHandle": "success",
             "targetHandle": "target",
             "style": {
-                "stroke": "#6B7280",
+                "stroke": "#16A34A",
                 "strokeWidth": 2
             },
             "labelStyle": {
-                "fill": "#6B7280",
+                "fill": "#16A34A",
                 "fontWeight": "bold"
             },
             "data": {
                 "routing_type": "VERTICAL",
-                "lane_offset": 0
+                "lane_offset": 0,
+                "routing_role": "MAIN_FLOW",
+                "edge_type": "SEQUENCE",
+                "source_type": "SYSTEM_CHECK",
+                "target_type": "RESPONSE"
             }
         },
         {
             "id": "EDGE_13",
-            "source": "MERGE_1",
-            "target": "A1",
-            "label": null,
+            "source": "R3",
+            "target": "A4",
+            "label": "PASSED",
             "type": "semantic",
             "animated": false,
+            "sourceHandle": "success",
             "targetHandle": "target",
             "style": {
-                "stroke": "#6B7280",
+                "stroke": "#16A34A",
                 "strokeWidth": 2
             },
             "labelStyle": {
-                "fill": "#6B7280",
+                "fill": "#16A34A",
                 "fontWeight": "bold"
             },
             "data": {
-                "routing_type": "OUTER_LOOP",
-                "lane_offset": 3
+                "routing_type": "DOWN",
+                "lane_offset": 0,
+                "routing_role": "SUCCESS",
+                "edge_type": "CONDITIONAL",
+                "source_type": "RESPONSE",
+                "target_type": "MANUAL_ACTIVITY"
+            }
+        },
+        {
+            "id": "EDGE_14",
+            "source": "R3",
+            "target": "SA3",
+            "label": "FAILED",
+            "type": "semantic",
+            "animated": false,
+            "sourceHandle": "error",
+            "targetHandle": "target",
+            "style": {
+                "stroke": "#DC2626",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#DC2626",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "RIGHT_EXTERNAL",
+                "lane_offset": 1,
+                "routing_role": "ERROR",
+                "edge_type": "CONDITIONAL",
+                "source_type": "RESPONSE",
+                "target_type": "SYSTEM_ACTIVITY"
+            }
+        },
+        {
+            "id": "EDGE_15",
+            "source": "SA3",
+            "target": "E1",
+            "label": null,
+            "type": "semantic",
+            "animated": false,
+            "sourceHandle": "success",
+            "targetHandle": "target",
+            "style": {
+                "stroke": "#16A34A",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#16A34A",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "VERTICAL",
+                "lane_offset": 0,
+                "routing_role": "MAIN_FLOW",
+                "edge_type": "SEQUENCE",
+                "source_type": "SYSTEM_ACTIVITY",
+                "target_type": "END"
+            }
+        },
+        {
+            "id": "EDGE_16",
+            "source": "A4",
+            "target": "SA4",
+            "label": null,
+            "type": "semantic",
+            "animated": false,
+            "sourceHandle": "success",
+            "targetHandle": "target",
+            "style": {
+                "stroke": "#16A34A",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#16A34A",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "VERTICAL",
+                "lane_offset": 0,
+                "routing_role": "MAIN_FLOW",
+                "edge_type": "SEQUENCE",
+                "source_type": "MANUAL_ACTIVITY",
+                "target_type": "SYSTEM_ACTIVITY"
+            }
+        },
+        {
+            "id": "EDGE_17",
+            "source": "SA4",
+            "target": "E1",
+            "label": null,
+            "type": "semantic",
+            "animated": false,
+            "sourceHandle": "success",
+            "targetHandle": "target",
+            "style": {
+                "stroke": "#16A34A",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#16A34A",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "VERTICAL",
+                "lane_offset": 0,
+                "routing_role": "MAIN_FLOW",
+                "edge_type": "SEQUENCE",
+                "source_type": "SYSTEM_ACTIVITY",
+                "target_type": "END"
             }
         }
     ],

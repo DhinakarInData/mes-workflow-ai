@@ -14,7 +14,7 @@ from engines.topology_layout_engine import build_topology_layout
 if __name__ == "__main__":
 
     with open(
-    "test_workflows/equipment_lineclearence.txt",
+    "test_workflows/startup_checks.txt",
     "r",
     encoding="utf-8"
 ) as file:

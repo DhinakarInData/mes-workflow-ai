@@ -32,53 +32,96 @@ export default function CustomOrthogonalEdge(props) {
   data?.routing_type,
   data?.lane_offset
 );
-  // ===================================
-  // ROUTING OFFSET
-  // ===================================
+  const laneOffset = Number(data?.lane_offset || 0);
 
-  let offset = 30;
+  let edgePath;
+  let labelX;
+  let labelY;
 
-    if (data?.routing_type === "RIGHT_EXTERNAL") {
+  if (data?.routing_type === "RIGHT_EXTERNAL") {
 
-      offset = 150 + (data.lane_offset || 0 * 120);
+    const labelLift = 18 + ((laneOffset - 1) % 2) * 16;
 
-      }
+    edgePath = `
+      M ${sourceX} ${sourceY}
+      L ${targetX} ${sourceY}
+      L ${targetX} ${targetY}
+    `;
 
-    else if (data?.routing_type === "OUTER_LOOP") {
+    labelX = sourceX + ((targetX - sourceX) * 0.52);
+    labelY = sourceY - labelLift;
 
-    offset = 250 + (data.lane_offset * 50);
+  } else if (data?.routing_type === "MERGE_JOIN") {
 
-    }
+    edgePath = `
+      M ${sourceX} ${sourceY}
+      L ${targetX} ${sourceY}
+      L ${targetX} ${targetY}
+    `;
 
-  // } else if (data?.routing_type === "DOWN") {
+    labelX = targetX;
+    labelY = sourceY;
 
-  //   offset = 30;
+  } else if (data?.routing_type === "OUTER_LOOP") {
 
-  // } else if (data?.routing_type === "VERTICAL") {
+    const returnLaneX =
+      Math.max(sourceX, targetX) +
+      220 +
+      laneOffset * 80;
 
-  //   offset = 30;
-  // }
+    edgePath = `
+      M ${sourceX} ${sourceY}
+      L ${returnLaneX} ${sourceY}
+      L ${returnLaneX} ${targetY}
+      L ${targetX} ${targetY}
+    `;
 
-  // ===================================
-  // EDGE PATH
-  // ===================================
+    labelX = returnLaneX - 90;
+    labelY = sourceY - 18;
 
-  const [edgePath, labelX, labelY] =
-    getSmoothStepPath({
+  } else if (data?.routing_type === "DOWN") {
 
-      sourceX,
-      sourceY,
+    edgePath = `
+      M ${sourceX} ${sourceY}
+      L ${sourceX} ${targetY}
+    `;
 
-      targetX,
-      targetY,
+    labelX = sourceX + 38;
+    labelY = sourceY + ((targetY - sourceY) * 0.32);
 
-      sourcePosition,
-      targetPosition,
+  } else if (data?.routing_type === "VERTICAL") {
 
-      borderRadius: 16,
+    edgePath = `
+      M ${sourceX} ${sourceY}
+      L ${targetX} ${targetY}
+    `;
 
-      offset
-    });
+    labelX = sourceX;
+    labelY = sourceY + ((targetY - sourceY) * 0.5);
+
+  } else {
+
+    const pathResult =
+      getSmoothStepPath({
+
+        sourceX,
+        sourceY,
+
+        targetX,
+        targetY,
+
+        sourcePosition,
+        targetPosition,
+
+        borderRadius: 16,
+
+        offset: 30
+      });
+
+    edgePath = pathResult[0];
+    labelX = pathResult[1];
+    labelY = pathResult[2];
+  }
 
   // ===================================
   // EDGE COLOR
@@ -94,10 +137,28 @@ export default function CustomOrthogonalEdge(props) {
 
     edgeColor = "#2563EB";
 
+  } else if (data?.routing_type === "MERGE_JOIN") {
+
+    edgeColor = "#6B7280";
+
   } else if (data?.routing_type === "DOWN") {
 
     edgeColor = "#16A34A";
   }
+
+  const isMergeJoin =
+    data?.routing_type === "MERGE_JOIN";
+
+  const strokeWidth =
+    data?.routing_type === "OUTER_LOOP"
+      ? 2.5
+      : 2;
+
+  const strokeDasharray =
+    isMergeJoin
+      ? "4 4"
+      : undefined;
+
   return (
 
     <>
@@ -114,7 +175,9 @@ export default function CustomOrthogonalEdge(props) {
 
           stroke: edgeColor,
 
-          strokeWidth: 2,
+          strokeWidth,
+
+          strokeDasharray,
 
           ...style
         }}
@@ -122,7 +185,7 @@ export default function CustomOrthogonalEdge(props) {
 
       {
 
-        label && (
+        label && !isMergeJoin && (
 
           <EdgeLabelRenderer>
 

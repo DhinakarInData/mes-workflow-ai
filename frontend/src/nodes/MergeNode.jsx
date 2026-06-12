@@ -6,10 +6,13 @@ export default function MergeNode() {
 
     <div
       style={{
-        width: 40,
-        height:40,
+        width: 1,
+        height: 1,
         borderRadius: "50%",
-        background: "#111827"
+        background: "transparent",
+        border: 0,
+        opacity: 0,
+        position: "relative"
       }}
     >
 

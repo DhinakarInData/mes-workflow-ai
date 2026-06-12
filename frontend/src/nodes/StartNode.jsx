@@ -18,7 +18,7 @@ export default function StartNode({ data }) {
 
       <Handle
         type="source"
-        position={Position.success}
+        position={Position.Bottom}
         id="success"
       />
 
