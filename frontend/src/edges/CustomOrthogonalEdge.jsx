@@ -7,57 +7,104 @@ import {
 } from "reactflow";
 
 
-export default function CustomOrthogonalEdge({
+export default function CustomOrthogonalEdge(props) {
 
-  id,
+  console.log("FULL EDGE PROPS =", props);
 
-  sourceX,
-  sourceY,
-
-  targetX,
-  targetY,
-
-  sourcePosition,
-  targetPosition,
-
-  style = {},
-
-  markerEnd,
-
-  label,
-  labelStyle
-
-}) {
-
-  // ===================================
-  // ORTHOGONAL PATH
-  // ===================================
-
-  const [edgePath, labelX, labelY] = getSmoothStepPath({
-
+  const {
+    id,
     sourceX,
     sourceY,
-
-    sourcePosition,
-
     targetX,
     targetY,
-
+    sourcePosition,
     targetPosition,
+    style = {},
+    markerEnd,
+    label,
+    labelStyle,
+    data
+  } = props;
 
-    borderRadius: 12,
+  console.log(
+  "ROUTING",
+  label,
+  data?.routing_type,
+  data?.lane_offset
+);
+  // ===================================
+  // ROUTING OFFSET
+  // ===================================
 
-    offset: 30
-  });
+  let offset = 30;
 
+    if (data?.routing_type === "RIGHT_EXTERNAL") {
 
+      offset = 150 + (data.lane_offset || 0 * 120);
+
+      }
+
+    else if (data?.routing_type === "OUTER_LOOP") {
+
+    offset = 250 + (data.lane_offset * 50);
+
+    }
+
+  // } else if (data?.routing_type === "DOWN") {
+
+  //   offset = 30;
+
+  // } else if (data?.routing_type === "VERTICAL") {
+
+  //   offset = 30;
+  // }
+
+  // ===================================
+  // EDGE PATH
+  // ===================================
+
+  const [edgePath, labelX, labelY] =
+    getSmoothStepPath({
+
+      sourceX,
+      sourceY,
+
+      targetX,
+      targetY,
+
+      sourcePosition,
+      targetPosition,
+
+      borderRadius: 16,
+
+      offset
+    });
+
+  // ===================================
+  // EDGE COLOR
+  // ===================================
+
+  let edgeColor = "#6B7280";
+
+  if (data?.routing_type === "RIGHT_EXTERNAL") {
+
+    edgeColor = "#DC2626";
+
+  } else if (data?.routing_type === "OUTER_LOOP") {
+
+    edgeColor = "#2563EB";
+
+  } else if (data?.routing_type === "DOWN") {
+
+    edgeColor = "#16A34A";
+  }
   return (
 
     <>
 
-      {/* EDGE */}
-
       <BaseEdge
+
+        id={id}
 
         path={edgePath}
 
@@ -65,50 +112,60 @@ export default function CustomOrthogonalEdge({
 
         style={{
 
+          stroke: edgeColor,
+
           strokeWidth: 2,
 
           ...style
         }}
       />
 
+      {
 
-      {/* LABEL */}
+        label && (
 
-      {label && (
+          <EdgeLabelRenderer>
 
-        <EdgeLabelRenderer>
+            <div
 
-          <div
-            style={{
+              style={{
 
-              position: "absolute",
+                position: "absolute",
 
-              transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
+                transform: `translate(-50%, -50%) 
+                translate(${labelX}px, ${labelY}px)`,
 
-              background: "white",
+                background: "white",
 
-              padding: "2px 6px",
+                padding: "4px 8px",
 
-              border: "1px solid #CBD5E1",
+                borderRadius: "6px",
 
-              borderRadius: "4px",
+                fontSize: "11px",
 
-              fontSize: "11px",
+                fontWeight: 700,
 
-              fontWeight: 700,
+                color: edgeColor,
 
-              pointerEvents: "all",
+                border: `1px solid ${edgeColor}`,
 
-              whiteSpace: "nowrap",
+                whiteSpace: "nowrap",
 
-              ...labelStyle
-            }}
-          >
-            {label}
-          </div>
+                pointerEvents: "all",
 
-        </EdgeLabelRenderer>
-      )}
+                zIndex: 9999,
+
+                ...labelStyle
+              }}
+            >
+
+              {label}
+
+            </div>
+
+          </EdgeLabelRenderer>
+        )
+      }
 
     </>
   );

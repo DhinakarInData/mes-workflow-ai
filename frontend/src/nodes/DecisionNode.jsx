@@ -37,31 +37,56 @@ export default function DecisionNode({ data }) {
 
       {/* TOP TARGET */}
       <Handle
+
         type="target"
+
         position={Position.Top}
-        id="top"
+
+        id="target"
       />
 
-      {/* LEFT SOURCE */}
+
+      {/* ===================================
+          LEFT TARGET
+      =================================== */}
+
       <Handle
-        type="source"
+
+        type="target"
+
         position={Position.Left}
-        id="left"
+
+        id="loopback"
       />
 
-      {/* RIGHT SOURCE */}
+
+      {/* ===================================
+          RIGHT SOURCE
+      =================================== */}
+
       <Handle
+
         type="source"
+
         position={Position.Right}
-        id="right"
+
+        id="error"
       />
 
-      {/* BOTTOM SOURCE */}
+
+      {/* ===================================
+          BOTTOM SOURCE
+      =================================== */}
+
       <Handle
+
         type="source"
+
         position={Position.Bottom}
-        id="bottom"
+
+        id="success"
       />
+
 
 
       <div

@@ -32,31 +32,56 @@ export default function ManualActivityNode({ data }) {
 
       {/* TOP TARGET */}
       <Handle
+
         type="target"
+
         position={Position.Top}
-        id="top"
+
+        id="target"
       />
 
-      {/* LEFT TARGET */}
+
+      {/* ===================================
+          LEFT TARGET
+      =================================== */}
+
       <Handle
+
         type="target"
+
         position={Position.Left}
-        id="left"
+
+        id="loopback"
       />
 
-      {/* RIGHT SOURCE */}
+
+      {/* ===================================
+          RIGHT SOURCE
+      =================================== */}
+
       <Handle
+
         type="source"
+
         position={Position.Right}
-        id="right"
+
+        id="error"
       />
 
-      {/* BOTTOM SOURCE */}
+
+      {/* ===================================
+          BOTTOM SOURCE
+      =================================== */}
+
       <Handle
+
         type="source"
+
         position={Position.Bottom}
-        id="bottom"
+
+        id="success"
       />
+
 
 
       {/* HEADER */}
@@ -66,7 +91,7 @@ export default function ManualActivityNode({ data }) {
           fontWeight: "bold",
           textAlign: "center",
           background: "#1F2937",
-          fontSize: "12px"
+          fontSize: "11px"
         }}
       >
         {data.step_number}

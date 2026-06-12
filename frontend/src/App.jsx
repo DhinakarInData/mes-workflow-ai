@@ -1,196 +1,54 @@
-import { useEffect, useState } from "react";
-
 import ReactFlow from "reactflow";
-
 import "reactflow/dist/style.css";
-import {
 
-  Background,
+import workflow from "./data/test_graph.json";
 
-  Controls,
-
-  MiniMap
-} from "reactflow"
-
-
-// ===================================
-// NODES
-// ===================================
-
-import ConnectorNode from "./nodes/ConnectorNode";
-
-import SystemActivityNode from "./nodes/SystemActivityNode";
-
+import StartNode from "./nodes/StartNode";
+import EndNode from "./nodes/EndNode";
 import DecisionNode from "./nodes/DecisionNode";
-
-import ErrorNode from "./nodes/ErrorNode";
-
+import SystemCheckNode from "./nodes/SystemCheckNode";
 import ManualActivityNode from "./nodes/ManualActivityNode";
-
-
-// ===================================
-// EDGES
-// ===================================
-
+import SystemActivityNode from "./nodes/SystemActivityNode";
 import CustomOrthogonalEdge from "./edges/CustomOrthogonalEdge";
+import ResponseNode from "./nodes/ResponseNode";
+import MergeNode from "./nodes/MergeNode";
 
-// ===================================
-// LAYOUT
-// ===================================
+const nodeTypes = {
+  start: StartNode,
+  end: EndNode,
+  decision: DecisionNode,
+  system_check: SystemCheckNode,
+  manual_activity: ManualActivityNode,
+  system_activity: SystemActivityNode,
+  response: ResponseNode,
+  merge: MergeNode
+};
 
-import {
-  getLayoutedElements
-} from "./layouts/dagreLayout";
+const edgeTypes = {
+  semantic: (props) => {
+    console.log("CUSTOM EDGE WORKING", props);
+    return <CustomOrthogonalEdge {...props} />;
+  }
+};
+export default function App() {
+  console.log("APP LOADED");
 
+  console.log("TOTAL EDGES =", workflow.edges.length);
 
-// ===================================
-// APP
-// ===================================
-
-function App() {
-
-  // ===================================
-  // STATE
-  // ===================================
-
-  const [nodes, setNodes] = useState([]);
-
-  const [edges, setEdges] = useState([]);
-
-
-  // ===================================
-  // NODE TYPES
-  // ===================================
-
-  const nodeTypes = {
-
-    connector: ConnectorNode,
-
-    decision: DecisionNode,
-
-    error: ErrorNode,
-
-    manual_activity: ManualActivityNode,
-
-    system_activity: SystemActivityNode
-  };
-
-
-  // ===================================
-  // EDGE TYPES
-  // ===================================
-
-  const edgeTypes = {
-
-    semantic: CustomOrthogonalEdge
-  };
-
-
-  // ===================================
-  // FETCH WORKFLOW
-  // ===================================
-
- useEffect(() => {
-
-  fetch(
-    "http://127.0.0.1:8000/workflow"
-  )
-
-    .then(
-      (response) => response.json()
-    )
-
-    .then((data) => {
-      console.log(
-  data.nodes.map(n => ({
-    id: n.id,
-    x: n.position.x,
-    y: n.position.y
-  }))
-);
-
-      console.log(
-        "NODES:",
-        data.nodes
-      );
-
-      console.log(
-        "EDGES:",
-        data.edges
-      );
-
-      setNodes(
-        data.nodes
-      );
-
-      setEdges(
-        data.edges
-      );
-    });
-
-}, []);
-
-
-  // ===================================
-  // RENDER
-  // ===================================
-
+  console.log("ALL EDGES =", workflow.edges);
+  
   return (
-
-    <div
-
-      style={{
-
-        width: "100vw",
-
-        height: "100vh",
-
-        background: "#F8FAFC"
-      }}
-    >
-
+    <div style={{ width: "100vw", height: "100vh" }}>
+      
       <ReactFlow
 
-        nodes={nodes}
-
-        edges={edges}
-
+        nodes={workflow.nodes}
+        edges={workflow.edges}
         nodeTypes={nodeTypes}
-
         edgeTypes={edgeTypes}
-        defaultEdgeOptions={{
-
-          type: "custom"
-        }}
-
         fitView
-
-        minZoom={0.3}
-
-        maxZoom={2}
-
-        defaultViewport={{
-
-          x: 250,
-
-          y: 40,
-
-          zoom: 1.0
-        }}
-
-        fitViewOptions={{
-
-          padding: 0.2
-        }}
-        
+        nodeOrigin={[0.5, 0.5]}
       />
-     
-      
-      
-
     </div>
   );
 }
-
-
-export default App;

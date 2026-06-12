@@ -31,8 +31,16 @@ function SemanticEdge({
 
   style,
 
-  label
-}) {
+  label,
+  data
+})
+
+  {
+  console.log("EDGE DEBUG",
+      id,
+      data
+    );
+
 
   // ===================================
   // SEMANTIC OFFSET

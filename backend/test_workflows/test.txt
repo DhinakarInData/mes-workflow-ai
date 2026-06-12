@@ -1,0 +1,8 @@
+Scan Equipment
+
+System checks:
+- Equipment valid
+- Correct equipment
+- Line clearance done
+
+If invalid show error and rescan.

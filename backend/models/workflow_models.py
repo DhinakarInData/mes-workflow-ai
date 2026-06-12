@@ -26,6 +26,8 @@ class WorkflowNode:
     event_type: Optional[str] = None
 
     metadata: Dict = field(default_factory=dict)
+    
+    response_actor: Optional[str] = None
 
 
 # ===================================
@@ -42,6 +44,8 @@ class WorkflowEdge:
     edge_type: str
 
     condition: Optional[str] = None
+
+    routing_role: Optional[str] = None
 
     edge_label: Optional[str] = None
 

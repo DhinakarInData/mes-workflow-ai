@@ -393,7 +393,25 @@ def is_merge_node(
 # ===================================
 # PRINT GRAPH SUMMARY
 # ===================================
+def find_error_nodes(graph):
 
+    result = []
+
+    for node in graph.nodes.values():
+
+        incoming = graph.reverse_adjacency_map.get(
+            node.id,
+            []
+        )
+
+        for edge in incoming:
+
+            if edge.routing_role == "ERROR":
+
+                result.append(node)
+                break
+
+    return result
 # ===================================
 # PRINT GRAPH SUMMARY
 # ===================================

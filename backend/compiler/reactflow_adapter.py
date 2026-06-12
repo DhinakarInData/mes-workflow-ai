@@ -107,6 +107,7 @@ def build_reactflow_nodes(
                 "group": node.group,
 
                 "actor": node.actor,
+                "response_actor": node.response_actor,
 
                 "event_type": node.event_type,
                 "width": node_width,
@@ -201,7 +202,7 @@ def get_edge_style(routing_type):
 
         "animated": animated
     }
-
+    
 
 # ===================================
 # BUILD REACTFLOW EDGES
@@ -211,40 +212,72 @@ def build_reactflow_edges(graph):
 
     reactflow_edges = []
 
-
+    
     for index, edge in enumerate(graph.edges):
-
+            
         # ===================================
         # ROUTING METADATA
-        # ===================================
+        # =
+            print(
+                "EDGE DEBUG:",
+                    edge.source,
+                "->",
+            edge.target,
+            "ROLE=",
+            edge.routing_role
+           
+        )
+           
+            routing = get_routing_config(edge)
 
-        routing = get_routing_config(edge)
+            routing_type = routing["routing_type"]
+
+            lane_offset = routing["lane_offset"]
 
 
-        routing_type = routing["routing_type"]
+        # ERROR BRANCH SEPARATION
 
-        lane_offset = routing["lane_offset"]
+            if edge.routing_role == "ERROR":
+
+                if edge.target.endswith("1"):
+
+                    lane_offset = 1
+
+                elif edge.target.endswith("2"):
+
+                    lane_offset = 2
+
+                elif edge.target.endswith("3"):
+
+                    lane_offset = 3
 
 
         # ===================================
         # STYLE
         # ===================================
 
-        style_config = get_edge_style(
+            style_config = get_edge_style(
             routing_type
         )
 
 
-        edge_color = style_config["edge_color"]
+            edge_color = style_config["edge_color"]
 
-        animated = style_config["animated"]
+            animated = style_config["animated"]
 
+            print(
+                edge.source,
+                "->",
+                edge.target,
+                routing_type,
+                lane_offset
+                )
 
         # ===================================
         # BUILD EDGE
         # ===================================
 
-        reactflow_edge = {
+            reactflow_edge = {
 
             "id": f"EDGE_{index}",
 
@@ -257,6 +290,9 @@ def build_reactflow_edges(graph):
             "type": "semantic",
 
             "animated": animated,
+             #"sourceHandle": source_handle,
+             
+             "targetHandle": "target",
 
 
             # ===================================
@@ -292,7 +328,7 @@ def build_reactflow_edges(graph):
         }
 
 
-        reactflow_edges.append(
+            reactflow_edges.append(
             reactflow_edge
         )
 

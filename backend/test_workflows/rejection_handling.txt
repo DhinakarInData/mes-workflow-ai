@@ -1,0 +1,27 @@
+Rejection Handling
+
+User scan rejected material
+
+System checks material exists
+
+If valid open rejection screen
+
+If invalid show material not found
+
+User enter rejection reason
+
+User enter rejected quantity
+
+System checks rejected quantity is within available quantity
+
+If valid save rejection
+
+If invalid show quantity exceeds available stock
+
+User confirm rejection
+
+System creates rejection transaction
+
+System updates inventory
+
+End workflow

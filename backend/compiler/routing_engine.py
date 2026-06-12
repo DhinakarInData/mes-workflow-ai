@@ -91,16 +91,32 @@ def get_routing_config(edge):
     # CONDITIONAL
     # ===================================
 
+    # ===================================
+# CONDITIONAL
+# ===================================
+
     if edge.edge_type == "CONDITIONAL":
 
-        if edge.condition == "YES":
+        if edge.routing_role == "ERROR":
+
+            return ROUTING_RULES["ERROR_FLOW"]
+
+        elif edge.routing_role == "SUCCESS":
 
             return ROUTING_RULES["CONDITIONAL_YES"]
 
-        elif edge.condition == "NO":
+        elif edge.routing_role == "LOOPBACK":
 
-            return ROUTING_RULES["CONDITIONAL_NO"]
-
+            return ROUTING_RULES["LOOPBACK"]
+        config = ROUTING_RULES["ERROR_FLOW"]   
+        print(
+            edge.source,
+            "->",
+            edge.target,
+            edge.edge_type,
+            edge.routing_role,
+            get_routing_config(edge)
+)
 
     # ===================================
     # DEFAULT

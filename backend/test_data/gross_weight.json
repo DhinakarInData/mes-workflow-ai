@@ -1,0 +1,203 @@
+{
+    "workflow_name": "Gross Weight Verification",
+    "nodes": [
+        {
+            "id": "S1",
+            "type": "START",
+            "label": "Start Gross Weight Verification"
+        },
+        {
+            "id": "MA1",
+            "type": "MANUAL_ACTIVITY",
+            "label": "Scan Area for Gross Weight Verification"
+        },
+        {
+            "id": "MA2",
+            "type": "MANUAL_ACTIVITY",
+            "label": "Scan Weighing Scale"
+        },
+        {
+            "id": "SC1",
+            "type": "SYSTEM_CHECK",
+            "label": "Check Scale Validity"
+        },
+        {
+            "id": "D1",
+            "type": "DECISION",
+            "label": "Scale Valid?"
+        },
+        {
+            "id": "SA1",
+            "type": "SYSTEM_ACTIVITY",
+            "label": "Fetch Dispensed Material Details"
+        },
+        {
+            "id": "SA2",
+            "type": "SYSTEM_ACTIVITY",
+            "label": "Show Scale Invalid Error"
+        },
+        {
+            "id": "MA3",
+            "type": "MANUAL_ACTIVITY",
+            "label": "Select Material"
+        },
+        {
+            "id": "MA4",
+            "type": "MANUAL_ACTIVITY",
+            "label": "Scan Material Barcode"
+        },
+        {
+            "id": "SC2",
+            "type": "SYSTEM_CHECK",
+            "label": "Check Material Barcode Validity"
+        },
+        {
+            "id": "D2",
+            "type": "DECISION",
+            "label": "Material Barcode Valid?"
+        },
+        {
+            "id": "SA3",
+            "type": "SYSTEM_ACTIVITY",
+            "label": "Read Scale Value"
+        },
+        {
+            "id": "SA4",
+            "type": "SYSTEM_ACTIVITY",
+            "label": "Show Material Barcode Invalid Error"
+        },
+        {
+            "id": "SC3",
+            "type": "SYSTEM_CHECK",
+            "label": "Check Weighed Qty vs Dispensed Qty"
+        },
+        {
+            "id": "D3",
+            "type": "DECISION",
+            "label": "Quantities Match?"
+        },
+        {
+            "id": "SA5",
+            "type": "SYSTEM_ACTIVITY",
+            "label": "Show Complies Message"
+        },
+        {
+            "id": "SA6",
+            "type": "SYSTEM_ACTIVITY",
+            "label": "Show Does Not Comply Message"
+        },
+        {
+            "id": "E1",
+            "type": "END",
+            "label": "End Gross Weight Verification"
+        }
+    ],
+    "edges": [
+        {
+            "source": "S1",
+            "target": "MA1",
+            "edge_type": "SEQUENCE"
+        },
+        {
+            "source": "MA1",
+            "target": "MA2",
+            "edge_type": "SEQUENCE"
+        },
+        {
+            "source": "MA2",
+            "target": "SC1",
+            "edge_type": "SEQUENCE"
+        },
+        {
+            "source": "SC1",
+            "target": "D1",
+            "edge_type": "SEQUENCE"
+        },
+        {
+            "source": "D1",
+            "target": "SA1",
+            "condition": "VALID",
+            "edge_type": "CONDITIONAL"
+        },
+        {
+            "source": "D1",
+            "target": "SA2",
+            "condition": "INVALID",
+            "edge_type": "CONDITIONAL"
+        },
+        {
+            "source": "SA2",
+            "target": "MA2",
+            "edge_type": "LOOPBACK"
+        },
+        {
+            "source": "SA1",
+            "target": "MA3",
+            "edge_type": "SEQUENCE"
+        },
+        {
+            "source": "MA3",
+            "target": "MA4",
+            "edge_type": "SEQUENCE"
+        },
+        {
+            "source": "MA4",
+            "target": "SC2",
+            "edge_type": "SEQUENCE"
+        },
+        {
+            "source": "SC2",
+            "target": "D2",
+            "edge_type": "SEQUENCE"
+        },
+        {
+            "source": "D2",
+            "target": "SA3",
+            "condition": "VALID",
+            "edge_type": "CONDITIONAL"
+        },
+        {
+            "source": "D2",
+            "target": "SA4",
+            "condition": "INVALID",
+            "edge_type": "CONDITIONAL"
+        },
+        {
+            "source": "SA4",
+            "target": "MA4",
+            "edge_type": "LOOPBACK"
+        },
+        {
+            "source": "SA3",
+            "target": "SC3",
+            "edge_type": "SEQUENCE"
+        },
+        {
+            "source": "SC3",
+            "target": "D3",
+            "edge_type": "SEQUENCE"
+        },
+        {
+            "source": "D3",
+            "target": "SA5",
+            "condition": "OK",
+            "edge_type": "CONDITIONAL"
+        },
+        {
+            "source": "D3",
+            "target": "SA6",
+            "condition": "NOT_OK",
+            "edge_type": "CONDITIONAL"
+        },
+        {
+            "source": "SA5",
+            "target": "E1",
+            "edge_type": "SEQUENCE"
+        },
+        {
+            "source": "SA6",
+            "target": "E1",
+            "edge_type": "SEQUENCE"
+        }
+    ]
+}

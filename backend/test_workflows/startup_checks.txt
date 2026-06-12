@@ -1,0 +1,31 @@
+Startup Checks
+
+User select equipment
+
+System checks equipment status
+
+If available proceed
+
+If unavailable show equipment unavailable
+
+User perform line clearance
+
+System checks line clearance completed
+
+If completed proceed
+
+If not completed show line clearance pending
+
+User perform equipment inspection
+
+System checks inspection passed
+
+If passed proceed
+
+If failed show inspection failed
+
+User acknowledge startup readiness
+
+System starts production
+
+End workflow

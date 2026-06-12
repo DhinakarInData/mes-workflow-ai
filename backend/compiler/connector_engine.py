@@ -29,7 +29,6 @@ def inject_loopback_connectors(graph):
     # ===================================
     # PROCESS EDGES
     # ===================================
-
     for edge in transformed_graph.edges:
 
 

@@ -1,0 +1,21 @@
+Gross Weight Verification
+
+Scan the area to perform Gross weight verification
+System check if its valied go to scan weigin scale step else show scanned equipment is invald and return to scan area step
+
+Scan the weighing scale 
+
+System check if its valid proceed to fetch the dispensed material details else show the error message and return to scan the scale
+
+
+
+User select the material
+
+User scan the material barcode
+
+System check if it valid go to read the scale value else show the error message and return to scan the material barcode
+
+Read the scale value 
+System check weighed qty matches dispensed qty if it ok show complies it if not ok show does not comply 
+
+then go to end of workflow

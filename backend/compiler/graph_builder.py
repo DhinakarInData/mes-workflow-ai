@@ -1,5 +1,9 @@
-from config import DEBUG_MODE
+
 import os
+
+from compiler.merge_engine import (
+    inject_merge_nodes
+)
 from compiler.grouping_engine import (
 
     build_semantic_groups,
@@ -26,6 +30,9 @@ from compiler.reactflow_adapter import (
     print_reactflow_report
 )
 
+from compiler.merge_engine import (
+    inject_merge_nodes
+)
 from compiler.normalization_engine import (
     print_ir_report
 )
@@ -76,10 +83,15 @@ def build_graph():
     # ===================================
 
     graph = parse_workflow(
-        workflow_path
+    workflow_path
     )
+
+    graph = inject_merge_nodes(
+    graph
+    )
+
     graph = inject_loopback_connectors(
-        graph
+    graph
     )
     print_semantic_report(
     graph
@@ -122,9 +134,8 @@ def build_graph():
         node_positions
 )
 
-    if DEBUG_MODE:
-
-        print_layout_report(
+  
+    print_layout_report(
             graph,
             node_positions
     )

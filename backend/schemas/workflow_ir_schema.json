@@ -1,0 +1,28 @@
+{
+  "workflow_name": "",
+
+  "nodes": [
+    {
+      "id": "A1",
+      "type": "MANUAL_ACTIVITY",
+      "label": "Scan Bin",
+
+      "performer": "OPERATOR",
+
+      "signature_required": false,
+
+      "metadata": {}
+    }
+  ],
+
+  "edges": [
+    {
+      "source": "A1",
+      "target": "A1.1",
+
+      "condition": null,
+
+      "edge_type": "SEQUENCE"
+    }
+  ]
+}

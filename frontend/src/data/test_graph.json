@@ -1,0 +1,510 @@
+{
+    "nodes": [
+        {
+            "id": "S1",
+            "type": "start",
+            "position": {
+                "x": 700,
+                "y": 0
+            },
+            "data": {
+                "label": "Start",
+                "step_number": "S1",
+                "lane": "MAIN",
+                "group": "GENERAL",
+                "actor": null,
+                "response_actor": null,
+                "event_type": null,
+                "width": 220,
+                "height": 100
+            }
+        },
+        {
+            "id": "A1",
+            "type": "manual_activity",
+            "position": {
+                "x": 700,
+                "y": 250
+            },
+            "data": {
+                "label": "Scan Equipment",
+                "step_number": "A1",
+                "lane": "MAIN",
+                "group": "GENERAL",
+                "actor": null,
+                "response_actor": null,
+                "event_type": null,
+                "width": 220,
+                "height": 100
+            }
+        },
+        {
+            "id": "SC1",
+            "type": "system_check",
+            "position": {
+                "x": 700,
+                "y": 500
+            },
+            "data": {
+                "label": "Check Equipment & Line Clearance Status",
+                "step_number": "SC1",
+                "lane": "MAIN",
+                "group": "GENERAL",
+                "actor": null,
+                "response_actor": null,
+                "event_type": null,
+                "width": 273,
+                "height": 100
+            }
+        },
+        {
+            "id": "R1",
+            "type": "response",
+            "position": {
+                "x": 700,
+                "y": 750
+            },
+            "data": {
+                "label": "System Response",
+                "step_number": "R1",
+                "lane": "MAIN",
+                "group": "GENERAL",
+                "actor": null,
+                "response_actor": "SYSTEM",
+                "event_type": null,
+                "width": 220,
+                "height": 100
+            }
+        },
+        {
+            "id": "SA1",
+            "type": "system_activity",
+            "position": {
+                "x": 1000,
+                "y": 1000
+            },
+            "data": {
+                "label": "Invalid Equipment",
+                "step_number": "SA1",
+                "lane": "MAIN",
+                "group": "GENERAL",
+                "actor": null,
+                "response_actor": null,
+                "event_type": null,
+                "width": 220,
+                "height": 100
+            }
+        },
+        {
+            "id": "SA2",
+            "type": "system_activity",
+            "position": {
+                "x": 1300,
+                "y": 1000
+            },
+            "data": {
+                "label": "Incorrect Equipment",
+                "step_number": "SA2",
+                "lane": "MAIN",
+                "group": "GENERAL",
+                "actor": null,
+                "response_actor": null,
+                "event_type": null,
+                "width": 220,
+                "height": 100
+            }
+        },
+        {
+            "id": "SA3",
+            "type": "system_activity",
+            "position": {
+                "x": 1600,
+                "y": 1000
+            },
+            "data": {
+                "label": "Line Clearance Not Done",
+                "step_number": "SA3",
+                "lane": "MAIN",
+                "group": "GENERAL",
+                "actor": null,
+                "response_actor": null,
+                "event_type": null,
+                "width": 220,
+                "height": 100
+            }
+        },
+        {
+            "id": "A2",
+            "type": "manual_activity",
+            "position": {
+                "x": 700,
+                "y": 1000
+            },
+            "data": {
+                "label": "Fill LC Checklist",
+                "step_number": "A2",
+                "lane": "MAIN",
+                "group": "GENERAL",
+                "actor": null,
+                "response_actor": null,
+                "event_type": null,
+                "width": 220,
+                "height": 100
+            }
+        },
+        {
+            "id": "R2",
+            "type": "response",
+            "position": {
+                "x": 700,
+                "y": 1250
+            },
+            "data": {
+                "label": "User Response",
+                "step_number": "R2",
+                "lane": "MAIN",
+                "group": "GENERAL",
+                "actor": null,
+                "response_actor": "USER",
+                "event_type": null,
+                "width": 220,
+                "height": 100
+            }
+        },
+        {
+            "id": "E1",
+            "type": "end",
+            "position": {
+                "x": 700,
+                "y": 1500
+            },
+            "data": {
+                "label": "End",
+                "step_number": "E1",
+                "lane": "MAIN",
+                "group": "GENERAL",
+                "actor": null,
+                "response_actor": null,
+                "event_type": null,
+                "width": 220,
+                "height": 100
+            }
+        },
+        {
+            "id": "MERGE_1",
+            "type": "merge",
+            "position": {
+                "x": 500,
+                "y": 1250
+            },
+            "data": {
+                "label": "",
+                "step_number": "MERGE_1",
+                "lane": "MAIN",
+                "group": "MERGE",
+                "actor": null,
+                "response_actor": null,
+                "event_type": null,
+                "width": 220,
+                "height": 100
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "EDGE_0",
+            "source": "S1",
+            "target": "A1",
+            "label": null,
+            "type": "semantic",
+            "animated": false,
+            "targetHandle": "target",
+            "style": {
+                "stroke": "#6B7280",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#6B7280",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "VERTICAL",
+                "lane_offset": 0
+            }
+        },
+        {
+            "id": "EDGE_1",
+            "source": "A1",
+            "target": "SC1",
+            "label": null,
+            "type": "semantic",
+            "animated": false,
+            "targetHandle": "target",
+            "style": {
+                "stroke": "#6B7280",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#6B7280",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "VERTICAL",
+                "lane_offset": 0
+            }
+        },
+        {
+            "id": "EDGE_2",
+            "source": "SC1",
+            "target": "R1",
+            "label": null,
+            "type": "semantic",
+            "animated": false,
+            "targetHandle": "target",
+            "style": {
+                "stroke": "#6B7280",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#6B7280",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "VERTICAL",
+                "lane_offset": 0
+            }
+        },
+        {
+            "id": "EDGE_3",
+            "source": "R1",
+            "target": "A2",
+            "label": "VALID",
+            "type": "semantic",
+            "animated": false,
+            "targetHandle": "target",
+            "style": {
+                "stroke": "#6B7280",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#6B7280",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "DOWN",
+                "lane_offset": 0
+            }
+        },
+        {
+            "id": "EDGE_4",
+            "source": "R1",
+            "target": "SA1",
+            "label": "INVALID_EQUIPMENT",
+            "type": "semantic",
+            "animated": false,
+            "targetHandle": "target",
+            "style": {
+                "stroke": "#6B7280",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#6B7280",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "RIGHT_EXTERNAL",
+                "lane_offset": 1
+            }
+        },
+        {
+            "id": "EDGE_5",
+            "source": "R1",
+            "target": "SA2",
+            "label": "INCORRECT_EQUIPMENT",
+            "type": "semantic",
+            "animated": false,
+            "targetHandle": "target",
+            "style": {
+                "stroke": "#6B7280",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#6B7280",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "RIGHT_EXTERNAL",
+                "lane_offset": 2
+            }
+        },
+        {
+            "id": "EDGE_6",
+            "source": "R1",
+            "target": "SA3",
+            "label": "LINE_CLEARANCE_NOT_DONE",
+            "type": "semantic",
+            "animated": false,
+            "targetHandle": "target",
+            "style": {
+                "stroke": "#6B7280",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#6B7280",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "RIGHT_EXTERNAL",
+                "lane_offset": 3
+            }
+        },
+        {
+            "id": "EDGE_7",
+            "source": "A2",
+            "target": "R2",
+            "label": null,
+            "type": "semantic",
+            "animated": false,
+            "targetHandle": "target",
+            "style": {
+                "stroke": "#6B7280",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#6B7280",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "VERTICAL",
+                "lane_offset": 0
+            }
+        },
+        {
+            "id": "EDGE_8",
+            "source": "R2",
+            "target": "A1",
+            "label": "CONTINUE_WITH_NEXT_EQUIPMENT",
+            "type": "semantic",
+            "animated": false,
+            "targetHandle": "target",
+            "style": {
+                "stroke": "#6B7280",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#6B7280",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "OUTER_LOOP",
+                "lane_offset": 3
+            }
+        },
+        {
+            "id": "EDGE_9",
+            "source": "R2",
+            "target": "E1",
+            "label": "DONE_WITH_EQUIPMENT_LC",
+            "type": "semantic",
+            "animated": false,
+            "targetHandle": "target",
+            "style": {
+                "stroke": "#6B7280",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#6B7280",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "DOWN",
+                "lane_offset": 0
+            }
+        },
+        {
+            "id": "EDGE_10",
+            "source": "SA1",
+            "target": "MERGE_1",
+            "label": null,
+            "type": "semantic",
+            "animated": false,
+            "targetHandle": "target",
+            "style": {
+                "stroke": "#6B7280",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#6B7280",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "VERTICAL",
+                "lane_offset": 0
+            }
+        },
+        {
+            "id": "EDGE_11",
+            "source": "SA2",
+            "target": "MERGE_1",
+            "label": null,
+            "type": "semantic",
+            "animated": false,
+            "targetHandle": "target",
+            "style": {
+                "stroke": "#6B7280",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#6B7280",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "VERTICAL",
+                "lane_offset": 0
+            }
+        },
+        {
+            "id": "EDGE_12",
+            "source": "SA3",
+            "target": "MERGE_1",
+            "label": null,
+            "type": "semantic",
+            "animated": false,
+            "targetHandle": "target",
+            "style": {
+                "stroke": "#6B7280",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#6B7280",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "VERTICAL",
+                "lane_offset": 0
+            }
+        },
+        {
+            "id": "EDGE_13",
+            "source": "MERGE_1",
+            "target": "A1",
+            "label": null,
+            "type": "semantic",
+            "animated": false,
+            "targetHandle": "target",
+            "style": {
+                "stroke": "#6B7280",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#6B7280",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "OUTER_LOOP",
+                "lane_offset": 3
+            }
+        }
+    ],
+    "semantic_groups": []
+}

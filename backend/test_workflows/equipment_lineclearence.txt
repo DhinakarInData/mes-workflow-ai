@@ -1,0 +1,22 @@
+Equipment Line Clearence
+Scan Equipment
+
+System checks:
+
+
+If valid proceed to fill LC checklist
+
+If invalid equipment
+show scanned equipment is invalid equipment
+return to scan
+
+If incorrect equipment
+show scanned equipment is incorrect 
+return to scan
+
+If line clearance not done
+show line clearance not for scanned equipment message
+return to scan
+
+after filling checklist 
+user confirmation for next equipment else end the workflow

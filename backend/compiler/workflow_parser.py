@@ -56,6 +56,10 @@ def parse_workflow(
             actor=node_data.get(
                 "actor"
             ),
+            response_actor=node_data.get(
+                "response_actor"
+            ),
+
 
             event_type=node_data.get(
                 "event_type"
@@ -73,41 +77,43 @@ def parse_workflow(
         ] = node
 
 
-    # ===================================
-    # PARSE EDGES
-    # ===================================
+   # ===================================
+# PARSE EDGES
+# ===================================
 
     workflow_edges = []
-
 
     for edge_data in data["edges"]:
 
         edge = WorkflowEdge(
 
-    source=edge_data["source"],
+        source=edge_data["source"],
 
-    target=edge_data["target"],
+        target=edge_data["target"],
 
-    edge_type=edge_data["edge_type"],
+        edge_type=edge_data["edge_type"],
 
-    condition=edge_data.get(
-        "condition"
-    ),
+        condition=edge_data.get(
+            "condition"
+        ),
 
-    edge_label=edge_data.get(
-        "edge_label"
-    ),
+        routing_role=edge_data.get(
+            "routing_role"
+        ),
 
-    metadata=edge_data.get(
-        "metadata",
-        {}
-    )
-)
+        edge_label=edge_data.get(
+            "edge_label"
+        ),
 
-
-        workflow_edges.append(
-            edge
+        metadata=edge_data.get(
+            "metadata",
+            {}
         )
+    )
+
+    workflow_edges.append(
+        edge
+    )
 
 
     # ===================================

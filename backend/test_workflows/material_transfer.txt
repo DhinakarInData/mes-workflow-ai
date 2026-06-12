@@ -1,0 +1,31 @@
+Material Transfer
+
+User scan source location
+
+System checks source location exists
+
+If valid proceed
+
+If invalid show location not found
+
+User scan destination location
+
+System checks destination location exists
+
+If valid proceed
+
+If invalid show destination location not found
+
+User scan material
+
+System checks material belongs to source location
+
+If valid transfer material
+
+If invalid show material mismatch
+
+System updates inventory
+
+System creates transfer transaction
+
+End workflow

@@ -1,0 +1,15 @@
+START
+
+A1 Check specimen preparation instructions
+
+A1.1 System Response
+
+Applicable -> A1.2
+
+Not Applicable -> A2
+
+A1.2 Display specimen preparation instructions
+
+A2 Get challenge test list
+
+END

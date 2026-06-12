@@ -1,0 +1,10 @@
+Bin Picking operation
+
+System  Check if bin is applicable for planned Blending area
+
+If yes next goes to Scan the Bin to be picked
+
+if no end the workflow
+
+after scanning bin system check if check ok move the bin to specified area then end the workflow
+if check not ok show scanned equipment is not clean then loop to scan the bin step

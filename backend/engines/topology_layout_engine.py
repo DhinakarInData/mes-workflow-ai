@@ -1,8 +1,4 @@
 from collections import deque
-from compiler.graph_analyzer import (
-    find_branch_nodes,
-    find_merge_nodes
-)
 
 MAIN_X = 700
 HORIZONTAL_GAP = 300
@@ -15,52 +11,122 @@ def build_topology_layout(graph):
 
     levels = {}
 
+    branch_lane = {}
+
     root = graph.get_start_node()
 
     if not root:
         return {}
 
-    queue = deque([(root.id, 0)])
+    queue = deque(
+        [
+            (
+                root.id,
+                0
+            )
+        ]
+    )
 
     levels[root.id] = 0
+
+    branch_lane[root.id] = MAIN_X
+
+    # ===================================
+    # BFS LAYOUT
+    # ===================================
 
     while queue:
 
         node_id, depth = queue.popleft()
+
+        current_lane = branch_lane.get(
+            node_id,
+            MAIN_X
+        )
 
         outgoing = graph.adjacency_map.get(
             node_id,
             []
         )
 
+        error_count = 0
+
         for edge in outgoing:
 
-            new_depth = depth + 1
+            print(
+                node_id,
+                "->",
+                edge.target,
+                edge.routing_role
+            )
 
-            if (
+            # ===================================
+            # IGNORE LOOPBACKS FOR DEPTH
+            # ===================================
 
-                edge.target not in levels
+            if edge.routing_role == "LOOPBACK":
+                continue
 
-                or
+            child_lane = current_lane
 
-                new_depth > levels[edge.target]
+            # ===================================
+            # SUCCESS PATH
+            # ===================================
 
-            ):
+            if edge.routing_role == "SUCCESS":
 
-                levels[edge.target] = new_depth
+                child_lane = current_lane
+
+            # ===================================
+            # ERROR PATHS
+            # ===================================
+
+            elif edge.routing_role == "ERROR":
+
+                error_count += 1
+
+                child_lane = (
+                    current_lane
+                    + (
+                        error_count
+                        * HORIZONTAL_GAP
+                    )
+                )
+
+            # ===================================
+            # MAIN FLOW
+            # ===================================
+
+            elif edge.routing_role == "MAIN_FLOW":
+
+                child_lane = current_lane
+
+            print(
+                edge.target,
+                "lane=",
+                child_lane
+            )
+
+            if edge.target not in levels:
+
+                levels[edge.target] = (
+                    depth + 1
+                )
+
+                branch_lane[
+                    edge.target
+                ] = child_lane
 
                 queue.append(
                     (
                         edge.target,
-                        new_depth
+                        depth + 1
                     )
-        )
-    merge_nodes = {
+                )
 
-        node.id
-
-        for node in find_merge_nodes(graph)
-    }
+    # ===================================
+    # BUILD POSITIONS
+    # ===================================
 
     for node_id, node in graph.nodes.items():
 
@@ -69,47 +135,34 @@ def build_topology_layout(graph):
             0
         )
 
-        x = MAIN_X
-
-        incoming = graph.reverse_adjacency_map.get(
+        x = branch_lane.get(
             node_id,
-            []
+            MAIN_X
         )
 
-        if node_id in merge_nodes:
+        # ===================================
+        # KEEP DECISIONS CENTERED
+        # ===================================
+
+        if node.type == "DECISION":
 
             x = MAIN_X
 
-        elif len(incoming) == 1:
+        # ===================================
+        # KEEP END CENTERED
+        # ===================================
 
-            parent_edge = incoming[0]
+        if node.type == "END":
 
-            parent_id = parent_edge.source
+            x = MAIN_X
+            
+        # ===================================
+        # KEEP MERGE CENTERED
+        # ===================================
 
-            siblings = graph.adjacency_map.get(
-                parent_id,
-                []
-            )
+        if node.type == "MERGE":
 
-            if len(siblings) > 1:
-
-                index = siblings.index(
-                    parent_edge
-                )
-
-                center = (
-
-                    len(siblings) - 1
-
-                ) / 2
-
-                offset = (
-
-                    index - center
-
-                ) * HORIZONTAL_GAP
-
-                x = MAIN_X + offset
+            x = 500
 
         node_positions[node_id] = {
 
@@ -117,17 +170,9 @@ def build_topology_layout(graph):
 
             "y": depth * VERTICAL_GAP
         }
-        print("\n===== DEPTHS =====\n")
-
-    for node_id, depth in levels.items():
-
-        print(
-        node_id,
-        "->",
-        depth
-    )
 
     return node_positions
+
 
 def print_topology_layout(
     graph,

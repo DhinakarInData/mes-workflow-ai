@@ -58,7 +58,7 @@ export default function SystemActivityNode({
 
         position={Position.Top}
 
-        id="top"
+        id="target"
       />
 
 
@@ -72,7 +72,7 @@ export default function SystemActivityNode({
 
         position={Position.Left}
 
-        id="left"
+        id="loopback"
       />
 
 
@@ -86,7 +86,7 @@ export default function SystemActivityNode({
 
         position={Position.Right}
 
-        id="right"
+        id="error"
       />
 
 
@@ -100,7 +100,7 @@ export default function SystemActivityNode({
 
         position={Position.Bottom}
 
-        id="bottom"
+        id="success"
       />
 
 

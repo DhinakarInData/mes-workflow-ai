@@ -11,7 +11,7 @@ export default function EndNode({ data }) {
         padding: "14px 40px",
         borderRadius: "999px",
         fontWeight: "bold",
-        border: "2px solid #1B2433",
+        border: "2px solid #0c111c",
         position: "relative"
       }}
     >

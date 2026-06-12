@@ -1,0 +1,143 @@
+{
+"workflow_name": "Equipment Line Clearence",
+"nodes": [
+{
+"id": "S1",
+"type": "START",
+"label": "Start"
+},
+{
+"id": "A1",
+"type": "MANUAL_ACTIVITY",
+"label": "Scan Equipment"
+},
+{
+"id": "SC1",
+"type": "SYSTEM_CHECK",
+"label": "Check Equipment & Line Clearance Status"
+},
+{
+"id": "R1",
+"type": "RESPONSE",
+"label": "System Response",
+"response_actor": "SYSTEM"
+},
+{
+"id": "SA1",
+"type": "SYSTEM_ACTIVITY",
+"label": "Invalid Equipment"
+},
+{
+"id": "SA2",
+"type": "SYSTEM_ACTIVITY",
+"label": "Incorrect Equipment"
+},
+{
+"id": "SA3",
+"type": "SYSTEM_ACTIVITY",
+"label": "Line Clearance Not Done"
+},
+{
+"id": "A2",
+"type": "MANUAL_ACTIVITY",
+"label": "Fill LC Checklist"
+},
+{
+"id": "R2",
+"type": "RESPONSE",
+"label": "User Response",
+"response_actor": "USER"
+},
+{
+"id": "E1",
+"type": "END",
+"label": "End"
+}
+],
+"edges": [
+{
+"source": "S1",
+"target": "A1",
+"edge_type": "SEQUENCE",
+"routing_role": "MAIN_FLOW"
+},
+{
+"source": "A1",
+"target": "SC1",
+"edge_type": "SEQUENCE",
+"routing_role": "MAIN_FLOW"
+},
+{
+"source": "SC1",
+"target": "R1",
+"edge_type": "SEQUENCE",
+"routing_role": "MAIN_FLOW"
+},
+{
+"source": "R1",
+"target": "A2",
+"condition": "VALID",
+"edge_type": "CONDITIONAL",
+"routing_role": "SUCCESS"
+},
+{
+"source": "R1",
+"target": "SA1",
+"condition": "INVALID_EQUIPMENT",
+"edge_type": "CONDITIONAL",
+"routing_role": "ERROR"
+},
+{
+"source": "SA1",
+"target": "A1",
+"edge_type": "LOOPBACK",
+"routing_role": "LOOPBACK"
+},
+{
+"source": "R1",
+"target": "SA2",
+"condition": "INCORRECT_EQUIPMENT",
+"edge_type": "CONDITIONAL",
+"routing_role": "ERROR"
+},
+{
+"source": "SA2",
+"target": "A1",
+"edge_type": "LOOPBACK",
+"routing_role": "LOOPBACK"
+},
+{
+"source": "R1",
+"target": "SA3",
+"condition": "LINE_CLEARANCE_NOT_DONE",
+"edge_type": "CONDITIONAL",
+"routing_role": "ERROR"
+},
+{
+"source": "SA3",
+"target": "A1",
+"edge_type": "LOOPBACK",
+"routing_role": "LOOPBACK"
+},
+{
+"source": "A2",
+"target": "R2",
+"edge_type": "SEQUENCE",
+"routing_role": "MAIN_FLOW"
+},
+{
+"source": "R2",
+"target": "A1",
+"condition": "CONTINUE_WITH_NEXT_EQUIPMENT",
+"edge_type": "CONDITIONAL",
+"routing_role": "LOOPBACK"
+},
+{
+"source": "R2",
+"target": "E1",
+"condition": "DONE_WITH_EQUIPMENT_LC",
+"edge_type": "CONDITIONAL",
+"routing_role": "SUCCESS"
+}
+]
+}

@@ -1,0 +1,180 @@
+{
+    "workflow_name": "Equipment Line Clearence",
+    "nodes": [
+        {
+            "id": "N1",
+            "type": "START",
+            "label": "Start"
+        },
+        {
+            "id": "A1",
+            "type": "MANUAL_ACTIVITY",
+            "label": "Scan Equipment"
+        },
+        {
+            "id": "SC1",
+            "type": "SYSTEM_CHECK",
+            "label": "Check Equipment Validity"
+        },
+        {
+            "id": "D1",
+            "type": "DECISION",
+            "label": "Equipment Valid?"
+        },
+        {
+            "id": "SA1",
+            "type": "SYSTEM_ACTIVITY",
+            "label": "Show Invalid Equipment Message"
+        },
+        {
+            "id": "SC2",
+            "type": "SYSTEM_CHECK",
+            "label": "Check Correct Equipment"
+        },
+        {
+            "id": "D2",
+            "type": "DECISION",
+            "label": "Equipment Correct?"
+        },
+        {
+            "id": "SA2",
+            "type": "SYSTEM_ACTIVITY",
+            "label": "Show Incorrect Equipment Message"
+        },
+        {
+            "id": "SC3",
+            "type": "SYSTEM_CHECK",
+            "label": "Check Line Clearance Status"
+        },
+        {
+            "id": "D3",
+            "type": "DECISION",
+            "label": "Line Clearance Done?"
+        },
+        {
+            "id": "SA3",
+            "type": "SYSTEM_ACTIVITY",
+            "label": "Show Line Clearance Message"
+        },
+        {
+            "id": "A2",
+            "type": "MANUAL_ACTIVITY",
+            "label": "Fill LC Checklist"
+        },
+        {
+            "id": "A3",
+            "type": "MANUAL_ACTIVITY",
+            "label": "User Confirmation for Next Equipment"
+        },
+        {
+            "id": "D4",
+            "type": "DECISION",
+            "label": "Proceed with Next Equipment?"
+        },
+        {
+            "id": "N2",
+            "type": "END",
+            "label": "End"
+        }
+    ],
+    "edges": [
+        {
+            "source": "N1",
+            "target": "A1",
+            "edge_type": "SEQUENCE"
+        },
+        {
+            "source": "A1",
+            "target": "SC1",
+            "edge_type": "SEQUENCE"
+        },
+        {
+            "source": "SC1",
+            "target": "D1",
+            "edge_type": "SEQUENCE"
+        },
+        {
+            "source": "D1",
+            "target": "SA1",
+            "condition": "INVALID",
+            "edge_type": "CONDITIONAL"
+        },
+        {
+            "source": "SA1",
+            "target": "A1",
+            "edge_type": "LOOPBACK"
+        },
+        {
+            "source": "D1",
+            "target": "SC2",
+            "condition": "VALID",
+            "edge_type": "CONDITIONAL"
+        },
+        {
+            "source": "SC2",
+            "target": "D2",
+            "edge_type": "SEQUENCE"
+        },
+        {
+            "source": "D2",
+            "target": "SA2",
+            "condition": "INCORRECT",
+            "edge_type": "CONDITIONAL"
+        },
+        {
+            "source": "SA2",
+            "target": "A1",
+            "edge_type": "LOOPBACK"
+        },
+        {
+            "source": "D2",
+            "target": "SC3",
+            "condition": "CORRECT",
+            "edge_type": "CONDITIONAL"
+        },
+        {
+            "source": "SC3",
+            "target": "D3",
+            "edge_type": "SEQUENCE"
+        },
+        {
+            "source": "D3",
+            "target": "SA3",
+            "condition": "NOT_DONE",
+            "edge_type": "CONDITIONAL"
+        },
+        {
+            "source": "SA3",
+            "target": "A1",
+            "edge_type": "LOOPBACK"
+        },
+        {
+            "source": "D3",
+            "target": "A2",
+            "condition": "DONE",
+            "edge_type": "CONDITIONAL"
+        },
+        {
+            "source": "A2",
+            "target": "A3",
+            "edge_type": "SEQUENCE"
+        },
+        {
+            "source": "A3",
+            "target": "D4",
+            "edge_type": "SEQUENCE"
+        },
+        {
+            "source": "D4",
+            "target": "A1",
+            "condition": "YES",
+            "edge_type": "CONDITIONAL"
+        },
+        {
+            "source": "D4",
+            "target": "N2",
+            "condition": "NO",
+            "edge_type": "CONDITIONAL"
+        }
+    ]
+}

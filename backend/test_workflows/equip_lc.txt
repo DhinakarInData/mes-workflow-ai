@@ -1,0 +1,15 @@
+The operator scans the equipment barcode.
+
+The system verifies whether the equipment belongs to the selected line and checks whether line clearance has been completed.
+
+If the equipment is valid and line clearance is completed, the system displays the line clearance checklist.
+
+If the equipment is invalid, the system displays an Invalid Equipment message.
+
+If the equipment belongs to another line, the system displays an Incorrect Equipment message.
+
+If line clearance has not been completed, the system displays a Line Clearance Not Done message.
+
+The operator completes the checklist and submits it.
+
+The system records the line clearance details and allows the user to continue.

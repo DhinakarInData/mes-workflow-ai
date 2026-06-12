@@ -1,0 +1,113 @@
+{
+  "workflow_name": "Bin Picking",
+
+  "nodes": [
+    {
+      "id": "START",
+      "type": "START",
+      "label": "Start"
+    },
+
+    {
+      "id": "A1",
+      "type": "SYSTEM_CHECK",
+      "label": "Check Bin Applicable"
+    },
+
+    {
+      "id": "A1.1",
+      "type": "DECISION",
+      "label": "System Response"
+    },
+
+    {
+      "id": "A2",
+      "type": "MANUAL_ACTIVITY",
+      "label": "Scan Bin"
+    },
+
+    {
+      "id": "A3",
+      "type": "SYSTEM_CHECK",
+      "label": "Check Bin Clean Status"
+    },
+
+    {
+      "id": "A3.1",
+      "type": "DECISION",
+      "label": "System Response"
+    },
+
+    {
+      "id": "A4",
+      "type": "MANUAL_ACTIVITY",
+      "label": "Move Bin To Area"
+    },
+
+    {
+      "id": "END",
+      "type": "END",
+      "label": "End"
+    }
+  ],
+
+  "edges": [
+    {
+      "source": "START",
+      "target": "A1",
+      "edge_type": "SEQUENCE"
+    },
+
+    {
+      "source": "A1",
+      "target": "A1.1",
+      "edge_type": "SEQUENCE"
+    },
+
+    {
+      "source": "A1.1",
+      "target": "A2",
+      "condition": "YES",
+      "edge_type": "CONDITIONAL"
+    },
+
+    {
+      "source": "A1.1",
+      "target": "END",
+      "condition": "NO",
+      "edge_type": "CONDITIONAL"
+    },
+
+    {
+      "source": "A2",
+      "target": "A3",
+      "edge_type": "SEQUENCE"
+    },
+
+    {
+      "source": "A3",
+      "target": "A3.1",
+      "edge_type": "SEQUENCE"
+    },
+
+    {
+      "source": "A3.1",
+      "target": "A4",
+      "condition": "YES",
+      "edge_type": "CONDITIONAL"
+    },
+
+    {
+      "source": "A3.1",
+      "target": "A2",
+      "condition": "NO",
+      "edge_type": "LOOPBACK"
+    },
+
+    {
+      "source": "A4",
+      "target": "END",
+      "edge_type": "SEQUENCE"
+    }
+  ]
+}
