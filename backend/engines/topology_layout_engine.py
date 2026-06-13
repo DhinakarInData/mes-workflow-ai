@@ -1,5 +1,6 @@
 from collections import deque
 
+
 MAIN_X = 700
 HORIZONTAL_GAP = 340
 VERTICAL_GAP = 250
@@ -32,6 +33,8 @@ def build_topology_layout(graph):
 
     branch_lane[root.id] = MAIN_X
 
+    global_error_lane = {}
+    next_error_lane = 1
     # ===================================
     # BFS LAYOUT
     # ===================================
@@ -84,14 +87,25 @@ def build_topology_layout(graph):
 
             elif edge.routing_role == "ERROR":
 
-                error_count += 1
+                if edge.target not in global_error_lane:
+
+                    global_error_lane[edge.target] = next_error_lane
+                    next_error_lane += 1
+
+                lane_index = global_error_lane[
+                edge.target
+                ]
 
                 child_lane = (
-                    current_lane
-                    + (
-                        error_count
-                        * HORIZONTAL_GAP
-                    )
+                MAIN_X
+                +
+                lane_index * HORIZONTAL_GAP
+                )
+                print(
+                    "error lane:",
+                    edge.target,
+                    lane_index,
+                    child_lane
                 )
 
             # ===================================
@@ -100,7 +114,7 @@ def build_topology_layout(graph):
 
             elif edge.routing_role == "MAIN_FLOW":
 
-                child_lane = current_lane
+             child_lane = current_lane
 
             print(
                 edge.target,

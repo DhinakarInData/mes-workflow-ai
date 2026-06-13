@@ -111,9 +111,11 @@ def parse_workflow(
         )
     )
 
-    workflow_edges.append(
-        edge
-    )
+        workflow_edges.append(
+            edge
+        )
+        print("total edges=",
+              len(workflow_edges))
 
 
     # ===================================

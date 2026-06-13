@@ -108,15 +108,7 @@ def get_routing_config(edge):
         elif edge.routing_role == "LOOPBACK":
 
             return ROUTING_RULES["LOOPBACK"]
-        config = ROUTING_RULES["ERROR_FLOW"]   
-        print(
-            edge.source,
-            "->",
-            edge.target,
-            edge.edge_type,
-            edge.routing_role,
-            get_routing_config(edge)
-)
+        
 
     # ===================================
     # DEFAULT

@@ -8,7 +8,7 @@
                 "y": 0
             },
             "data": {
-                "label": "Start",
+                "label": "Start Bin Picking Operation",
                 "step_number": "S1",
                 "lane": "MAIN",
                 "group": "GENERAL",
@@ -27,7 +27,7 @@
                 "y": 250
             },
             "data": {
-                "label": "Select Equipment",
+                "label": "Initiate Bin Picking",
                 "step_number": "A1",
                 "lane": "MAIN",
                 "group": "GENERAL",
@@ -46,14 +46,14 @@
                 "y": 500
             },
             "data": {
-                "label": "Check Equipment Status",
+                "label": "Check Bin Applicability for Blending Area",
                 "step_number": "SC1",
                 "lane": "MAIN",
                 "group": "GENERAL",
                 "actor": null,
                 "response_actor": null,
                 "event_type": null,
-                "width": 220,
+                "width": 287,
                 "height": 100
             }
         },
@@ -77,25 +77,6 @@
             }
         },
         {
-            "id": "SA1",
-            "type": "system_activity",
-            "position": {
-                "x": 1040,
-                "y": 1000
-            },
-            "data": {
-                "label": "Equipment Unavailable",
-                "step_number": "SA1",
-                "lane": "MAIN",
-                "group": "GENERAL",
-                "actor": null,
-                "response_actor": null,
-                "event_type": null,
-                "width": 220,
-                "height": 100
-            }
-        },
-        {
             "id": "A2",
             "type": "manual_activity",
             "position": {
@@ -103,7 +84,7 @@
                 "y": 1000
             },
             "data": {
-                "label": "Perform Line Clearance",
+                "label": "Scan Bin",
                 "step_number": "A2",
                 "lane": "MAIN",
                 "group": "GENERAL",
@@ -122,7 +103,7 @@
                 "y": 1250
             },
             "data": {
-                "label": "Check Line Clearance Status",
+                "label": "Check Scanned Bin Cleanliness",
                 "step_number": "SC2",
                 "lane": "MAIN",
                 "group": "GENERAL",
@@ -153,129 +134,15 @@
             }
         },
         {
-            "id": "SA2",
+            "id": "SA1",
             "type": "system_activity",
-            "position": {
-                "x": 1040,
-                "y": 1750
-            },
-            "data": {
-                "label": "Line Clearance Pending",
-                "step_number": "SA2",
-                "lane": "MAIN",
-                "group": "GENERAL",
-                "actor": null,
-                "response_actor": null,
-                "event_type": null,
-                "width": 220,
-                "height": 100
-            }
-        },
-        {
-            "id": "A3",
-            "type": "manual_activity",
             "position": {
                 "x": 700,
                 "y": 1750
             },
             "data": {
-                "label": "Perform Equipment Inspection",
-                "step_number": "A3",
-                "lane": "MAIN",
-                "group": "GENERAL",
-                "actor": null,
-                "response_actor": null,
-                "event_type": null,
-                "width": 220,
-                "height": 100
-            }
-        },
-        {
-            "id": "SC3",
-            "type": "system_check",
-            "position": {
-                "x": 700,
-                "y": 2000
-            },
-            "data": {
-                "label": "Check Inspection Status",
-                "step_number": "SC3",
-                "lane": "MAIN",
-                "group": "GENERAL",
-                "actor": null,
-                "response_actor": null,
-                "event_type": null,
-                "width": 220,
-                "height": 100
-            }
-        },
-        {
-            "id": "R3",
-            "type": "response",
-            "position": {
-                "x": 700,
-                "y": 2250
-            },
-            "data": {
-                "label": "System Response",
-                "step_number": "R3",
-                "lane": "MAIN",
-                "group": "GENERAL",
-                "actor": null,
-                "response_actor": "SYSTEM",
-                "event_type": null,
-                "width": 220,
-                "height": 100
-            }
-        },
-        {
-            "id": "SA3",
-            "type": "system_activity",
-            "position": {
-                "x": 1040,
-                "y": 2500
-            },
-            "data": {
-                "label": "Inspection Failed",
-                "step_number": "SA3",
-                "lane": "MAIN",
-                "group": "GENERAL",
-                "actor": null,
-                "response_actor": null,
-                "event_type": null,
-                "width": 220,
-                "height": 100
-            }
-        },
-        {
-            "id": "A4",
-            "type": "manual_activity",
-            "position": {
-                "x": 700,
-                "y": 2500
-            },
-            "data": {
-                "label": "Acknowledge Startup Readiness",
-                "step_number": "A4",
-                "lane": "MAIN",
-                "group": "GENERAL",
-                "actor": null,
-                "response_actor": null,
-                "event_type": null,
-                "width": 220,
-                "height": 100
-            }
-        },
-        {
-            "id": "SA4",
-            "type": "system_activity",
-            "position": {
-                "x": 700,
-                "y": 2750
-            },
-            "data": {
-                "label": "Start Production",
-                "step_number": "SA4",
+                "label": "Move Bin to Specified Area",
+                "step_number": "SA1",
                 "lane": "MAIN",
                 "group": "GENERAL",
                 "actor": null,
@@ -290,10 +157,10 @@
             "type": "end",
             "position": {
                 "x": 700,
-                "y": 1250
+                "y": 1000
             },
             "data": {
-                "label": "End",
+                "label": "End Bin Picking Workflow",
                 "step_number": "E1",
                 "lane": "MAIN",
                 "group": "GENERAL",
@@ -388,7 +255,7 @@
             "id": "EDGE_3",
             "source": "R1",
             "target": "A2",
-            "label": "AVAILABLE",
+            "label": "APPLICABLE",
             "type": "semantic",
             "animated": false,
             "sourceHandle": "success",
@@ -413,8 +280,8 @@
         {
             "id": "EDGE_4",
             "source": "R1",
-            "target": "SA1",
-            "label": "UNAVAILABLE",
+            "target": "E1",
+            "label": "NOT_APPLICATIONAL",
             "type": "semantic",
             "animated": false,
             "sourceHandle": "error",
@@ -433,37 +300,11 @@
                 "routing_role": "ERROR",
                 "edge_type": "CONDITIONAL",
                 "source_type": "RESPONSE",
-                "target_type": "SYSTEM_ACTIVITY"
-            }
-        },
-        {
-            "id": "EDGE_5",
-            "source": "SA1",
-            "target": "E1",
-            "label": null,
-            "type": "semantic",
-            "animated": false,
-            "sourceHandle": "success",
-            "targetHandle": "target",
-            "style": {
-                "stroke": "#16A34A",
-                "strokeWidth": 2
-            },
-            "labelStyle": {
-                "fill": "#16A34A",
-                "fontWeight": "bold"
-            },
-            "data": {
-                "routing_type": "VERTICAL",
-                "lane_offset": 0,
-                "routing_role": "MAIN_FLOW",
-                "edge_type": "SEQUENCE",
-                "source_type": "SYSTEM_ACTIVITY",
                 "target_type": "END"
             }
         },
         {
-            "id": "EDGE_6",
+            "id": "EDGE_5",
             "source": "A2",
             "target": "SC2",
             "label": null,
@@ -489,7 +330,7 @@
             }
         },
         {
-            "id": "EDGE_7",
+            "id": "EDGE_6",
             "source": "SC2",
             "target": "R2",
             "label": null,
@@ -515,10 +356,10 @@
             }
         },
         {
-            "id": "EDGE_8",
+            "id": "EDGE_7",
             "source": "R2",
-            "target": "A3",
-            "label": "COMPLETED",
+            "target": "SA1",
+            "label": "CLEAN",
             "type": "semantic",
             "animated": false,
             "sourceHandle": "success",
@@ -536,221 +377,39 @@
                 "lane_offset": 0,
                 "routing_role": "SUCCESS",
                 "edge_type": "CONDITIONAL",
+                "source_type": "RESPONSE",
+                "target_type": "SYSTEM_ACTIVITY"
+            }
+        },
+        {
+            "id": "EDGE_8",
+            "source": "R2",
+            "target": "A2",
+            "label": null,
+            "type": "semantic",
+            "animated": true,
+            "sourceHandle": "error",
+            "targetHandle": "loopback",
+            "style": {
+                "stroke": "#2563EB",
+                "strokeWidth": 2
+            },
+            "labelStyle": {
+                "fill": "#2563EB",
+                "fontWeight": "bold"
+            },
+            "data": {
+                "routing_type": "OUTER_LOOP",
+                "lane_offset": 3,
+                "routing_role": "LOOPBACK",
+                "edge_type": "LOOPBACK",
                 "source_type": "RESPONSE",
                 "target_type": "MANUAL_ACTIVITY"
             }
         },
         {
             "id": "EDGE_9",
-            "source": "R2",
-            "target": "SA2",
-            "label": "NOT_COMPLETED",
-            "type": "semantic",
-            "animated": false,
-            "sourceHandle": "error",
-            "targetHandle": "target",
-            "style": {
-                "stroke": "#DC2626",
-                "strokeWidth": 2
-            },
-            "labelStyle": {
-                "fill": "#DC2626",
-                "fontWeight": "bold"
-            },
-            "data": {
-                "routing_type": "RIGHT_EXTERNAL",
-                "lane_offset": 1,
-                "routing_role": "ERROR",
-                "edge_type": "CONDITIONAL",
-                "source_type": "RESPONSE",
-                "target_type": "SYSTEM_ACTIVITY"
-            }
-        },
-        {
-            "id": "EDGE_10",
-            "source": "SA2",
-            "target": "E1",
-            "label": null,
-            "type": "semantic",
-            "animated": false,
-            "sourceHandle": "success",
-            "targetHandle": "target",
-            "style": {
-                "stroke": "#16A34A",
-                "strokeWidth": 2
-            },
-            "labelStyle": {
-                "fill": "#16A34A",
-                "fontWeight": "bold"
-            },
-            "data": {
-                "routing_type": "VERTICAL",
-                "lane_offset": 0,
-                "routing_role": "MAIN_FLOW",
-                "edge_type": "SEQUENCE",
-                "source_type": "SYSTEM_ACTIVITY",
-                "target_type": "END"
-            }
-        },
-        {
-            "id": "EDGE_11",
-            "source": "A3",
-            "target": "SC3",
-            "label": null,
-            "type": "semantic",
-            "animated": false,
-            "sourceHandle": "success",
-            "targetHandle": "target",
-            "style": {
-                "stroke": "#16A34A",
-                "strokeWidth": 2
-            },
-            "labelStyle": {
-                "fill": "#16A34A",
-                "fontWeight": "bold"
-            },
-            "data": {
-                "routing_type": "VERTICAL",
-                "lane_offset": 0,
-                "routing_role": "MAIN_FLOW",
-                "edge_type": "SEQUENCE",
-                "source_type": "MANUAL_ACTIVITY",
-                "target_type": "SYSTEM_CHECK"
-            }
-        },
-        {
-            "id": "EDGE_12",
-            "source": "SC3",
-            "target": "R3",
-            "label": null,
-            "type": "semantic",
-            "animated": false,
-            "sourceHandle": "success",
-            "targetHandle": "target",
-            "style": {
-                "stroke": "#16A34A",
-                "strokeWidth": 2
-            },
-            "labelStyle": {
-                "fill": "#16A34A",
-                "fontWeight": "bold"
-            },
-            "data": {
-                "routing_type": "VERTICAL",
-                "lane_offset": 0,
-                "routing_role": "MAIN_FLOW",
-                "edge_type": "SEQUENCE",
-                "source_type": "SYSTEM_CHECK",
-                "target_type": "RESPONSE"
-            }
-        },
-        {
-            "id": "EDGE_13",
-            "source": "R3",
-            "target": "A4",
-            "label": "PASSED",
-            "type": "semantic",
-            "animated": false,
-            "sourceHandle": "success",
-            "targetHandle": "target",
-            "style": {
-                "stroke": "#16A34A",
-                "strokeWidth": 2
-            },
-            "labelStyle": {
-                "fill": "#16A34A",
-                "fontWeight": "bold"
-            },
-            "data": {
-                "routing_type": "DOWN",
-                "lane_offset": 0,
-                "routing_role": "SUCCESS",
-                "edge_type": "CONDITIONAL",
-                "source_type": "RESPONSE",
-                "target_type": "MANUAL_ACTIVITY"
-            }
-        },
-        {
-            "id": "EDGE_14",
-            "source": "R3",
-            "target": "SA3",
-            "label": "FAILED",
-            "type": "semantic",
-            "animated": false,
-            "sourceHandle": "error",
-            "targetHandle": "target",
-            "style": {
-                "stroke": "#DC2626",
-                "strokeWidth": 2
-            },
-            "labelStyle": {
-                "fill": "#DC2626",
-                "fontWeight": "bold"
-            },
-            "data": {
-                "routing_type": "RIGHT_EXTERNAL",
-                "lane_offset": 1,
-                "routing_role": "ERROR",
-                "edge_type": "CONDITIONAL",
-                "source_type": "RESPONSE",
-                "target_type": "SYSTEM_ACTIVITY"
-            }
-        },
-        {
-            "id": "EDGE_15",
-            "source": "SA3",
-            "target": "E1",
-            "label": null,
-            "type": "semantic",
-            "animated": false,
-            "sourceHandle": "success",
-            "targetHandle": "target",
-            "style": {
-                "stroke": "#16A34A",
-                "strokeWidth": 2
-            },
-            "labelStyle": {
-                "fill": "#16A34A",
-                "fontWeight": "bold"
-            },
-            "data": {
-                "routing_type": "VERTICAL",
-                "lane_offset": 0,
-                "routing_role": "MAIN_FLOW",
-                "edge_type": "SEQUENCE",
-                "source_type": "SYSTEM_ACTIVITY",
-                "target_type": "END"
-            }
-        },
-        {
-            "id": "EDGE_16",
-            "source": "A4",
-            "target": "SA4",
-            "label": null,
-            "type": "semantic",
-            "animated": false,
-            "sourceHandle": "success",
-            "targetHandle": "target",
-            "style": {
-                "stroke": "#16A34A",
-                "strokeWidth": 2
-            },
-            "labelStyle": {
-                "fill": "#16A34A",
-                "fontWeight": "bold"
-            },
-            "data": {
-                "routing_type": "VERTICAL",
-                "lane_offset": 0,
-                "routing_role": "MAIN_FLOW",
-                "edge_type": "SEQUENCE",
-                "source_type": "MANUAL_ACTIVITY",
-                "target_type": "SYSTEM_ACTIVITY"
-            }
-        },
-        {
-            "id": "EDGE_17",
-            "source": "SA4",
+            "source": "SA1",
             "target": "E1",
             "label": null,
             "type": "semantic",
