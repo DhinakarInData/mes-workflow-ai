@@ -1,0 +1,23 @@
+Start
+
+Operator selects the time point like startup, RLC, inprocess, or batch end.
+
+If startup, RLC, or batch end is selected, then the operator enters the specimen quantity.
+
+Supervisor and QA verify the entered quantity.
+
+If it is correct, proceed further. If not correct, re-enter the quantity again.
+
+If inprocess is selected,
+
+then operator enters specimen quantity.
+
+Supervisor and QA verify the quantity. If correct, proceed. If not correct, re-enter the quantity again.
+
+After verification, the operator records the specimen quantity.
+
+Then operator decides whether to continue or end.
+
+If continue, go back to time point selection.
+
+If not, end the process.

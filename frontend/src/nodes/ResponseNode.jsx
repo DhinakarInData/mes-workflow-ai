@@ -10,6 +10,9 @@ import {
 export default function ResponseNode({ data }) {
 const actor = data.response_actor || "SYSTEM";
 
+const DIAMOND_WIDTH = 112;
+const DIAMOND_HEIGHT = 86;
+
 const colors = {
   SYSTEM: "#1E3A8A",
   OPERATOR: "#EA580C",
@@ -19,33 +22,130 @@ const colors = {
 };
 
 const bgColor = colors[actor] || "#1E3A8A";
+
+const rawActor =
+  String(data.response_actor || data.actor || "")
+    .trim()
+    .toUpperCase();
+
+const actorLabels = {
+  SYSTEM: "System",
+  OPERATOR: "Operator",
+  SUPERVISOR: "Supervisor",
+  QA: "QA",
+  USER: "User"
+};
+
+const actorLabel =
+  actorLabels[rawActor] || rawActor;
+
+const rawDisplayLabel =
+  String(data.label || "Response")
+    .trim();
+
+const displayLabel =
+  /response$/i.test(rawDisplayLabel)
+    ? rawDisplayLabel.replace(
+        /^(SYSTEM|USER|OPERATOR|SUPERVISOR|QA)\s+/i,
+        actorLabel ? `${actorLabel} ` : ""
+      )
+    : actorLabel
+    ? `${actorLabel} Response`
+    : rawDisplayLabel;
+
+const stepNumber =
+  data.display_step_number || data.step_number;
+
+const responseLabel =
+  stepNumber
+    ? `${stepNumber}: ${displayLabel}`
+    : displayLabel;
+
+const hiddenHandleStyle = {
+  opacity: 0,
+  pointerEvents: "none"
+};
+
   return (
 
     <div
 
-    
       style={{
-        width: 110,
-        height: 110,
-
-        background: bgColor,
-
-        border: "2px solid #3B82F6",
-
-        transform: "rotate(45deg)",
-
-        display: "flex",
-
-        alignItems: "center",
-
-        justifyContent: "center",
-
-        color: "white",
-
+        width: DIAMOND_WIDTH,
+        height: DIAMOND_HEIGHT,
         position: "relative"
-        
       }}
     >
+
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+
+          background: "#3B82F6",
+
+          clipPath: "polygon(50% 0, 100% 50%, 50% 100%, 0 50%)",
+
+          display: "flex",
+
+          alignItems: "center",
+
+          justifyContent: "center",
+
+          color: "white"
+        }}
+      >
+
+        <div
+          style={{
+            position: "absolute",
+
+            inset: 3,
+
+            background: bgColor,
+
+            clipPath: "polygon(50% 0, 100% 50%, 50% 100%, 0 50%)",
+
+            display: "flex",
+
+            alignItems: "center",
+
+            justifyContent: "center",
+
+            padding: "10px 18px",
+
+            boxSizing: "border-box"
+          }}
+        >
+
+          <div
+            style={{
+
+              width: "82px",
+
+              boxSizing: "border-box",
+
+              textAlign: "center",
+
+              fontWeight: "bold",
+
+              fontSize: "11px",
+
+              lineHeight: "1.2",
+
+              whiteSpace: "normal",
+
+              wordBreak: "break-word",
+
+              overflowWrap: "break-word"
+            }}
+          >
+            {responseLabel}
+          </div>
+
+        </div>
+
+      </div>
 
        <Handle
 
@@ -54,6 +154,11 @@ const bgColor = colors[actor] || "#1E3A8A";
         position={Position.Top}
 
         id="target"
+
+        style={{
+          top: 0,
+          left: "50%"
+        }}
       />
 
 
@@ -68,6 +173,31 @@ const bgColor = colors[actor] || "#1E3A8A";
         position={Position.Left}
 
         id="loopback"
+
+        style={{
+          top: "50%",
+          left: 0
+        }}
+      />
+
+
+      {/* ===================================
+          LEFT RESTART SOURCE
+      =================================== */}
+
+      <Handle
+
+        type="source"
+
+        position={Position.Left}
+
+        id="restart"
+
+        style={{
+          top: "50%",
+          left: 0,
+          ...hiddenHandleStyle
+        }}
       />
 
 
@@ -82,6 +212,11 @@ const bgColor = colors[actor] || "#1E3A8A";
         position={Position.Right}
 
         id="error"
+
+        style={{
+          top: "50%",
+          right: 0
+        }}
       />
 
 
@@ -96,38 +231,12 @@ const bgColor = colors[actor] || "#1E3A8A";
         position={Position.Bottom}
 
         id="success"
-      />
 
-      <div
         style={{
-          transform: "rotate(-45deg)",
-
-          width: "95px",
-
-          padding: "4px",
-
-          boxSizing: "border-box",
-
-          textAlign: "center",
-
-          fontWeight: "bold",
-
-          fontSize: "12px",
-
-          lineHeight: "1.3",
-
-          whiteSpace: "normal",
-
-          wordBreak: "break-word",
-
-          overflowWrap: "break-word"
+          bottom: 0,
+          left: "50%"
         }}
-      >
-        <div>
-  <div>{data.response_actor || "SYSTEM"}</div>
-  <div>{data.label}</div>
-</div>
-      </div>
+      />
 
     </div>
   );

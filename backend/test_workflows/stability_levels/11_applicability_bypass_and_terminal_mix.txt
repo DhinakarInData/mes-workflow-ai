@@ -1,0 +1,28 @@
+Workflow name: Applicability Bypass and Terminal Mix Challenge
+
+The operator starts cleaning verification.
+The operator scans the equipment.
+The system checks the equipment status.
+If the equipment is invalid, the system displays Invalid Equipment and returns to scan the equipment.
+If calibration is due, the system displays Calibration Due and returns to scan the equipment.
+If the equipment is valid, continue.
+
+The system checks whether pre-cleaning verification is applicable.
+If pre-cleaning is not applicable, continue to post-cleaning verification.
+If pre-cleaning is applicable, the operator performs pre-cleaning verification.
+The supervisor reviews pre-cleaning verification.
+If the supervisor says not correct, the operator performs pre-cleaning verification again.
+If the supervisor says correct, continue to post-cleaning verification.
+
+The system checks whether post-cleaning verification is applicable.
+If post-cleaning is not applicable, continue to final cleaning decision.
+If post-cleaning is applicable, the operator performs post-cleaning verification.
+QA reviews post-cleaning verification.
+If QA says not correct, the operator performs post-cleaning verification again.
+If QA says correct, continue to final cleaning decision.
+
+The user confirms whether cleaning is complete.
+If no, return to scan the equipment.
+If yes, the system records the cleaning verification.
+The system updates the equipment status.
+End the workflow.

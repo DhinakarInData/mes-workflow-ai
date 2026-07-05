@@ -1,0 +1,27 @@
+Start gross weight verification.
+
+The operator scans the container.
+The system checks whether the container belongs to the correct batch, lot, and stage.
+
+If the container is correct, the operator places the container on the weighing scale.
+The system captures the gross weight.
+
+If the container is invalid, the system displays "Invalid Container Scanned".
+The operator must scan the container again.
+
+If the batch, lot, or stage is incorrect, the system displays "Incorrect Batch Lot or Stage".
+The operator must scan the container again.
+
+The system checks whether the captured gross weight is within the allowed tolerance.
+
+If the gross weight is within tolerance, the system records the verified gross weight.
+
+If the gross weight is below the limit, the system displays "Gross Weight Below Limit".
+The operator must correct the container weight and weigh the container again.
+
+If the gross weight is above the limit, the system displays "Gross Weight Above Limit".
+The operator must correct the container weight and weigh the container again.
+
+The user is asked whether another container needs to be verified.
+If yes, return to scan the next container.
+If no, complete the gross weight verification workflow.

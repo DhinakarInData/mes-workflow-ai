@@ -1,0 +1,24 @@
+Start in-process challenge test.
+
+The operator scans the product sample.
+The system checks whether the sample is valid for the current stage.
+
+If the sample is valid, the operator records the challenge test result.
+
+If the sample is invalid, the system displays "Invalid Sample".
+The operator must scan the product sample again.
+
+The system checks whether the challenge test result complies with the acceptance criteria.
+
+If the result complies, the QA reviewer reviews the recorded result.
+
+If the result does not comply, launch deviation.
+The supervisor reviews the deviation reason.
+If the supervisor approves the deviation reason, the workflow continues to QA review.
+If the supervisor rejects the deviation reason, the operator must update the deviation reason and submit it again.
+
+QA reviews the challenge test result.
+If QA approves, the system records the completed challenge test.
+If QA rejects, the operator updates the test result and submits it again for QA review.
+
+End in-process challenge test.

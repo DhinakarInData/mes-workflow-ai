@@ -17,12 +17,10 @@ export default function ConnectorNode({
 }) {
 
   const nodeSize = Math.max(
-
-    70,
-
+    34,
     Math.min(
-      (data.width || 70),
-      100
+      (data.width || 44),
+      52
     )
   );
 
@@ -39,11 +37,11 @@ export default function ConnectorNode({
 
         borderRadius: "50%",
 
-        background: "#374151",
+        background: "white",
 
-        border: "3px solid #9CA3AF",
+        border: "2px solid #111827",
 
-        color: "white",
+        color: "#111827",
 
         display: "flex",
 
@@ -53,17 +51,15 @@ export default function ConnectorNode({
 
         fontWeight: "bold",
 
-        fontSize: "18px",
+        fontSize: "14px",
 
         position: "relative",
 
-        boxShadow:
-
-          "0 4px 10px rgba(0,0,0,0.15)",
+        boxShadow: "none",
 
         textAlign: "center",
 
-        padding: "6px",
+        padding: "2px",
 
         whiteSpace: "normal",
 

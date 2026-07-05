@@ -1,0 +1,44 @@
+Workflow name: Rejection Handling
+
+Start rejection handling.
+
+The operator scans the rejected container.
+The system checks whether the container is valid for rejection handling.
+
+The system gives a response.
+If the container is valid, continue.
+If the container is invalid, the system displays Invalid Container and returns to Scan Rejected Container.
+If the container is not in rejected status, the system displays Container Not In Rejected Status and returns to Scan Rejected Container.
+If the container is already disposed, the system displays Container Already Disposed and returns to Scan Rejected Container.
+
+The operator selects the rejection reason.
+The system checks whether the selected rejection reason is applicable.
+
+The system gives a response.
+If the rejection reason is valid, continue.
+If the rejection reason is missing, the system displays Rejection Reason Required and returns to Select Rejection Reason.
+If the rejection reason is not applicable, the system displays Invalid Rejection Reason and returns to Select Rejection Reason.
+
+The operator enters remarks for the rejection.
+The supervisor reviews the rejection details.
+
+The supervisor gives a response.
+If the supervisor approves rejection, continue.
+If the supervisor asks for correction, return to Select Rejection Reason.
+If the supervisor rejects the request, the system displays Rejection Request Cancelled and ends rejection handling.
+
+The QA user reviews the approved rejection.
+
+The QA user gives a response.
+If QA approves, continue.
+If QA requests rework, the system marks the container for rework and ends rejection handling.
+If QA rejects disposal, the system displays QA Rejection Failed and returns to Supervisor Review.
+
+The system updates the container status to rejected.
+The system posts the rejection transaction.
+The system prints or generates the rejection label.
+
+The user confirms whether another rejected container must be handled.
+If Yes, return to Scan Rejected Container.
+If No, end rejection handling.
+

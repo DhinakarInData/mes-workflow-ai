@@ -1,0 +1,13 @@
+Start sample collection.
+
+The operator scans the sample container.
+The system verifies the sample container.
+
+If the sample container is valid, the operator records the sample quantity.
+The system saves the sample collection details.
+
+The user is asked whether another sample container needs to be collected.
+If yes, return to scan the next sample container.
+If no, complete the sample collection workflow.
+
+End sample collection.

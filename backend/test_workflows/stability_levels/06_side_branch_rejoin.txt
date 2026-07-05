@@ -1,0 +1,16 @@
+Start rejection review.
+
+The operator scans the rejected container.
+The system displays the rejection reason.
+
+The supervisor reviews the rejection reason.
+If the rejection reason is accepted, the workflow continues to QA verification.
+
+If the rejection reason needs correction, the supervisor enters the corrected rejection reason.
+After correction, the workflow returns to QA verification.
+
+QA verifies the rejection details.
+If QA approves, the system records the approved rejection.
+If QA rejects, the workflow ends as rejection review failed.
+
+End rejection review.

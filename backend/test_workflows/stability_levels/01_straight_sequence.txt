@@ -1,0 +1,9 @@
+Start material staging.
+
+The operator scans the material container.
+The system displays the container details.
+The operator verifies the displayed details against the batch record.
+The operator confirms the container is ready for use.
+The system records the staging confirmation.
+
+End material staging.

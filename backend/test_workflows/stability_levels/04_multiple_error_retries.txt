@@ -1,0 +1,19 @@
+Start equipment line clearance.
+
+The operator scans the equipment.
+The system checks the equipment and line clearance status.
+
+If the equipment is valid and line clearance is complete, the operator fills the line clearance checklist.
+
+If invalid equipment is scanned, the system displays "Invalid Equipment".
+The operator must return to scan the equipment again.
+
+If incorrect equipment is scanned, the system displays "Incorrect Equipment".
+The operator must return to scan the equipment again.
+
+If line clearance is not done, the system displays "Line Clearance Not Done".
+The operator must return to scan the equipment again.
+
+After the checklist is filled, the user confirms whether another equipment needs to be checked.
+If yes, return to scan the next equipment.
+If no, end the equipment line clearance workflow.

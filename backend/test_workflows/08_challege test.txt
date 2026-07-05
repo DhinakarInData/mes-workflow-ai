@@ -1,0 +1,59 @@
+Start the workflow.
+
+System checks whether specimen preparation instructions are applicable.
+
+System response:
+If Applicable, display the specimen preparation instructions, then continue to get all challenge test details.
+If Not Applicable, continue directly to get all challenge test details.
+
+System gets all challenge test details.
+
+System checks the performer type during the in-process challenge test.
+
+System response:
+If Operator checks, continue to get the list of challenge tests to be performed.
+If Supervisor or QA checks, go to select challenge test performer.
+
+Select challenge test performer as Supervisor or QA, then continue to get the list of challenge tests to be performed.
+
+System gets the list of challenge tests to be performed.
+
+User selects the challenge test to be performed.
+
+User performs the challenge test.
+
+User response:
+If Comply or NA, go to check whether all challenge tests are completed.
+If Does Not Comply, go to redo the challenge test or inform supervisor.
+
+Ask the user whether to redo the challenge test.
+
+User response:
+If Yes, return to perform challenge test.
+If No, supervisor performs the challenge test again.
+
+Supervisor response:
+If Comply or NA, go to check whether all challenge tests are completed.
+If Does Not Comply, launch the deviation linked workflow.
+
+System launches the deviation linked workflow.
+
+System sets equipment under breakdown.
+
+User performs the challenge test after breakdown maintenance is complete.
+
+System checks whether the equipment is ready to use.
+
+System response:
+If Yes, return to check for performer during challenge test in-process.
+If No, show message that breakdown or post cleaning is not completed, then return to check whether the equipment is ready to use.
+
+System checks whether all challenge tests are completed.
+
+System response:
+If Yes, show that all challenge tests are performed.
+If No, return to get the list of challenge tests to be performed.
+
+System sets the respective equipment challenge test as completed in the global variable.
+
+End the workflow.

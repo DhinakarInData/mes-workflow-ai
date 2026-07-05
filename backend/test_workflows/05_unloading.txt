@@ -1,0 +1,44 @@
+Workflow name: Unloading
+
+Start unloading.
+
+The operator scans the unloading order.
+The system checks whether the unloading order is valid and active.
+
+If the unloading order is valid, continue.
+If the unloading order is invalid, the system displays Invalid Unloading Order and returns to Scan Unloading Order.
+If the unloading order is already completed, the system displays Order Already Completed and returns to Scan Unloading Order.
+
+The operator scans the source equipment.
+The system checks whether the source equipment is available for unloading.
+
+If the equipment is available, continue to scan the material container to be unloaded.
+If the equipment is invalid, the system displays Invalid Equipment and returns to Scan Source Equipment.
+If the equipment is under maintenance, the system displays Equipment Under Maintenance and returns to Scan Source Equipment.
+If line clearance is not completed, the system displays Line Clearance Required and returns to Scan Source Equipment.
+
+The operator scans the material container to be unloaded.
+The system checks the container, material, batch, and quantity stauts.
+
+If the container details are valid, continue to enter the unloaded quantity.
+If the container is invalid, the system displays Invalid Container and returns to Scan Material Container.
+If the material does not match, the system displays Material Mismatch and returns to Scan Material Container.
+If the batch does not match, the system displays Batch Mismatch and returns to Scan Material Container.
+If the quantity is zero or unavailable, the system displays Quantity Not Available and returns to Scan Material Container.
+
+The operator enters the unloaded quantity.
+The system checks whether the unloaded quantity is less than or equal to the available quantity.
+
+The system gives a response.
+If the quantity complies, continue.
+If the quantity exceeds available quantity, the system displays Quantity Does Not Comply and returns to Enter Unloaded Quantity.
+
+
+The operator confirms the unloading details.
+The system posts the unloading transaction.
+The system updates equipment and container inventory.
+
+The user confirms whether another container must be unloaded.
+If Yes, return to Scan Material Container.
+If No, end unloading.
+

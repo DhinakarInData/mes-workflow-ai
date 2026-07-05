@@ -10,6 +10,14 @@ export default function ManualActivityNode({ data }) {
 
   const height = data.height || 100;
 
+  const stepNumber =
+    data.display_step_number || data.step_number;
+
+  const hiddenHandleStyle = {
+    opacity: 0,
+    pointerEvents: "none"
+  };
+
 
   return (
 
@@ -40,6 +48,20 @@ export default function ManualActivityNode({ data }) {
         id="target"
       />
 
+      <Handle
+
+        type="source"
+
+        position={Position.Top}
+
+        id="top_retry"
+
+        style={{
+          left: "50%",
+          ...hiddenHandleStyle
+        }}
+      />
+
 
       {/* ===================================
           LEFT TARGET
@@ -52,6 +74,44 @@ export default function ManualActivityNode({ data }) {
         position={Position.Left}
 
         id="loopback"
+
+        style={{
+          top: "50%"
+        }}
+      />
+
+
+      {/* LEFT LOCAL RETRY SOURCE */}
+      <Handle
+
+        type="source"
+
+        position={Position.Left}
+
+        id="restart"
+
+        style={{
+          top: "50%",
+          ...hiddenHandleStyle
+        }}
+      />
+
+
+      {/* ===================================
+          RIGHT RETURN TARGET
+      =================================== */}
+
+      <Handle
+
+        type="target"
+
+        position={Position.Right}
+
+        id="return"
+
+        style={{
+          top: "50%"
+        }}
       />
 
 
@@ -66,6 +126,11 @@ export default function ManualActivityNode({ data }) {
         position={Position.Right}
 
         id="error"
+
+        style={{
+          top: "50%",
+          ...hiddenHandleStyle
+        }}
       />
 
 
@@ -82,34 +147,37 @@ export default function ManualActivityNode({ data }) {
         id="success"
       />
 
+      <Handle
+
+        type="target"
+
+        position={Position.Bottom}
+
+        id="bottom"
+
+        style={{
+          left: "50%",
+          ...hiddenHandleStyle
+        }}
+      />
+
 
 
       {/* HEADER */}
       <div
         style={{
-          padding: "8px",
-          fontWeight: "bold",
-          textAlign: "center",
-          background: "#1F2937",
-          fontSize: "11px"
-        }}
-      >
-        {data.step_number}
-      </div>
-
-
-      {/* BODY */}
-      <div
-        style={{
-          padding: "18px",
+          padding: "14px 18px",
           textAlign: "center",
           lineHeight: "1.5",
           wordBreak: "break-word",
           whiteSpace: "normal",
-          fontSize: "13px"
+          fontSize: "13px",
+          fontWeight: 700
         }}
       >
-        {data.label}
+        {stepNumber
+          ? `${stepNumber}: ${data.label}`
+          : data.label}
       </div>
 
     </div>

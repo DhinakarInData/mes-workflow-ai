@@ -222,6 +222,15 @@ The AI must identify:
 * Loopbacks
 * End conditions
 
+The AI must preserve separate option branch chains. If one response has
+multiple options and each option describes its own activities, repeated
+activity labels must still become separate nodes for each branch unless the
+workflow explicitly says they use one shared step.
+
+Human verification by Operator, Supervisor, QA, User, or Supervisor and QA
+must be represented as a `MANUAL_ACTIVITY` before the corresponding response
+node. Do not collapse human verification into the response node itself.
+
 The AI must not generate ReactFlow JSON.
 
 The AI must not generate coordinates.

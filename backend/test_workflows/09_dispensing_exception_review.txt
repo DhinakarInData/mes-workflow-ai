@@ -1,0 +1,22 @@
+Start dispensing exception review.
+
+Operator scans the batch number.
+System checks whether the batch is valid.
+If invalid batch, system displays Invalid Batch and returns to scan batch number.
+If valid, operator reviews dispensing checklist.
+
+System checks whether dispensing exception is present.
+If no exception, operator confirms dispensing checklist complete.
+If exception present, operator enters exception justification.
+
+QA reviews the exception justification.
+If QA rejects the justification, operator updates the justification and returns to QA reviews the exception justification.
+If QA approves the justification, supervisor reviews the justification.
+
+Supervisor reviews the justification.
+If supervisor rejects, operator updates the justification and returns to supervisor reviews the justification.
+If supervisor approves, operator confirms whether another dispensing checklist is required.
+
+If yes, return to scan batch number.
+If no, system posts dispensing exception review completion.
+End workflow.

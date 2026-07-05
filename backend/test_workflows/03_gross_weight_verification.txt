@@ -1,0 +1,53 @@
+Workflow name: Gross Weight Verification
+
+Start gross weight verification 
+scan the material or container.
+
+The system checks whether the scanned material/container status.
+The system gives a response.
+If the material is already verified, the system displays Scanned Material Already Verified and go to scan the material step.
+If the material is not verified, continue.
+
+If the container is incorrect, the system displays Incorrect Material Scanned and go to scan the material step.
+If the container is correct, continue.
+
+The system checks whether scale change is required.
+The system gives a response.
+If scale change is required, send the flow to the scale-change continuation.
+If scale change is not required, continue.
+
+The system checks whether the scanned material gross weight is within scale limits.
+The system gives a response.
+If the scanned material gross weight is not ok, the system displays Scanned Scale Not Suitable and return to check scale change require system check step.
+If the scanned material gross weight is ok, continue.
+
+The operator keeps the scanned material on the weighing scale.
+The system reads the dispensed container gross weight and tare weight from the system.
+The system reads the container gross weight from the balance.
+
+
+The system checks whether the scale reading is within scale range.
+The system gives a response.
+If the scale reading is outside scale range, the system displays Scale Reading Outside Scale Range and sends the flow to the scale-range-failed continuation.
+If the scale reading is within scale range, continue.
+
+The system compares the gross weight from the scale with the container gross weight in the system.
+The system gives a response.
+If the comparison is not ok, send the flow to the weighing-verification-failed continuation.
+If the comparison is ok, continue to the verified-weight continuation.
+
+When weighing verification fails for the scanned container, the system displays Weighing Verification Failed For Scanned Container.
+The supervisor scans the container barcode for re-verification.
+The supervisor keeps the container on the scale.
+The system reads the container gross weight from the balance again.
+
+The system checks whether the supervisor weight verification is ok.
+The system gives a response.
+If the supervisor verification is ok, continue to the verified-weight continuation.
+If the supervisor verification is not ok, the system launches the deviation linked workflow.
+
+After deviation workflow launch, the QA changes the current step or moves the process to the next step.
+If the process must be corrected, return to the appropriate weighing step.
+If the process can continue, continue to the verified-weight continuation.
+
+End gross weight verification.

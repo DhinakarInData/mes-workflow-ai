@@ -2,11 +2,13 @@ Startup Checks
 
 User select equipment
 
+User scans the selected equipment
+
 System checks equipment status
 
 If available proceed
 
-If unavailable show equipment unavailable
+If unavailable show equipment unavailable and return to scan again
 
 User perform line clearance
 
@@ -14,7 +16,7 @@ System checks line clearance completed
 
 If completed proceed
 
-If not completed show line clearance pending
+If not completed show line clearance pending and return to perform lc again
 
 User perform equipment inspection
 
@@ -22,9 +24,14 @@ System checks inspection passed
 
 If passed proceed
 
-If failed show inspection failed
+If failed show inspection failed and go for re-inspection to user perform equipment inspection step
+
+user confirm whether next equipment required or proceed
+if requried go to select equipment
 
 User acknowledge startup readiness
+
+System update custom property for Equipment
 
 System starts production
 

@@ -1,0 +1,22 @@
+Start line reconciliation.
+
+Operator scans the process order.
+System validates the process order.
+If process order is invalid, system displays Invalid Process Order and returns to scan process order.
+If valid, operator performs line reconciliation.
+
+System checks whether reconciliation discrepancy exists.
+If no discrepancy, operator submits reconciliation for approval.
+If discrepancy exists, operator enters discrepancy reason.
+
+QA reviews discrepancy reason.
+If rejected, operator updates discrepancy reason and returns to QA reviews discrepancy reason.
+If approved, supervisor reviews reconciliation.
+
+Supervisor reviews reconciliation.
+If rejected, operator updates reconciliation and returns to supervisor reviews reconciliation.
+If approved, system checks whether additional reconciliation is required.
+
+If additional reconciliation is required, return to perform line reconciliation.
+If not required, system posts line reconciliation completion.
+End workflow.

@@ -16,23 +16,38 @@ export default function SystemActivityNode({
   data
 }) {
 
-  return (
+  const stepNumber =
+    data.display_step_number || data.step_number;
 
-    <div
+  const isErrorActivity =
+    data.is_error_activity
+    || data.group === "ERROR_HANDLING";
 
-      style={{
+  const isLinkedWorkflow =
+    data.visual_type === "LINKED_WORKFLOW"
+    || data.metadata?.visual_type === "LINKED_WORKFLOW"
+    || String(data.label || "")
+      .toUpperCase()
+      .includes("LINKED WORKFLOW");
 
+  const hiddenHandleStyle = {
+    opacity: 0,
+    pointerEvents: "none"
+  };
+
+  const containerStyle = isErrorActivity
+    ? {
         width: data.width || 240,
 
-        minHeight: data.height || 100,
+        minHeight: 72,
 
-        background: "#0F766E",
+        background: "#FFFFFF",
 
-        color: "white",
+        color: "#111827",
 
-        border: "2px solid #14B8A6",
+        border: "2px solid #111827",
 
-        borderRadius: "10px",
+        borderRadius: "2px",
 
         overflow: "hidden",
 
@@ -40,12 +55,70 @@ export default function SystemActivityNode({
 
         display: "flex",
 
-        flexDirection: "column",
+        alignItems: "center",
+
+        justifyContent: "center",
+
+        boxShadow: "none"
+      }
+    : isLinkedWorkflow
+    ? {
+        width: data.width || 240,
+
+        minHeight: 72,
+
+        background: "#FFFFFF",
+
+        color: "#111827",
+
+        border: "2px solid #8B3A2B",
+
+        borderRadius: "2px",
+
+        overflow: "hidden",
+
+        position: "relative",
+
+        display: "flex",
+
+        alignItems: "center",
+
+        justifyContent: "center",
+
+        boxShadow: "none"
+      }
+    : {
+        width: data.width || 240,
+
+        minHeight: 72,
+
+        background: "#C2410C",
+
+        color: "white",
+
+        border: "2px solid #EA580C",
+
+        borderRadius: "999px",
+
+        overflow: "hidden",
+
+        position: "relative",
+
+        display: "flex",
+
+        alignItems: "center",
+
+        justifyContent: "center",
 
         boxShadow:
-
           "0 4px 10px rgba(0,0,0,0.15)"
-      }}
+      };
+
+  return (
+
+    <div
+
+      style={containerStyle}
     >
 
       {/* ===================================
@@ -61,6 +134,20 @@ export default function SystemActivityNode({
         id="target"
       />
 
+      <Handle
+
+        type="source"
+
+        position={Position.Top}
+
+        id="top_retry"
+
+        style={{
+          left: "50%",
+          ...hiddenHandleStyle
+        }}
+      />
+
 
       {/* ===================================
           LEFT TARGET
@@ -73,6 +160,47 @@ export default function SystemActivityNode({
         position={Position.Left}
 
         id="loopback"
+
+        style={{
+          top: "50%"
+        }}
+      />
+
+
+      {/* ===================================
+          LEFT LOCAL RETRY SOURCE
+      =================================== */}
+
+      <Handle
+
+        type="source"
+
+        position={Position.Left}
+
+        id="restart"
+
+        style={{
+          top: "50%",
+          ...hiddenHandleStyle
+        }}
+      />
+
+
+      {/* ===================================
+          RIGHT RETURN TARGET
+      =================================== */}
+
+      <Handle
+
+        type="target"
+
+        position={Position.Right}
+
+        id="return"
+
+        style={{
+          top: "50%"
+        }}
       />
 
 
@@ -87,6 +215,11 @@ export default function SystemActivityNode({
         position={Position.Right}
 
         id="error"
+
+        style={{
+          top: "50%",
+          ...hiddenHandleStyle
+        }}
       />
 
 
@@ -103,35 +236,19 @@ export default function SystemActivityNode({
         id="success"
       />
 
+      <Handle
 
-      {/* ===================================
-          HEADER
-      =================================== */}
+        type="target"
 
-      <div
+        position={Position.Bottom}
+
+        id="bottom"
 
         style={{
-
-          padding: "10px",
-
-          fontWeight: "bold",
-
-          textAlign: "center",
-
-          background: "#115E59",
-
-          borderBottom:
-            "1px solid #14B8A6",
-
-          fontSize: "13px",
-
-          letterSpacing: "0.5px"
+          left: "50%",
+          ...hiddenHandleStyle
         }}
-      >
-
-        SYSTEM
-
-      </div>
+      />
 
 
       {/* ===================================
@@ -142,7 +259,7 @@ export default function SystemActivityNode({
 
         style={{
 
-          padding: "16px",
+          padding: "14px 18px",
 
           textAlign: "center",
 
@@ -152,8 +269,6 @@ export default function SystemActivityNode({
 
           justifyContent: "center",
 
-          flex: 1,
-
           whiteSpace: "normal",
 
           wordBreak: "break-word",
@@ -162,11 +277,15 @@ export default function SystemActivityNode({
 
           lineHeight: "1.5",
 
-          fontSize: "14px"
+          fontSize: "13px",
+
+          fontWeight: 700
         }}
       >
 
-        {data.label}
+        {stepNumber
+          ? `${stepNumber}: ${data.label}`
+          : data.label}
 
       </div>
 

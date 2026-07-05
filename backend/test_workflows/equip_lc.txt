@@ -4,11 +4,11 @@ The system verifies whether the equipment belongs to the selected line and check
 
 If the equipment is valid and line clearance is completed, the system displays the line clearance checklist.
 
-If the equipment is invalid, the system displays an Invalid Equipment message.
+If the equipment is invalid, the system displays an Invalid Equipment message then go to scan equipment step.
 
-If the equipment belongs to another line, the system displays an Incorrect Equipment message.
+If the equipment belongs to another line, the system displays an Incorrect Equipment message then go to scan equipment step.
 
-If line clearance has not been completed, the system displays a Line Clearance Not Done message.
+If line clearance has not been completed, the system displays a Line Clearance Not Done message then go to scan equipment step.
 
 The operator completes the checklist and submits it.
 

@@ -1,0 +1,22 @@
+Workflow name: Nested QA and Supervisor Rejoin Challenge
+
+The operator starts batch closure review.
+The operator scans the process order.
+The system checks whether the process order is valid.
+If the process order is invalid, the system displays Invalid Process Order and returns to scan the process order.
+If the process order is valid, the operator reviews the batch closure checklist.
+
+The system checks whether any batch closure exception is present.
+If no exception is present, continue to final batch closure confirmation.
+If an exception is present, the operator enters the exception justification.
+QA reviews the exception justification.
+If QA rejects the justification, the operator updates the justification and returns to QA review.
+If QA approves the justification, the supervisor reviews the same justification.
+If the supervisor rejects the justification, the operator updates the justification and returns to QA review.
+If the supervisor approves the justification, continue to final batch closure confirmation.
+
+The operator confirms whether another batch closure checklist is required.
+If yes, return to review the batch closure checklist.
+If no, the system posts the batch closure transaction.
+The system updates the batch status.
+End the workflow.

@@ -81,7 +81,23 @@ def inject_merge_nodes(graph):
 
                     edge_type="SEQUENCE",
 
-                    routing_role="MAIN_FLOW"
+                    condition=loopback_edge.condition,
+
+                    routing_role="MAIN_FLOW",
+
+                    edge_label=(
+                        loopback_edge.edge_label
+                        or loopback_edge.condition
+                    ),
+
+                    metadata={
+                        **(
+                            loopback_edge.metadata
+                            or {}
+                        ),
+                        "merge_incoming_loopback": True,
+                        "semantic_target": loopback_edge.target
+                    }
                 )
             )
 

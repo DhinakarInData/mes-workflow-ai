@@ -1,0 +1,12 @@
+Start equipment availability check.
+
+The operator scans the equipment ID.
+The system checks whether the equipment is available for the current batch.
+
+If the equipment is available, the operator confirms the equipment selection.
+The system records the selected equipment.
+
+If the equipment is not available, the system shows that the equipment cannot be used.
+End the workflow.
+
+End equipment availability check.

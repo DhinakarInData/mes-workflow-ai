@@ -1,0 +1,11 @@
+Start container scan verification.
+
+The operator scans the container barcode.
+The system checks whether the container is valid for the batch.
+
+If the container is valid, the operator proceeds with container verification.
+
+If the container is invalid, the system displays "Invalid Container Scanned".
+The operator must scan the container again.
+
+End container scan verification.

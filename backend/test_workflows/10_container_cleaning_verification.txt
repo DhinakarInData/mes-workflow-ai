@@ -1,0 +1,23 @@
+Start container cleaning verification.
+
+Operator scans the container.
+System checks whether the container is valid.
+If invalid container, system displays Invalid Container and returns to scan container.
+If valid, system checks whether pre-cleaning verification is applicable.
+
+If pre-cleaning is not applicable, continue to post-cleaning applicability check.
+If pre-cleaning is applicable, operator performs pre-cleaning verification.
+Supervisor reviews pre-cleaning verification.
+If not correct, operator repeats pre-cleaning verification.
+If correct, system checks whether post-cleaning verification is applicable.
+
+If post-cleaning is not applicable, operator confirms cleaning complete.
+If post-cleaning is applicable, operator performs post-cleaning verification.
+QA reviews post-cleaning verification.
+If rejected, operator repeats post-cleaning verification.
+If approved, operator confirms cleaning complete.
+
+Operator confirms whether another container requires cleaning verification.
+If yes, return to scan container.
+If no, system records container cleaning verification.
+End workflow.

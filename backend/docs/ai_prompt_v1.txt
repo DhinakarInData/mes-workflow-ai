@@ -115,7 +115,7 @@ Always use:
 
 ---
 
-## SYSTEM CHECK AND RESPONSE RULES
+## CHECK, VERIFICATION, AND RESPONSE RULES
 
 When a workflow describes:
 
@@ -128,7 +128,14 @@ When a workflow describes:
 - line clearance checking
 - system evaluation
 
-Create:
+First decide who performs the check.
+
+Human checks performed by Operator, Supervisor, QA, User, or Supervisor
+and QA are MANUAL_ACTIVITY nodes.
+
+System checks performed by the MES/system are SYSTEM_CHECK nodes.
+
+For system evaluation, create:
 
 MANUAL_ACTIVITY
 ↓
@@ -165,6 +172,19 @@ RESPONSE presents the outcome.
 Do not connect MANUAL_ACTIVITY directly to SYSTEM RESPONSE when validations are present.
 
 OPERATOR, SUPERVISOR, QA and USER responses must NOT automatically create a SYSTEM_CHECK unless the workflow explicitly describes a system validation step.
+
+For human verification or approval, create the human verification as a
+MANUAL_ACTIVITY before the actor RESPONSE.
+
+Example:
+
+Enter Quantity
+â†“
+Verify Quantity by Supervisor and QA
+â†“
+Supervisor Response
+
+Do not collapse human verification text into the RESPONSE node.
 
 ## ROUTING ROLE RULES
 
@@ -426,6 +446,50 @@ Multiple paths should converge to the same END node.
 
 ---
 
+## PARALLEL OPTION BRANCH RULES
+
+If one RESPONSE has multiple options and each option describes its own
+subsequent activities, preserve each option as a separate branch chain.
+
+Do NOT merge branch targets just because the activity labels are similar.
+
+Create separate nodes for repeated branch work when the natural language
+describes separate cases.
+
+Example:
+
+Operator Response
+
+OPTION_A -> Enter Quantity -> Verify Quantity -> Supervisor Response
+
+OPTION_B -> Enter Quantity -> Verify Quantity -> Supervisor Response
+
+The correct IR must be:
+
+R1 -> A2 condition OPTION_A
+A2 -> A3
+A3 -> R2
+
+R1 -> A4 condition OPTION_B
+A4 -> A5
+A5 -> R3
+
+R2 success -> common next step
+R3 success -> common next step
+
+Never emit:
+
+R1 -> A2 condition OPTION_A
+R1 -> A2 condition OPTION_B
+
+unless the workflow explicitly says both options use the exact same shared
+already-existing step.
+
+When separate option branches later continue to the same next activity,
+converge them only at that next common activity.
+
+---
+
 ## ID RULES
 
 Use unique IDs.
@@ -446,13 +510,14 @@ END -> E1
 
 * Create all implied decisions.
 * Create all implied validation checks.
+* Preserve separate option branch chains.
+* Do not collapse repeated activities from different branches into one shared node unless explicitly stated.
 * Create all retry loops.
 * Preserve workflow sequence accurately.
 * Ensure every node is reachable.
 * Ensure every edge references valid node IDs.
 * Ensure JSON is valid.
 * Ensure routing_role is present on EVERY edge.
-* Never generate SYSTEM_CHECK nodes.
 * Never generate DECISION nodes.
 * Use RESPONSE nodes for all validations and branching logic.
 

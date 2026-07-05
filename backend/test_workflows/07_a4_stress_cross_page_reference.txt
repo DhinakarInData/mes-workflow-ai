@@ -1,0 +1,68 @@
+Workflow name: Long A4 Stress Workflow With References
+
+Start production execution.
+
+The operator scans the process order.
+The system validates the process order, batch, material, and order status.
+
+The system gives a response.
+If all order details are valid, continue.
+If the process order is invalid, the system displays Invalid Process Order and returns to Scan Process Order.
+If the order is not released, the system displays Order Not Released and returns to Scan Process Order.
+If the batch is blocked, the system displays Batch Blocked and returns to Scan Process Order.
+
+The operator scans the equipment.
+The system checks equipment status, calibration, cleaning status, and line clearance status.
+
+The system gives a response.
+If equipment checks pass, continue.
+If equipment is invalid, the system displays Invalid Equipment and returns to Scan Equipment.
+If equipment calibration is due, the system displays Calibration Due and returns to Scan Equipment.
+If equipment cleaning is not complete, the system displays Cleaning Required and returns to Scan Equipment.
+If line clearance is not complete, the system displays Line Clearance Required and returns to Scan Equipment.
+
+The operator performs pre-operation checklist.
+The supervisor reviews the pre-operation checklist.
+
+The supervisor gives a response.
+If approved, continue.
+If correction is required, return to Perform Pre-operation Checklist.
+If rejected, the system displays Pre-operation Rejected and ends production execution.
+
+The system starts the production operation.
+The operator scans the first material container.
+The system validates material, batch, expiry, and quantity.
+
+The system gives a response.
+If material validation passes, continue.
+If material does not match, the system displays Material Mismatch and returns to Scan Material Container.
+If batch does not match, the system displays Batch Mismatch and returns to Scan Material Container.
+If material is expired, the system displays Material Expired and returns to Scan Material Container.
+If quantity is insufficient, the system displays Quantity Not Available and returns to Scan Material Container.
+
+The operator dispenses material.
+The system captures dispensing weight.
+The system verifies dispensing weight tolerance.
+
+The system gives a response.
+If weight is within tolerance, continue.
+If weight is below tolerance, return to Dispense Material.
+If weight is above tolerance, the QA user reviews the deviation.
+
+The QA user gives a response.
+If QA approves the deviation, continue.
+If QA rejects the deviation, the system marks the operation as deviation rejected and ends production execution.
+
+The user confirms whether another material container is required.
+If Yes, return to Scan Material Container.
+If No, continue.
+
+The operator completes operation remarks.
+The system posts the production transaction.
+The system updates inventory and batch status.
+The system generates the production audit trail.
+
+Use an on-page or cross-page reference if the diagram does not fit on one A4 portrait page.
+
+End production execution.
+

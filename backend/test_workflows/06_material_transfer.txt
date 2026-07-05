@@ -1,0 +1,49 @@
+Start material transfer.
+
+Operator scans the empty container. If the container is 
+invalid the system shows Invalid Container Scanned and 
+asks to scan again. If wrong container is scanned the 
+system shows Incorrect Container Scanned and asks to 
+scan again. If valid, system updates container status, 
+prints the label and operator affixes it.
+
+Operator scans the product container. If invalid, system 
+shows Invalid Container Scanned and asks to scan again. If wrong 
+batch or lot, system shows Incorrect Batch Lot Or Stage 
+and asks to scan again. If valid, continue.
+
+System checks material hold time. If hold time is not ok, 
+deviation linked workflow is launched and QA decides to ask supervisor to enter justfication then continue or return to scan another the product container.
+
+System checks silica gel removal. If not applicable, 
+continue. If applicable, system checks silica gel status.
+If removed continue, If not removed, operator corrects it and return to checks silicagel gel status step.
+
+Operator loads container for weighing. If material is WIP 
+system updates container status. If raw material, system 
+reads material code. Then system performs material transfer.
+
+Operator decides next action. If wants to scan another 
+container, go back to product container scan. If wants to 
+weigh unloaded container, continue to weighing scale scan. 
+If wants to exit, exit.
+
+Operator scans weighing scale. System checks UOM, 
+calibration, area assignment and scale existence. If any 
+check fails the system shows the relevant error and asks 
+to scan scale again. If valid, continue.
+
+Operator scans container for weighing. If incorrect 
+container, system shows error and retries. If already 
+weighed, asks operator whether to scan another or go for 
+reweighing. If correct, continue.
+
+weigh the container and continue
+
+System checks if all containers are loaded. If not, 
+shows All Containers Not Loaded and asks to load 
+pending and return to scan product container
+If all loaded, continue.
+
+
+End material transfer.

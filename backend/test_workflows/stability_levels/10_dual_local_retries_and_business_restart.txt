@@ -1,0 +1,28 @@
+Workflow name: Dual Local Retry and Business Restart Challenge
+
+The operator starts container verification.
+The operator scans the source container.
+The system validates the source container.
+If the source container is invalid, the system displays Invalid Source Container and returns to scan the source container.
+If the source container is already consumed, the system displays Source Container Already Consumed and returns to scan the source container.
+If the source container is valid, continue.
+
+The operator scans the destination container.
+The system validates the destination container.
+If the destination container is invalid, the system displays Invalid Destination Container and returns to scan the destination container.
+If the destination container is blocked, the system displays Destination Container Blocked and returns to scan the destination container.
+If the destination container is valid, continue.
+
+The operator enters the transfer quantity.
+The system checks whether the transfer quantity is within tolerance.
+If the quantity is below tolerance, the operator corrects the transfer quantity and returns to enter the transfer quantity.
+If the quantity is above tolerance, the supervisor reviews the quantity deviation.
+If the supervisor rejects the deviation, the operator corrects the transfer quantity and returns to enter the transfer quantity.
+If the supervisor approves the deviation, continue.
+If the quantity is within tolerance, continue.
+
+The operator confirms whether another transfer is required.
+If yes, return to scan the source container.
+If no, the system records the transfer transaction.
+The system updates inventory.
+End the workflow.

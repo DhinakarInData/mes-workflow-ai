@@ -16,6 +16,6 @@ User scan the material barcode
 System check if it valid go to read the scale value else show the error message and return to scan the material barcode
 
 Read the scale value 
-System check weighed qty matches dispensed qty if it ok show complies it if not ok show does not comply 
+System check weighed qty matches dispensed qty if it ok show complies it if not ok show does not comply and end the workflow
 
 then go to end of workflow
