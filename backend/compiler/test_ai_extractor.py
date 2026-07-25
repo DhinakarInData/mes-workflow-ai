@@ -1,4 +1,5 @@
 import json
+import argparse
 from pathlib import Path
 
 from compiler.ai_workflow_extractor import (
@@ -14,6 +15,20 @@ from engines.topology_layout_engine import build_topology_layout
 
 if __name__ == "__main__":
 
+    parser = argparse.ArgumentParser(
+        description="Generate ReactFlow JSON from a test workflow input."
+    )
+    parser.add_argument(
+        "workflow_file",
+        nargs="?",
+        default="test_workflows/11_line_reconciliation_with_rework.txt",
+        help=(
+            "Workflow text file path. Relative paths are resolved from "
+            "the backend folder."
+        )
+    )
+    args = parser.parse_args()
+
     backend_dir = Path(
         __file__
     ).resolve().parents[1]
@@ -28,11 +43,18 @@ if __name__ == "__main__":
         / "test_graph.json"
     )
 
-    with open(
-    "test_workflows/09_dispensing_exception_review.txt",
-    "r",
-    encoding="utf-8"
-) as file:
+    workflow_path = Path(
+        args.workflow_file
+    )
+
+    if not workflow_path.is_absolute():
+
+        workflow_path = backend_dir / workflow_path
+
+    with workflow_path.open(
+        "r",
+        encoding="utf-8"
+    ) as file:
 
         workflow_text = file.read()
 
@@ -97,6 +119,21 @@ if __name__ == "__main__":
 
     violations = validate_reactflow_graph(
         reactflow_graph
+    )
+
+    from compiler.fds_visual_validator import (
+        format_fds_visual_report,
+        validate_fds_visual_layout
+    )
+
+    visual_issues = validate_fds_visual_layout(
+        reactflow_graph
+    )
+
+    print(
+        "\n" + format_fds_visual_report(
+            visual_issues
+        )
     )
 
     blocking_violations = [
