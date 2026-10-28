@@ -1,16 +1,29 @@
-# React + Vite
+# MES Workflow Studio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The frontend accepts a plain-language manufacturing process and displays the
+generated MES/FDS workflow as a React Flow diagram. The bundled sample graph
+remains available through **Restore sample diagram**.
 
-Currently, two official plugins are available:
+## Local development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Run the FastAPI backend in one terminal:
 
-## React Compiler
+```sh
+cd backend
+uvicorn main:app --reload --port 8000
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Start the frontend in a second terminal:
 
-## Expanding the ESLint configuration
+```sh
+cd frontend
+npm install
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The Vite development server proxies `/workflow` requests to
+`http://127.0.0.1:8000`. Override that target with `VITE_API_PROXY_TARGET`.
+
+For a separately hosted API, set `VITE_API_BASE_URL` to the API origin when
+building the frontend, and set `FRONTEND_ORIGINS` on the backend to a
+comma-separated allowlist of frontend origins.
