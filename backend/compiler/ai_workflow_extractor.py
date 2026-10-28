@@ -346,7 +346,7 @@ def correction_instruction(error):
     )
 
 
-def extract_workflow(text):
+def extract_workflow(text, write_debug=True):
 
     prompt_path = (
         Path(__file__).resolve().parents[1]
@@ -379,13 +379,13 @@ def extract_workflow(text):
             )
 
             result = response.text
-            with open(
-                "debug_output.json",
-                "w",
-                encoding="utf-8"
-                
-            ) as f:
-                f.write(result)
+            if write_debug:
+                with open(
+                    "debug_output.json",
+                    "w",
+                    encoding="utf-8"
+                ) as f:
+                    f.write(result)
 
             result = extract_json_object(
                 result
